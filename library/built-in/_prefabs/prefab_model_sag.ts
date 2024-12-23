@@ -27,7 +27,7 @@ export const ui_model_sag = (form: X.Builder): UI_model_sag => {
       {
          startCollapsed: true,
          tooltip: 'Self Attention Guidance can improve image quality but runs slower',
-         toString: ({ value: ui }): string => {
+         toSummary: ({ value: ui }): string => {
             return `${ui.include.base ? '🟢Base ' : ''}${ui.include.hiRes ? '🟢HiRes ' : ''}`
          },
       },

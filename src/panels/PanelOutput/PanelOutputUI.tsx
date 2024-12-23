@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 
 import { OutputUI } from '../../outputs/OutputUI'
-import { PanelStepsConf } from '../PanelSteps/Panel_StepsConf'
+import { PanelStepsConf } from '../PanelSteps/PanelStepsConf'
 import { LatentIfLastUI } from './LatentIfLastUI'
 
 export type PanelOutputProps = {

@@ -6,6 +6,7 @@ import type { Field_choices } from '../csuite/fields/choices/FieldChoices'
 import type { Field_color } from '../csuite/fields/color/FieldColor'
 import type { Field_custom } from '../csuite/fields/custom/FieldCustom'
 import type { Field_date } from '../csuite/fields/date/FieldDate'
+import type { Field_dynamic } from '../csuite/fields/dynamic/FieldDynamic'
 import type { Field_enum } from '../csuite/fields/enum/FieldEnum'
 import type { Field_group, Field_group_types, FieldGroup } from '../csuite/fields/group/FieldGroup'
 import type { Field_image } from '../csuite/fields/image/FieldImage'
@@ -97,6 +98,7 @@ declare global {
       type XNumber = CushySchema<Field_number>
       type XColor = CushySchema<Field_color>
       type XList<T extends BaseSchema> = CushySchema<Field_list<T>>
+      type XDynamic<T extends BaseSchema> = CushySchema<Field_dynamic<T>>
       type XBoard<T extends BaseSchema> = SimpleSchema<Field_board<T>>
       type XButton<T> = CushySchema<Field_button<T>>
       type XSeed = CushySchema<Field_seed>

@@ -82,6 +82,7 @@ export interface CushySchemaᐸ_ᐳ extends HKT<FieldTypes> {
    Link: HKSimpleLinkAlias
    Shared: HKSimpleSharedAlias
    List: HKSimpleListAlias
+   Dynamic: HKSimpleDynamicAlias
    Optional: HKSimpleOptionalAlias
 
    OneOf: HKSimpleOneOfAlias
@@ -113,6 +114,9 @@ interface HKSimpleSharedAlias extends HKT<Field> {
 }
 interface HKSimpleListAlias extends HKT<BaseSchema> {
    type: X.XList<this['__1']>
+}
+interface HKSimpleDynamicAlias extends HKT<BaseSchema> {
+   type: X.XDynamic<this['__1']>
 }
 
 interface HKSimpleOptionalAlias extends HKT<BaseSchema> {

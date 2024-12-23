@@ -198,7 +198,7 @@ export function ui_sampler_advanced(p?: {
          // steps: form.int({ step: 10, default: p?.steps ?? 20, label: 'Steps', min: 0, softMax: 100 }),
       },
       {
-         toString: ({ value: ui }): string => {
+         toSummary: ({ value: ui }): string => {
             let sigmas: string = ''
             if (ui.sigmasType.basic) {
                sigmas = 'basic'

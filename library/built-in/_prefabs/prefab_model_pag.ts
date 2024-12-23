@@ -43,7 +43,7 @@ export const ui_model_pag = (form: X.Builder): UI_model_pag => {
          {
             startCollapsed: true,
             tooltip: 'Perturbed Attention Guidance - can improve attention at the cost of performance',
-            toString: ({ value: ui }): string => {
+            toSummary: ({ value: ui }): string => {
                return `scale:${ui.include.base ? 'Base ' : ''}${ui.include.hiRes ? 'HiRes ' : ''} scale:${ui.scale} dampening:${ui.adaptiveScale}`
             },
          },

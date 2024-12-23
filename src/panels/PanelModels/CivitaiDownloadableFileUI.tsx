@@ -1,5 +1,5 @@
 import type { ComfyManagerModelInfo } from '../../manager/types/ComfyManagerModelInfo'
-import type { CivitaiDownloadableFile, CivitaiModelVersion, CivitaiSearchResultItem } from './CivitaiSpec'
+import type { CivitaiDownloadableFile, CivitaiModelVersion, CivitaiSearchResultItem } from './CivitaiTypes'
 
 import { observer, useLocalObservable } from 'mobx-react-lite'
 

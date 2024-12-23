@@ -36,6 +36,7 @@ export interface SimpleSchemaᐸ_ᐳ extends HKT<Field> {
    Link: HKSimpleLinkAlias
    Shared: HKSimpleSharedAlias
    List: HKSimpleListAlias
+   Dynamic: HKSimpleDynamicAlias
    Optional: HKSimpleOptionalAlias
 
    OneOf: HKSimpleOneOfAlias
@@ -67,6 +68,9 @@ interface HKSimpleSharedAlias extends HKT<Field> {
 }
 interface HKSimpleListAlias extends HKT<BaseSchema> {
    type: S.SList<this['__1']>
+}
+interface HKSimpleDynamicAlias extends HKT<BaseSchema> {
+   type: S.SDynamic<this['__1']>
 }
 
 // #region optional

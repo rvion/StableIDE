@@ -26,7 +26,11 @@ app<FIELD>({
       name: 'NoobAI',
       illustration: 'library/built-in/noobai.webp',
       description: 'Laxhar Dream Lab SDXL NOOB', // prettier-ignore
-      help: `[NoobXL](https://civitai.com/models/833294) is the upcoming amazing anime image generation model. based on [Illustrious-xl](https://civitai.com/models/795765/illustrious-xl), and continued trained by Laxhar Lab.`,
+      help: [
+         //
+         `[NoobXL](https://civitai.com/models/833294) is the upcoming amazing anime image generation model. based on [Illustrious-xl](https://civitai.com/models/795765/illustrious-xl), and continued trained by Laxhar Lab.`,
+         `[Usage Guide](https://civitai.com/articles/8962/noobai-xl-quick-guide)`,
+      ].join('\n'),
    },
    ui: _cushySDXLSchema,
    layout: _cushySDXLLayout(),

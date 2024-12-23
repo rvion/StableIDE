@@ -14,6 +14,7 @@ export type $schemaModelExtras = X.XChoices<{
    freeU: X.XEmpty
    freeUv2: X.XEmpty
    vpred: X.XGroup<{ zsnr: X.XBool }>
+   epred: X.XGroup<{ zsnr: X.XBool }>
    sampling: X.XGroup<{
       sampling: X.XEnum<'ModelSamplingDiscrete.sampling'>
       zsnr: X.XBool
@@ -42,6 +43,7 @@ export const schemaModelExtras = (
             freeU: b.empty({ label: 'freeU ' }),
             freeUv2: b.empty({ label: 'freeU (v2)' }),
             vpred: b.fields({ zsnr: b.bool() }),
+            epred: b.fields({ zsnr: b.bool() }),
             sampling: b.auto.ModelSamplingDiscrete(),
             pag: ui_model_pag(b),
             sag: ui_model_sag(b),
@@ -100,6 +102,13 @@ export function evalModelExtras_part1(
          model: ckpt,
          zsnr: extra.vpred.zsnr,
          sampling: 'v_prediction',
+      })
+   }
+   if (extra.epred) {
+      ckpt = graph.ModelSamplingDiscrete({
+         model: ckpt,
+         zsnr: extra.epred.zsnr,
+         sampling: 'eps',
       })
    }
 

@@ -26,7 +26,7 @@ export type Field_group_config<T extends Field_group_types<SchemaDict>> = FieldC
        *      This is a very important concept to understand, and we don't want to pollute the group field
        *      with the complexity of dynamic fields.
        */
-      items?: T | (() => T)
+      items?: T['$Sub'] | (() => T['$Sub'])
 
       /** @default @false */
       presetButtons?: boolean
@@ -171,7 +171,7 @@ export class Field_group<X extends Field_group_types<SchemaDict> = Field_group_t
       // 👇🤔 Maybe we don't want to invoke the summary unless the field is valid
       // -> it could throw with children that have a throwable _or_zero
       try {
-         return this.config.toString?.(this) ?? ''
+         return this.config.toSummary?.(this) ?? ''
       } catch (e) {
          return `❌ ${this.path}.toString() crashed ❌`
       }

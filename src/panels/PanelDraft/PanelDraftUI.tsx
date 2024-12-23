@@ -164,6 +164,7 @@ export const DraftUI = observer(function Panel_Draft_(p: { draft: Maybe<DraftL> 
                   />
                )}
             </Frame>
+            <Frame tw='[height:80vh]'></Frame>
          </Frame>
       </draftContext.Provider>
    )

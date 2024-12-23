@@ -5,6 +5,7 @@ import { MenuItem } from '../csuite/dropdown/MenuItem'
 import { Frame, type FrameProps } from '../csuite/frame/Frame'
 import { InputStringUI } from '../csuite/input-string/InputStringUI'
 import { RevealUI } from '../csuite/reveal/RevealUI'
+import { perspectiveHelper } from '../router/perspectives/_PerspectiveBuilder'
 
 export const PerspectivePickerUI = observer(function PerspectivePicker(p: FrameProps) {
    const perspectives = cushy.db.perspective.all
@@ -66,7 +67,12 @@ export const PerspectivePickerUI = observer(function PerspectivePicker(p: FrameP
             icon='mdiPlus'
             subtle
             borderless
-            onClick={() => cushy.db.perspective.getOrCreate(`p${Date.now()}`)}
+            onClick={() =>
+               cushy.db.perspective.getOrCreateWith(
+                  `p${Date.now()}`,
+                  cushy.layout.makeNewPerspective_default1,
+               )
+            }
          />
       </Frame>
    )

@@ -302,18 +302,18 @@ describe('FieldList', () => {
             expect(r).toEqual([4, 4, 4])
          })
       })
-   })
 
-   describe('filter', () => {
-      it('should filter items', () => {
-         const S = b.int().list()
-         const f = S.create()
+      describe('filter', () => {
+         it('should filter items', () => {
+            const S = b.int().list()
+            const f = S.create()
 
-         f.value = [1, 2, 3, 4, 5, 6]
-         expectJSON(f.value).toEqual([1, 2, 3, 4, 5, 6])
+            f.value = [1, 2, 3, 4, 5, 6]
+            expectJSON(f.value).toEqual([1, 2, 3, 4, 5, 6])
 
-         const filtered = f.value.filter((x) => x > 3)
-         expect(filtered).toEqual([4, 5, 6])
+            const filtered = f.value.filter((x) => x > 3)
+            expect(filtered).toEqual([4, 5, 6])
+         })
       })
    })
 
@@ -366,5 +366,26 @@ describe('FieldList', () => {
          expect(E.items[4]?.mountKey).toBe('4')
          expect(E.items[5]?.mountKey).toBe('5')
       })
+   })
+
+   it('properly forwards value mode through proxy', () => {
+      const S = b.string_().list({ defaultLength: 3 })
+      const E = S.create()
+      E.value[0] = 'zero'
+
+      expect(E.value_unchecked[0]).toBe('zero')
+      expect(E.value_unchecked[1]).toBeUndefined()
+      expect(E.value_unchecked[2]).toBeUndefined()
+      expect(E.value_unchecked.map((x) => x)).toEqual(['zero', undefined, undefined])
+
+      expect(E.value[0]).toBe('zero')
+      expect(() => E.value[1]).toThrow()
+      expect(() => E.value[2]).toThrow()
+      expect(() => E.value.map((x) => x)).toThrow()
+
+      expect(E.value_or_zero[0]).toBe('zero')
+      expect(E.value_or_zero[1]).toBe('')
+      expect(E.value_or_zero[2]).toBe('')
+      expect(E.value_or_zero.map((x) => x)).toEqual(['zero', '', ''])
    })
 })

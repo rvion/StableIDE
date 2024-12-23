@@ -4,6 +4,7 @@ import type { Field_button } from '../fields/button/FieldButton'
 import type { Field_choices } from '../fields/choices/FieldChoices'
 import type { Field_color } from '../fields/color/FieldColor'
 import type { Field_date } from '../fields/date/FieldDate'
+import type { Field_dynamic } from '../fields/dynamic/FieldDynamic'
 import type { Field_group, Field_group_types, Field_Group_withMagicFields } from '../fields/group/FieldGroup'
 import type { Field_link } from '../fields/link/FieldLink'
 import type { Field_list } from '../fields/list/FieldList'
@@ -62,6 +63,7 @@ declare global {
       //
       type SGroup<T extends SchemaDict> = SimpleSchema<Field_Group_withMagicFields<Field_group_types<T>>>
       type SList<T extends BaseSchema> = SimpleSchema<Field_list<T>>
+      type SDynamic<T extends BaseSchema> = SimpleSchema<Field_dynamic<T>>
       type SLink<A extends BaseSchema, B extends BaseSchema> = SimpleSchema<Field_link<A, B>>
       type SChoices<T extends SchemaDict = SchemaDict> = SimpleSchema<Field_choices<T>>
       type SOptional<T extends BaseSchema> = SimpleSchema<Field_optional<T>>

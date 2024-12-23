@@ -3,15 +3,17 @@ import type { CSSProperties } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
+import { Status } from '../../back/Status'
 import { statusUI } from '../../back/statusUI'
 import { AppIllustrationUI } from '../../cards/fancycard/AppIllustrationUI'
 import { DraftIllustrationUI } from '../../cards/fancycard/DraftIllustration'
 import { BadgeUI } from '../../csuite/badge/BadgeUI'
+import { Button } from '../../csuite/button/Button'
 import { SpacerUI } from '../../csuite/components/SpacerUI'
 import { _formatPreviewDate } from '../../csuite/formatters/_formatPreviewDate'
 import { Frame } from '../../csuite/frame/Frame'
 import { OutputPreviewUI } from '../../outputs/OutputUI'
-import { PanelStepsConf } from './Panel_StepsConf'
+import { PanelStepsConf } from './PanelStepsConf'
 
 export const StepCardUI = observer(function StepOutputsV1HeaderUI_(p: {
    // Data ---------------------
@@ -97,6 +99,16 @@ export const StepCardUI = observer(function StepOutputsV1HeaderUI_(p: {
             </div>
          )}
          <SpacerUI />
+         {step?.finalStatus === Status.Running && (
+            <Button //
+               icon='mdiStop'
+               look='error'
+               onClick={() => {
+                  step.abort()
+                  cushy.stopCurrentPrompt()
+               }}
+            />
+         )}
          {showDate && (
             <div style={STYLE2} tw='flex items-center justify-center opacity-80'>
                {_formatPreviewDate(new Date(step.createdAt))}

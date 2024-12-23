@@ -36,7 +36,7 @@ export const ui_ipadapter_advancedSettings = (
          unfold_batch: form.bool({ default: false }),
       },
       {
-         toString: ({ value: ui }): string => {
+         toSummary: ({ value: ui }): string => {
             return `${ui.weight_type} | from:${ui.startAtStepPercent}=>${ui.endAtStepPercent}`
          },
       },
@@ -75,7 +75,7 @@ export function ui_IPAdapterImageInput(form: X.Builder): UI_IPAdapterImageInput 
             {
                startCollapsed: true,
                label: 'Image Settings',
-               toString: ({ value: ui }): string => {
+               toSummary: ({ value: ui }): string => {
                   return `weight:${ui.imageWeight} | combo:${ui.embedding_combination} | mask:${
                      ui.imageAttentionMask ? 'yes' : 'no'
                   }`
@@ -84,7 +84,7 @@ export function ui_IPAdapterImageInput(form: X.Builder): UI_IPAdapterImageInput 
          ),
       },
       {
-         toString: ({ value: ui }): string => {
+         toSummary: ({ value: ui }): string => {
             return `weight:${ui.advanced.imageWeight} | combo:${ui.advanced.embedding_combination} | mask:${
                ui.advanced.imageAttentionMask ? 'yes' : 'no'
             }`
@@ -122,14 +122,14 @@ export function ui_IPAdapterV2(): UI_IPAdapterV2 {
                            default: 'STANDARD (medium strength)',
                         }),
                      },
-                     { startCollapsed: true, toString: ({ value: ui }): string => `model:${ui.type}` },
+                     { startCollapsed: true, toSummary: ({ value: ui }): string => `model:${ui.type}` },
                   ),
                   advancedSettings: ui_ipadapter_advancedSettings(form),
                },
                {
                   label: 'IP Adapter Settings',
                   startCollapsed: true,
-                  toString: ({ value: ui }): string =>
+                  toSummary: ({ value: ui }): string =>
                      `strength:${ui.adapterStrength} | model:${ui.models.type}|`,
                },
             ),
@@ -139,7 +139,7 @@ export function ui_IPAdapterV2(): UI_IPAdapterV2 {
             icon: 'mdiAnvil',
             label: 'IPAdapter',
             box: { base: { hue: 70, chroma: 0.1 } },
-            toString: ({ value: ui }): string => {
+            toSummary: ({ value: ui }): string => {
                return `images:${1 + ui.images.length} | strength:${ui.settings.adapterStrength} | model:${
                   ui.settings.models.type
                }`

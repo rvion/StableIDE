@@ -46,6 +46,11 @@ export class StepL extends BaseInst<TABLES['step']> {
       return this.draftL.item
    }
 
+   abort(): void {
+      this.update({ status: Status.Failure })
+      // TODO: finish me
+   }
+
    finished = new ManualPromise<RuntimeExecutionResult>()
    start = async (p: {
       /**

@@ -11,8 +11,26 @@ import type { Extension } from '@codemirror/state'
 import { autocompletion } from '@codemirror/autocomplete'
 import { syntaxTree } from '@codemirror/language'
 
+import { DanbooruTagCategory } from '../../widgets/prompter/nodes/booru/BooruLoader'
 import { isValidPromptLangIdentifier } from './isIdentifier'
 import { $ancestorsBottomUp } from './utils'
+
+const getCategoryName = (category: DanbooruTagCategory): string => {
+   switch (category) {
+      case DanbooruTagCategory.General:
+         return 'General'
+      case DanbooruTagCategory.Artist:
+         return 'Artist'
+      case DanbooruTagCategory.Copyright:
+         return 'Copyright'
+      case DanbooruTagCategory.Character:
+         return 'Character'
+      case DanbooruTagCategory.Meta:
+         return 'Meta'
+      default:
+         return 'Unknown'
+   }
+}
 
 // Dynamic completion based on context
 const dynamicCompletion: CompletionSource = (context: CompletionContext): CompletionResult | null => {
@@ -93,14 +111,15 @@ const dynamicCompletion: CompletionSource = (context: CompletionContext): Comple
       for (const tag of st.danbooru.tags) {
          const tagName = tag.text
          const noWrap = isValidPromptLangIdentifier(tagName)
-         const prefix = alreadyhasPrefix ? '' : `%`
+         const prefix = alreadyhasPrefix ? '' : ``
+         const formattedTagName = tagName.replace(/_/g, ' ').replace(/\(/g, '\\(').replace(/\)/g, '\\)')
          completionsOptions.push({
             displayLabel: `${tagName}`,
-            detail: 'tag',
+            detail: getCategoryName(tag.category) + ' ' + tag.count,
             boost: -99,
             label: tagName,
             type: 'tag',
-            apply: noWrap ? `${prefix}${tagName}` : `${prefix}"${tagName}"`,
+            apply: noWrap ? `${prefix}${formattedTagName}` : `${prefix}"${formattedTagName}"`,
          })
       }
    }

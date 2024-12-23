@@ -16,15 +16,18 @@ import { hashJSONObjectToNumber } from '../csuite/hashUtils/hash'
 import { getIconAsDataSVG } from '../csuite/icons/iconStr'
 import { LegacyMessageUI } from '../csuite/inputs/LegacyMessageUI'
 import { regionMonitor } from '../csuite/regions/RegionMonitor'
+import { Stack } from '../csuite/structures/Stack'
 import { Trigger } from '../csuite/trigger/Trigger'
 import { bang } from '../csuite/utils/bang'
 import { toastError } from '../csuite/utils/toasts'
 import { type CustomPanelRef, registerCustomPanel } from '../panels/PanelCustom/CustomPanels'
-import { perspectiveHelper } from './DefaultPerspective'
 import { LayoutUI } from './LayoutUI'
 import { PanelContainerUI } from './PanelContainerUI'
 import { panels } from './PANELS'
-import { Stack } from './Stack'
+import { perspectiveHelper } from './perspectives/_PerspectiveBuilder'
+import { getCanvasPerspective } from './perspectives/canvas.perspective'
+import { getDefaultPerspective } from './perspectives/default1.perspective'
+import { getEmptyPerspective } from './perspectives/empty.perspective'
 import { type TraversalNextStep, type TraverseFn, traverseLayoutNode } from './traverseLayoutNode'
 import { uniqueIDByMemoryRef } from './uniqueIDByMemoryRef'
 
@@ -77,7 +80,10 @@ export class CushyLayoutManager {
    perspective: PerspectiveL
    constructor(public st: STATE) {
       // const prevLayout = st.configFile.value.layouts_v13?.default
-      this.perspective = cushy.db.perspective.getOrCreate('default')
+      const PDefault = cushy.db.perspective.getOrCreateWith('default', this.makeNewPerspective_default1)
+      const PCanvas = cushy.db.perspective.getOrCreateWith('canvas', this.makeNewPerspective_canvas)
+      const PEmpty = cushy.db.perspective.getOrCreateWith('empty', this.makeNewPerspective_empty)
+      this.perspective = PDefault
       this.openPerspective(this.perspective)
       makeAutoObservable(this, {
          layoutRef: false,
@@ -397,8 +403,18 @@ export class CushyLayoutManager {
          this.setModel(FlexLayoutModel.fromJson(json))
       } catch (e) {
          console.log('[💠] Layout: ❌ error loading layout', e)
-         this.setModel(FlexLayoutModel.fromJson(perspectiveHelper.default()))
+         this.setModel(FlexLayoutModel.fromJson(this.makeNewPerspective_default1()))
       }
+   }
+
+   makeNewPerspective_default1(): FL.IJsonModel {
+      return getDefaultPerspective(perspectiveHelper)
+   }
+   makeNewPerspective_canvas(): FL.IJsonModel {
+      return getCanvasPerspective(perspectiveHelper)
+   }
+   makeNewPerspective_empty(): FL.IJsonModel {
+      return getEmptyPerspective(perspectiveHelper)
    }
 
    resetCurrent(): void {
@@ -410,7 +426,10 @@ export class CushyLayoutManager {
    }
 
    reset(perspectiveName: string): void {
-      const perspective = cushy.db.perspective.getOrCreate(perspectiveName)
+      const perspective = cushy.db.perspective.getOrCreateWith(
+         perspectiveName,
+         this.makeNewPerspective_default1,
+      )
       perspective.resetToDefault()
       if (perspective === this.perspective) {
          this.setModel(FlexLayoutModel.fromJson(perspective.data.layout))

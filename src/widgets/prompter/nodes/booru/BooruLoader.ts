@@ -27,20 +27,25 @@ export type DanbooruTag = {
 
 export class DanbooruTags {
    tags: DanbooruTag[] = []
-   // tagsByCategory: Record<string, DanbooruTag> = {}
-   // aliases: Record<string, number> = {}
+   private tagsMap: Map<string, DanbooruTag> = new Map()
 
-   parseRow = (data: string[]): DanbooruTag => {
+   parseRow = (data: (string | undefined)[]): DanbooruTag => {
       if (
          data[0] == null || //
          data[1] == null ||
          data[2] == null
       ) {
          console.log(`🔶 invalid danbooru tag row: ${data}`)
+         return {
+            text: '❌ unknown',
+            category: 0 as DanbooruTagCategory,
+            count: 0,
+            aliases: [],
+         }
       }
       return {
          text: data[0] ?? '❌ unknown',
-         category: parseInt(data[1] ?? '❌ unknown'),
+         category: parseInt(data[1] ?? '0') as DanbooruTagCategory,
          count: parseInt(data[2] ?? '0'),
          aliases: data[3]?.split(',') ?? [],
       }
@@ -55,16 +60,34 @@ export class DanbooruTags {
    private constructor(public st: STATE) {
       if (DanbooruTags._instance) throw new Error('DanbooruTags is a singleton')
       DanbooruTags._instance = this
+      const filePaths = []
+      const enabledTags = cushy.preferences.system.value.tags
+      if (enabledTags.danbooru) filePaths.push('completions/danbooru.csv')
+      if (enabledTags.danbooruNSFW) filePaths.push('completions/danbooru_nsfw.csv')
+      if (enabledTags.e621) filePaths.push('completions/e621.csv')
+      if (enabledTags.e621NSFW) filePaths.push('completions/e621_nsfw.csv')
 
-      const filePath = this.st.configFile.get('tagFile') ?? 'completions/danbooru.csv'
-      createReadStream(filePath)
-         .pipe(csv.parse({ headers: false, delimiter: ',' }))
-         .on('error', (error) => console.error(error))
-         .on('data', (row) => this.tags.push(this.parseRow(row)))
-         .on('end', (rowCount: number) => {
-            console.log(`[🏷️] DanbooruTags: ${rowCount} tags parsed`)
-            // console.log(`[🤠] `, this.tags[0])
-         })
+      filePaths.forEach((filePath) => {
+         createReadStream(filePath)
+            .pipe(csv.parse({ headers: false, delimiter: ',' }))
+            .on('error', (error) => console.error(error))
+            .on('data', (row) => {
+               const parsedTag = this.parseRow(row)
+               if (parsedTag.count < enabledTags.remove) return
+               const existingTag = this.tagsMap.get(parsedTag.text)
+               if (existingTag) {
+                  if (existingTag.count < parsedTag.count) {
+                     this.tagsMap.set(parsedTag.text, parsedTag)
+                  }
+               } else {
+                  this.tagsMap.set(parsedTag.text, parsedTag)
+               }
+            })
+            .on('end', () => {
+               this.tags = Array.from(this.tagsMap.values())
+               console.log(`[🏷️] DanbooruTags: ${this.tags.length} tags parsed and sorted by count`)
+            })
+      })
 
       if (isObservable(this.tags)) throw new Error(`tags shouldn't be observable for perf reasons`)
    }

@@ -5,20 +5,10 @@ import { useMemo } from 'react'
 
 import { SpacerUI } from '../../csuite/components/SpacerUI'
 import { PanelHeaderUI } from '../../csuite/panel/PanelHeaderUI'
-import { Panel, type PanelHeader } from '../../router/Panel'
 import { assets } from '../../utils/assets/assets'
 import { SectionTitleUI } from '../../widgets/workspace/SectionTitle'
-import { CivitaiUI } from './CivitaiBrowserUI'
-import { Civitai } from './CivitaiSpec'
-
-export const PanelModels = new Panel({
-   name: 'Models',
-   widget: (): React.FC<NO_PROPS> => PanelModelsUI,
-   header: (p): PanelHeader => ({ title: 'Models' }),
-   def: (): NO_PROPS => ({}),
-   category: 'models',
-   icon: 'mdiGlobeModel',
-})
+import { Civitai } from './Civitai'
+import { CivitaiUI } from './CivitaiUI'
 
 export const PanelModelsUI = observer(function PanelModelsUI_(p: NO_PROPS) {
    const civitai = useMemo(() => new Civitai(), [])
@@ -37,23 +27,10 @@ export const PanelModelsUI = observer(function PanelModelsUI_(p: NO_PROPS) {
             <SpacerUI />
             {cushy.civitaiConf.renderAsConfigBtn({ title: 'CIVITAI Options' })}
          </PanelHeaderUI>
-         <CivitaiUI tw='flex-1' civitai={civitai} />
-      </div>
-   )
-})
-
-export const FieldUI = observer(function FieldUI_(p: {
-   required?: boolean
-   label?: string
-   help?: string
-   className?: string
-   children: React.ReactNode
-}) {
-   return (
-      <div className={p.className} tw='flex items-center gap-2'>
-         <label tw='whitespace-nowrap'>{p.label}</label>
-         {p.children}
-         {p.required && <div tw='join-item'>Required</div>}
+         <CivitaiUI //
+            tw='flex-1'
+            civitai={civitai}
+         />
       </div>
    )
 })

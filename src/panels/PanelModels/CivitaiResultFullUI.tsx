@@ -1,4 +1,5 @@
-import type { Civitai, CivitaiModelVersion, CivitaiSearchResultItem } from './CivitaiSpec'
+import type { Civitai } from './Civitai'
+import type { CivitaiModelVersion, CivitaiSearchResultItem } from './CivitaiTypes'
 
 import { observer, useLocalObservable } from 'mobx-react-lite'
 import { useEffect } from 'react'

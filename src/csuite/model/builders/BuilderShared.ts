@@ -3,12 +3,14 @@ import type { PartialOmit } from '../../../types/Misc'
 import type { BaseSchema } from '../BaseSchema'
 import type { Field } from '../Field'
 
+import { Field_dynamic, type Field_dynamic_config } from '../../fields/dynamic/FieldDynamic'
 import { Field_link, type Field_link_config } from '../../fields/link/FieldLink'
 import { Field_shared, type Field_shared_config } from '../../fields/shared/FieldShared'
 import { BaseBuilder } from './BaseBuilder'
 
 interface SchemaAndAliasesᐸ_ᐳ extends HKT<FieldTypes> {
    Link: HKT<BaseSchema, BaseSchema>
+   Dynamic: HKT<BaseSchema>
    Shared: HKT<Field>
 }
 
@@ -34,5 +36,9 @@ export class BuilderShared<Schemaᐸ_ᐳ extends SchemaAndAliasesᐸ_ᐳ> extend
    linked<T extends Field>(field: T): Apply<Schemaᐸ_ᐳ['Shared'], T> {
       const finalConfig: Field_shared_config<T> = { field }
       return this.buildSchema(Field_shared<T>, finalConfig)
+   }
+
+   dynamic<T extends BaseSchema>(conf: Field_dynamic_config<T>): Apply<Schemaᐸ_ᐳ['Dynamic'], T> {
+      return this.buildSchema(Field_dynamic<T>, conf)
    }
 }

@@ -42,7 +42,7 @@ export const CachedResizedImage = observer(function CachedResizedImage_({
          .toBuffer((err, buffer, info) => {
             if (err) {
                console.error(err)
-               return <ImageErrorDisplayUI icon='cached' />
+               return <ImageErrorDisplayUI icon='mdiCached' />
             }
 
             setCached(`data:image/png;base64,${buffer.toString('base64')}`)

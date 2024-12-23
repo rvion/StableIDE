@@ -1,4 +1,4 @@
-import type { CivitaiSearchResultItem } from '../../panels/PanelModels/CivitaiSpec'
+import type { CivitaiSearchResultItem } from '../../panels/PanelModels/CivitaiTypes'
 
 import { observer } from 'mobx-react-lite'
 

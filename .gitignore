@@ -86,6 +86,14 @@ node-*.tar.gz
 completions/*
 settings/*.json
 
+# Explicitly include specific CSV files
+!completions/danbooru_2_000.csv
+!completions/danbooru_100_000.csv
+!completions/danbooru.csv
+!completions/danbooru_nsfw.csv
+!completions/e621.csv
+!completions/e621_nsfw.csv
+
 tsconfig.tsbuildinfo
 .tsbuildinfo
 

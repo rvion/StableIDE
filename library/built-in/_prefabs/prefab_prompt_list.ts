@@ -43,7 +43,7 @@ export const ui_promptList = (): PromptLisT$ => {
                   blur: form.float({ default: 6, min: 0, max: 2048, softMax: 24, step: 1 }),
                },
                {
-                  toString: ({ value: ui }): string => {
+                  toSummary: ({ value: ui }): string => {
                      return `${ui.prompt}`
                   },
                },
@@ -51,7 +51,7 @@ export const ui_promptList = (): PromptLisT$ => {
          }),
       },
       {
-         toString: ({ value: ui }): string => {
+         toSummary: ({ value: ui }): string => {
             return `(${ui.promptList.length})${ui.joinType}`
          },
       },

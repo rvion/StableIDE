@@ -1,20 +1,21 @@
 import type { LiveDB } from '../db/LiveDB'
 import type { TABLES } from '../db/TYPES.gen'
+import type { IJsonModel } from 'flexlayout-react'
 import type { AnnotationMapEntry } from 'mobx'
 
 import { toastError } from '../csuite/utils/toasts'
 import { BaseInst } from '../db/BaseInst'
 import { LiveTable } from '../db/LiveTable'
-import { perspectiveHelper } from '../router/DefaultPerspective'
+import { perspectiveHelper } from '../router/perspectives/_PerspectiveBuilder'
 
 export class PerspectiveRepo extends LiveTable<TABLES['perspective'], typeof PerspectiveL> {
-   getOrCreate = (name: string): PerspectiveL => {
+   getOrCreateWith = (name: string, layout: () => IJsonModel): PerspectiveL => {
       const x = this.selectOne((t) => t.where('name', '=', name))
       if (x) return x
       return this.create({
          priority: 100,
          name,
-         layout: perspectiveHelper.default(),
+         layout: layout(),
       })
    }
 
@@ -44,7 +45,7 @@ export class PerspectiveL extends BaseInst<TABLES['perspective']> {
    }
 
    resetToDefault(): void {
-      this.update({ layout: perspectiveHelper.default() })
+      this.update({ layout: cushy.layout.makeNewPerspective_default1() })
       cushy.layout.openPerspective(this)
    }
 
@@ -52,7 +53,7 @@ export class PerspectiveL extends BaseInst<TABLES['perspective']> {
       this.update({ layoutDefault: this.data.layout })
    }
    resetToSnapshot(): void {
-      this.update({ layout: this.data.layoutDefault ?? perspectiveHelper.default() })
+      this.update({ layout: this.data.layoutDefault ?? cushy.layout.makeNewPerspective_default1() })
       cushy.layout.openPerspective(this)
    }
    duplicate(): void {

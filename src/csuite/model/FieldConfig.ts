@@ -54,7 +54,7 @@ export interface FieldConfig_CommonProperties<out T extends FieldTypes> {
     * override the default string renderer
     * (passing `null` to restore the default renderer)
     */
-   toString?: null | CovariantFn<[field: T['$Field']], string>
+   toSummary?: null | CovariantFn<[field: T['$Field']], string>
 
    // --------------------------------
 

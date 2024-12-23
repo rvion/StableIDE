@@ -47,7 +47,7 @@ export function ui_IPAdapterFaceIDV2(): UI_IPAdapterFaceIDV2 {
                               default: 'FACEID PLUS V2',
                            }),
                         },
-                        { startCollapsed: true, toString: ({ value: ui }): string => `model:${ui.type}` },
+                        { startCollapsed: true, toSummary: ({ value: ui }): string => `model:${ui.type}` },
                      ),
                      extra: form.list({
                         label: 'Extra Images',
@@ -82,7 +82,7 @@ export function ui_IPAdapterFaceIDV2(): UI_IPAdapterFaceIDV2 {
                               .optional(),
                         },
                         {
-                           toString: ({ value: ui }): string => {
+                           toSummary: ({ value: ui }): string => {
                               return `${ui.weight_type} | combo:${ui.embedding_combination} | from:${
                                  ui.startAtStepPercent
                               }=>${ui.endAtStepPercent} | reinforced:${ui.extraIPAdapter ? 'yes' : 'no'}`
@@ -93,7 +93,7 @@ export function ui_IPAdapterFaceIDV2(): UI_IPAdapterFaceIDV2 {
                   {
                      label: 'IP Adapter Settings',
                      startCollapsed: true,
-                     toString: ({ value: ui }): string => {
+                     toSummary: ({ value: ui }): string => {
                         return `extra images:${ui.extra.length} | weight:${ui.weight} | weightV2:${ui.weight_faceidv2} | model:${ui.models.type}|`
                      },
                   },
@@ -104,7 +104,7 @@ export function ui_IPAdapterFaceIDV2(): UI_IPAdapterFaceIDV2 {
                label: 'FaceID',
                icon: 'mdiStarFace',
                box: { base: { hue: 50, chroma: 0.1 } },
-               toString: ({ value: ui }): string => {
+               toSummary: ({ value: ui }): string => {
                   return `images:${1 + ui.settings.extra.length} | weight:${ui.settings.weight} | weightV2:${
                      ui.settings.weight_faceidv2
                   } | model:${ui.settings.models.type}`
@@ -167,7 +167,7 @@ export function ui_FaceIDImageInput(form: X.Builder): UI_FaceIDImageInput {
             {
                startCollapsed: true,
                label: 'Image Settings',
-               toString: ({ value: ui }): string => {
+               toSummary: ({ value: ui }): string => {
                   return `sharpening:${ui.sharpening} | crop_position:${ui.crop_position}`
                },
             },
@@ -175,7 +175,7 @@ export function ui_FaceIDImageInput(form: X.Builder): UI_FaceIDImageInput {
          // crop: form.bool({ default: true }),
       },
       {
-         toString: ({ value: ui }): string => {
+         toSummary: ({ value: ui }): string => {
             return `sharpening:${ui.advanced.sharpening} | crop_position:${ui.advanced.crop_position}`
          },
       },
@@ -196,7 +196,7 @@ function ui_extraIpAdapter(form: X.Builder): UI_extraIpAdapter {
          ipAdapterSettings: ui_ipadapter_advancedSettings(form, 0.25, 1, 'ease in'),
       },
       {
-         toString: ({ value: ui }): string => {
+         toSummary: ({ value: ui }): string => {
             return `weight:${ui.weight} | ${ui.ipAdapterSettings.weight_type} | combo:${ui.embedding_combination} | from:${ui.ipAdapterSettings.startAtStepPercent}=>${ui.ipAdapterSettings.endAtStepPercent}`
          },
       },

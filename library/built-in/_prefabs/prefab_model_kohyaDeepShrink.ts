@@ -44,7 +44,7 @@ export function ui_model_kohyaDeepShrink(form: X.Builder): UI_model_kohyaDeepShr
             },
             {
                startCollapsed: true,
-               toString: ({ value: ui }): string => {
+               toSummary: ({ value: ui }): string => {
                   return `scale:${ui.downscaleFactor} end:${ui.endPercent} afterSkip:${ui.downscaleAfterSkip} downMethod:${ui.downscaleMethod}`
                },
             },
@@ -54,7 +54,7 @@ export function ui_model_kohyaDeepShrink(form: X.Builder): UI_model_kohyaDeepShr
          startCollapsed: true,
          tooltip:
             'Shrinks and patches the model. Can be used to generate resolutions higher than the model training and helps with hires fix.',
-         toString: ({ value: ui }): string => {
+         toSummary: ({ value: ui }): string => {
             return `${ui.include.base ? '🟢Base (' + ui.advancedSettings.downscaleFactor + ')' : ''}${ui.include.hiRes ? '🟢HiRes ' : ''} end:${ui.advancedSettings.endPercent}`
          },
       },

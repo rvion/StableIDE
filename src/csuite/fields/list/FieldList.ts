@@ -278,6 +278,10 @@ export class Field_list<T extends BaseSchema> //
       return this.items.map((i) => i.value)
    }
 
+   valueArrMode(mode: VALUE_MODE): Field_list_value<T> | Field_list_unchecked<T> {
+      return this.items.map((i) => i.getValue(mode))
+   }
+
    _acknowledgeNewChildSerial(
       //
       mountKey: string,
@@ -439,13 +443,13 @@ export class Field_list<T extends BaseSchema> //
 
             // MOBX HACK ----------------------------------------------------
             // Handle mutations
-            if (prop === 'toJSON') return () => this.valueArr
+            if (prop === 'toJSON') return () => this.valueArrMode(mode)
             if (prop === 'pop') return () => this.pop()
             if (prop === 'shift') return () => this.shift()
             if (prop === 'unshift') return (...args: any[]) => this.unshift(...args)
             if (prop === 'push') return (...args: any[]) => this.push(...args)
-            if (prop === 'map') return (...args: [any, any]) => this.valueArr.map(...args)
-            if (prop === 'filter') return (...args: [any, any]) => this.valueArr.filter(...args)
+            if (prop === 'map') return (...args: [any, any]) => this.valueArrMode(mode).map(...args)
+            if (prop === 'filter') return (...args: [any, any]) => this.valueArrMode(mode).filter(...args)
 
             // MOBX HACK ----------------------------------------------------
 
@@ -457,7 +461,7 @@ export class Field_list<T extends BaseSchema> //
             }
 
             // defer to valueArr for other props
-            return this.valueArr[prop]
+            return this.valueArrMode(mode)[prop]
          },
 
          set: (_, prop: any, value): boolean => {

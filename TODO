@@ -1,28 +1,7 @@
 SHORT TERM TODO:
 
-    ☐ backport 2024-12-07
-        - skip: 20241029_132420_guillaume-gautreau_10dc8bb_refactor-unify-buttons-1998
-        - skip: 20241029_153538_rvion_a99d39a_initial-setup.diff
-        - skip: 20241031_164650_guillaume-gautreau_1238494_refactor-mark-other-buttons-as-deprecated-migrate-buttons-from-scenario-settings-and-remove-deprecated-buttons-2057
-        - skip: 20241104_153812_globidev_b749f2d_fix-builder-choices-default-value (❌ wrong)
-        - skip: 20241106_160310_globidev_9fdc458_try-to-improve-form-labels (❌ now can this work without reactivity)
-        - wrong: `disabled={p.readonly || p.field.config.readonly}`
-        - wrong: 20241107_140139_guillaume-gautreau_6de86ca_feat-dont-show-extra-checkboxes-on-optional-strings-2074
-            (completely break having empty strings :|)
-            | if (!value && p.field.canBeToggledWithinParent) {
-            |     p.field.disableSelfWithinParent()
-            | } else if (value && p.field.canBeToggledWithinParent) {
-            |     p.field.enableSelfWithinParent()
-            | }
-        - wtf: 20241115_014236_gggdomi_fc9c3ab_labels-fieldlink-fieldshared
-        - partial: 20241115_144416_guillaume-gautreau_f52f9d3_fix-select-widgets-size-2090
-            we need to fork select once forall;
-            I don't want to add those p-input-2, ... classes
-        - need other name in 20241115_144643_gggdomi_d6cd16e_rename-configtostring
-            toString  => ❌toString_, but 🟢 toSummary?, toText?, ...
-        - ....
-        - skip: 20241128_000225_gggdomi_d6cfc25_choice-widget-via-type-subfield
-
+    ☐ give you a way to have multiple built-in perspectives
+    ☐ add a stop run button in the steps panel
     ☐ paths: switche to / instead of .
 
     ☐ tree view:
@@ -42,6 +21,28 @@ SHORT TERM TODO:
     ✔ open new draft in biggest existing draft is possible @done(24-11-23 20:19)
     ✔ persist current perspective in project @done(24-11-23 21:15)
     ☐ fix reset on choices
+    ✔ backport 2024-12-07 @done(24-12-10 23:12)
+        ✔ skip: 20241029_132420_guillaume-gautreau_10dc8bb_refactor-unify-buttons-1998 @done(24-12-10 23:12)
+        ✔ skip: 20241029_153538_rvion_a99d39a_initial-setup.diff @done(24-12-10 23:12)
+        ✔ skip: 20241031_164650_guillaume-gautreau_1238494_refactor-mark-other-buttons-as-deprecated-migrate-buttons-from-scenario-settings-and-remove-deprecated-buttons-2057 @done(24-12-10 23:12)
+        ✔ skip: 20241104_153812_globidev_b749f2d_fix-builder-choices-default-value (❌ wrong) @done(24-12-10 23:12)
+        ✔ skip: 20241106_160310_globidev_9fdc458_try-to-improve-form-labels (❌ now can this work without reactivity) @done(24-12-10 23:12)
+        ✔ wrong: `disabled={p.readonly || p.field.config.readonly}` @done(24-12-10 23:12)
+        ✔ wrong: 20241107_140139_guillaume-gautreau_6de86ca_feat-dont-show-extra-checkboxes-on-optional-strings-2074 @done(24-12-10 23:12)
+            ✔ (completely break having empty strings :|) @done(24-12-10 23:12)
+            ✔ | if (!value && p.field.canBeToggledWithinParent) { @done(24-12-10 23:12)
+            ✔ |     p.field.disableSelfWithinParent() @done(24-12-10 23:12)
+            ✔ | } else if (value && p.field.canBeToggledWithinParent) { @done(24-12-10 23:12)
+            ✔ |     p.field.enableSelfWithinParent() @done(24-12-10 23:12)
+            ✔ | } @done(24-12-10 23:12)
+        ✔ wtf: 20241115_014236_gggdomi_fc9c3ab_labels-fieldlink-fieldshared @done(24-12-10 23:12)
+        ✔ partial: 20241115_144416_guillaume-gautreau_f52f9d3_fix-select-widgets-size-2090 @done(24-12-10 23:12)
+            ✔ we need to fork select once forall; @done(24-12-10 23:12)
+            ✔ I don't want to add those p-input-2, ... classes @done(24-12-10 23:12)
+        ✔ need other name in 20241115_144643_gggdomi_d6cd16e_rename-configtostring @done(24-12-10 23:12)
+            ✔ toString  => ❌toString_, but 🟢 toSummary?, toText?, ... @done(24-12-10 23:12)
+        ✔ .... @done(24-12-10 23:12)
+        ✔ skip: 20241128_000225_gggdomi_d6cfc25_choice-widget-via-type-subfield @done(24-12-10 23:12)
 
     ☐ reveal
         ✔ almost good @done(24-11-22 23:25)
