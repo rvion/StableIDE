@@ -1,10 +1,12 @@
-import Color from 'colorjs.io'
+import Color, { type SpaceAccessor } from 'colorjs.io'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useRef, useState } from 'react'
 
 import { Frame } from '../frame/Frame'
 import { InputStringUI } from '../input-string/InputStringUI'
 import { Kolor } from '../kolor/Kolor'
+
+// TODO: Hue/Saturation need to be stored in a state when opened to allow modifying it when #000, since the color property is going to constantly return 0,0
 
 type ColorPickerProps = {
    color: Kolor
@@ -22,27 +24,35 @@ function formatHex(value: number): string {
    return next.length == 1 ? `${next}${next}` : next
 }
 
+function ensureHSV(hsv: SpaceAccessor): { h: number; s: number; v: number } {
+   if (!hsv[0]) {
+      hsv[0] = 0
+   }
+   if (!hsv[1]) {
+      hsv[1] = 0
+   }
+   if (!hsv[2]) {
+      hsv[2] = 0
+   }
+
+   return { h: hsv[0], s: hsv[1], v: hsv[2] }
+}
+
+// Global
+let mode: 'rgb' | 'hsv' | 'oklch' = 'rgb'
+
 export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProps) {
+   mode = 'rgb'
    const hueSatCanvasRef = useRef<HTMLCanvasElement>(null)
    const valueCanvasRef = useRef<HTMLCanvasElement>(null)
-   const [mode, setMode] = useState<'rgb' | 'hsv' | 'oklch'>('rgb')
    const [tempHex, setTempHex] = useState<string>('')
 
    const theme = cushy.preferences.theme.value
    const onColorChange = p.onColorChange
    const color = p.color
 
-   //    const hsl = color.color.hsl
-   const hsv = color.color.hsv
-
-   // Make sure we have a valid color, this should always be valid tbh
-   if (!hsv[0] || !hsv[1] || !hsv[2]) {
-      return (
-         <>
-            DID NOT FIND COLOR WTF, HSV was: {hsv[0]}, {hsv[1]}, {hsv[2]},{' '}
-         </>
-      )
-   }
+   // Make sure we have a valid hsv color
+   const phsv = ensureHSV(color.color.hsv)
 
    useEffect(() => {
       // ------------ Hue/Sat Circle ----------------- //
@@ -80,7 +90,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
       ctx.globalCompositeOperation = 'multiply'
 
       // May not be accurate since converting from HSV "lightness" to hsl's, but I don't notice it. It should be fine since it only controls lightness
-      ctx.fillStyle = `hsl(0deg 0% ${hsv[2]}%)`
+      ctx.fillStyle = `hsl(0deg 0% ${phsv.v}%)`
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       // Go back to normal blend mode
@@ -119,7 +129,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
    }
 
    // -180 to adjust for the rotated hue, saturation should be 0-1, so divide by 100 prob not needed. clean later
-   const circlePosition = getCanvasPositionFromHueSaturation(hsv[0] - 180, hsv[1] / 100, CANVASSIZE / 2)
+   const circlePosition = getCanvasPositionFromHueSaturation(phsv.h - 180, phsv.s / 100, CANVASSIZE / 2)
 
    return (
       <Frame col tw='gap-2'>
@@ -188,12 +198,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                      hue = (hue - 90) % 360
                      if (hue < 0) hue += 360
 
-                     const lightness = hsv[2]
-                     if (!lightness) {
-                        return
-                     }
-
-                     const newCol = new Color('hsv', [hue, saturation * 100, lightness]).hsl
+                     const newCol = new Color('hsv', [hue, saturation * 100, phsv.v]).hsl
 
                      // const adjustedRgb = hslToRGB(hue, saturation, lightness / 100)
                      onColorChange(Kolor.fromString(`hsl(${newCol[0]}deg, ${newCol[1]}%, ${newCol[2]}%)`))
@@ -222,20 +227,9 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
 
                         const rect = canvas.getBoundingClientRect()
                         const y = e.clientY - rect.top
-
                         const lightness = Math.round((1 - y / CANVASSIZE) * 100)
 
-                        const hue = hsv[0]
-                        const saturation = hsv[1]
-
-                        if (!hue || !saturation) {
-                           return
-                        }
-
-                        // Kolor.fromColor(
-                        const newColor = new Color('hsv', [hue, saturation, lightness])
-                        console.log('[FD] new Color: ', newColor)
-                        // )
+                        const newColor = new Color('hsv', [phsv.h, phsv.s, lightness])
 
                         const asHSL = newColor.hsl
 
@@ -248,7 +242,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                   tw='pointer-events-none absolute'
                   style={{
                      border: '1px solid black',
-                     top: `${CANVASSIZE - (hsv[2] / 100) * CANVASSIZE}px`,
+                     top: `${CANVASSIZE - (phsv.v / 100) * CANVASSIZE}px`,
                      left: `50%`,
                      transform: 'translateX(-50%) translateY(-50%)',
                   }}
@@ -260,7 +254,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                         // Only add by a multiple of two here, this is centered in the transform above and numbers not divisible by two will be blurry
                         width: BAR_CANVAS_WIDTH + 2,
                         border: '1px solid white',
-                        background: `hsl(0deg, 0%, ${hsv[2]}%)`,
+                        background: `hsl(0deg, 0%, ${phsv.v}%)`,
                      }}
                   />
                </div>
