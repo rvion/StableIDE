@@ -45,9 +45,9 @@ export async function _cushySDXLRun(
    let ckptPos = ckpt
    let clipPos = clip_
    let positive!: Comfy.Signal['CONDITIONING']
-   for (const prompt of ui.positive.prompts) {
-      if (prompt == null /* disabled */) continue
-      const res = _evalPrompt(prompt.text, ui, clipPos, ckptPos, graph)
+   for (const promptGroup of ui.positive.prompts) {
+      if (!promptGroup.enabled) continue
+      const res = _evalPrompt(promptGroup.prompt.text, ui, clipPos, ckptPos, graph)
       positive = mergeConditionning(positive, res.conditioning)
       ckptPos = res.ckpt
       clipPos = res.clip
@@ -86,9 +86,9 @@ export async function _cushySDXLRun(
    let ckptNeg = ckpt
    let clipNeg = clip_
    let negative!: Comfy.Signal['CONDITIONING']
-   for (const prompt of ui.negative) {
-      if (prompt == null /* disabled */) continue
-      const res = _evalPrompt(prompt.text, ui, clipNeg, ckpt, graph)
+   for (const promptGroup of ui.negative.prompts) {
+      if (!promptGroup.enabled) continue
+      const res = _evalPrompt(promptGroup.prompt.text, ui, clipNeg, ckpt, graph)
       negative = mergeConditionning(negative, res.conditioning)
       ckptNeg = res.ckpt
       clipNeg = res.clip

@@ -39,102 +39,106 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
       // })
       const model = ui.field.Model
       const latent = ui.field.Latent
-      ui.set<Field_list<X.XGroup<{ enabled: X.XBool; prompt: X.XPrompt }>>>('@list..@prompt^^', {
-         Header: false,
-         Body: observer((p) => {
-            // return <>FUCK ME</>
-
-            const positive = p.field.parent?.value
-            const activePrompt = p.field.items[positive.activeIndex]
-            return (
-               <>
-                  <UY.list.BlenderLike<typeof p.field> //
-                     activeIndex={positive.activeIndex}
-                     field={p.field}
-                     renderItem={(item, index) => {
-                        const conditioningIcon: IconName =
-                           index == 0 ? 'mdiArrowDown' : 'mdiFormatListGroupPlus'
-                        return (
-                           <UY.Misc.Frame
-                              tw='flex items-center'
-                              hover
-                              key={item.id}
-                              onMouseDown={() => (positive.activeIndex = index)}
-                           >
-                              <span
-                                 tw={[
-                                    'line-clamp-1 w-full flex-grow px-1',
-                                    !item.fields.enabled.value && 'opacity-50',
-                                 ]}
+      ui.set<Field_list<X.XGroup<{ enabled: X.XBool; name: X.XString; prompt: X.XPrompt }>>>(
+         '@list..@prompt^^',
+         {
+            Header: false,
+            Body: observer((p) => {
+               const promptGroup = p.field.parent?.value
+               const activePrompt = p.field.items[promptGroup.activeIndex]
+               return (
+                  <>
+                     <UY.list.BlenderLike<typeof p.field> //
+                        activeIndex={promptGroup.activeIndex}
+                        field={p.field}
+                        renderItem={(item, index) => {
+                           const conditioningIcon: IconName =
+                              index == 0 ? 'mdiArrowDown' : 'mdiFormatListGroupPlus'
+                           return (
+                              <UY.Misc.Frame
+                                 tw='flex items-center'
+                                 hover
+                                 key={item.id}
+                                 onMouseDown={() => (promptGroup.activeIndex = index)}
                               >
-                                 {item.fields.prompt.text}
-                              </span>
-                              <div tw='flex-none'>
-                                 <IkonOf name={conditioningIcon} />
-                              </div>
-                              <div tw='w-2' />
-                              <div tw='flex-none'>
-                                 {/* <InputNumberUI
+                                 <span
+                                    tw={[
+                                       'line-clamp-1 w-full flex-grow px-1',
+                                       !item.fields.enabled.value && 'opacity-50',
+                                    ]}
+                                 >
+                                    {item.fields.name.value == ''
+                                       ? item.fields.prompt.text
+                                       : item.fields.name.value}
+                                 </span>
+                                 <div tw='flex-none'>
+                                    <IkonOf name={conditioningIcon} />
+                                 </div>
+                                 <div tw='w-2' />
+                                 <div tw='flex-none'>
+                                    {/* <InputNumberUI
                               // TODO(bird_d/ui/logic): Implement showing strength based on the conditioning type, should only appear on blend/add/etc. concate doesn't need it for example.
                               mode='float'
                               hideSlider
                               onValueChange={() => {}}
                               value={ree}
                            /> */}
-                                 <UY.Misc.Checkbox
-                                    square // TODO(bird_d/ui): Buttons like this, where there's only an icon, should just automatically apply square if there's no text/children.
-                                    toggleGroup='prompt'
-                                    value={item.fields.enabled.value}
-                                    onValueChange={(v) => (item.fields.enabled.value = v)}
-                                    tooltip='Whether or not the prompt effects the generation'
-                                 />
-                              </div>
-                           </UY.Misc.Frame>
-                        )
-                     }}
-                  />
-                  <UY.Misc.Button
-                     hover
-                     tw='w-full !content-start !items-center !justify-start !border-none !bg-transparent py-[15px] pl-3.5 text-center'
-                     icon={positive.showEditor ? 'mdiChevronDown' : 'mdiChevronRight'}
-                     onMouseDown={(e) => {
-                        if (e.button != 0) {
-                           return
-                        }
-                        positive.showEditor = !positive.showEditor
-                     }}
-                  >
-                     Editor
-                  </UY.Misc.Button>
+                                    <UY.Misc.Checkbox
+                                       square // TODO(bird_d/ui): Buttons like this, where there's only an icon, should just automatically apply square if there's no text/children.
+                                       toggleGroup='prompt'
+                                       value={item.fields.enabled.value}
+                                       onValueChange={(v) => (item.fields.enabled.value = v)}
+                                       tooltip='Whether or not the prompt effects the generation'
+                                    />
+                                 </div>
+                              </UY.Misc.Frame>
+                           )
+                        }}
+                     />
+                     <UY.Misc.Button
+                        hover
+                        tw='w-full !content-start !items-center !justify-start !border-none !bg-transparent py-[15px] pl-3.5 text-center'
+                        icon={promptGroup.showEditor ? 'mdiChevronDown' : 'mdiChevronRight'}
+                        onMouseDown={(e) => {
+                           if (e.button != 0) {
+                              return
+                           }
+                           promptGroup.showEditor = !promptGroup.showEditor
+                        }}
+                     >
+                        Editor
+                     </UY.Misc.Button>
 
-                  {positive.showEditor && (
-                     <UY.Misc.Frame tw='gap-2 ' col>
-                        {activePrompt ? (
-                           <>
-                              <UY.boolean.defualt
-                                 toggleGroup='y802w34ty80we4th80er0erh8008'
-                                 value={activePrompt.fields.enabled.value}
-                                 onValueChange={(v) => (activePrompt.fields.enabled.value = v)}
-                                 widgetLabel='Prompt Enabled'
-                                 text='Prompt Enabled'
-                                 // Tooltip needs to be gathered from the field
-                                 tooltip='Whether or not the prompt effects the generation'
-                                 // display='button'
-                                 expand
-                              />
-                              <UY.Misc.ResizableFrame tw='!bg-transparent'>
-                                 <UY.group.Default tw='flex-1' field={activePrompt} />
-                              </UY.Misc.ResizableFrame>
-                           </>
-                        ) : (
-                           <>No prompt</>
-                        )}
-                     </UY.Misc.Frame>
-                  )}
-               </>
-            )
-         }),
-      })
+                     {promptGroup.showEditor && (
+                        <UY.Misc.Frame tw='gap-2 ' col>
+                           {activePrompt ? (
+                              <>
+                                 <UY.string.input field={activePrompt.fields.name} />
+                                 <UY.boolean.defualt
+                                    toggleGroup='y802w34ty80we4th80er0erh8008'
+                                    value={activePrompt.fields.enabled.value}
+                                    onValueChange={(v) => (activePrompt.fields.enabled.value = v)}
+                                    widgetLabel='Prompt Enabled'
+                                    text='Prompt Enabled'
+                                    // Tooltip needs to be gathered from the field
+                                    tooltip='Whether or not the prompt effects the generation'
+                                    // display='button'
+                                    expand
+                                 />
+                                 <UY.Misc.ResizableFrame tw='!bg-transparent'>
+                                    <UY.group.Default tw='flex-1' field={activePrompt} />
+                                 </UY.Misc.ResizableFrame>
+                              </>
+                           ) : (
+                              <>No prompt</>
+                           )}
+                        </UY.Misc.Frame>
+                     )}
+                  </>
+               )
+            }),
+         },
+      )
       // already handled by its parent
       ui.set(ui.field.Positive.Prompts, { collapsible: false, Head: false, Header: false })
       ui.set(ui.field.Negative.Prompts, { collapsible: false, Head: false, Header: false })

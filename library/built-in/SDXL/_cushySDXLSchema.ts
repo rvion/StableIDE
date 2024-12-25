@@ -21,6 +21,7 @@ type $PromptList = X.XGroup<{
    prompts: X.XList<
       X.XGroup<{
          enabled: X.XBool
+         name: X.String
          prompt: X.XPrompt
       }>
    >
@@ -63,6 +64,7 @@ function promptList(b: X.Builder, options?: { default?: string }): $PromptList {
          prompts: b
             .fields({
                enabled: b.bool({ default: true }),
+               name: b.string({ default: '' }),
                prompt: b.prompt({
                   icon: 'mdiPlusBoxOutline',
                   // background: { hue: 150, chroma: 0.05 },
