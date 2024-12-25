@@ -6,6 +6,7 @@ import { createRef, useEffect, useMemo, useRef, useState } from 'react'
 import { Frame } from '../frame/Frame'
 import { InputStringUI } from '../input-string/InputStringUI'
 import { Kolor } from '../kolor/Kolor'
+import { clamp } from '../utils/clamp'
 
 // TODO: Hue/Saturation need to be stored in a state when opened to allow modifying it when #000, since the color property is going to constantly return 0,0
 
@@ -152,7 +153,7 @@ class ColorPickerState {
       this.offsetY += e.movementY
 
       const y = this.startY + this.offsetY
-      const value = Math.round((1 - y / CANVASSIZE) * 100)
+      const value = clamp(Math.round((1 - y / CANVASSIZE) * 100), 0.0001, 100)
 
       const phsv = ensureHSV(this.pcolor.hsv)
       const newColor = new Color('hsv', [phsv.h, phsv.s, value])
