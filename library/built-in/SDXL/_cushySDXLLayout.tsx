@@ -86,6 +86,7 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                                     toggleGroup='prompt'
                                     value={item.fields.enabled.value}
                                     onValueChange={(v) => (item.fields.enabled.value = v)}
+                                    tooltip='Whether or not the prompt effects the generation'
                                  />
                               </div>
                            </UY.Misc.Frame>
@@ -107,14 +108,27 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                   </UY.Misc.Button>
 
                   {positive.showEditor && (
-                     <UY.Misc.Frame
-                        //
-                        // tw='p-2'
-                        base={cushy.preferences.theme.value.global.contrast}
-                     >
-                        {/* <ResizableFrame tw='!bg-transparent'> */}
-                        {activePrompt ? <UY.group.Default field={activePrompt} /> : <>No prompt</>}
-                        {/* </ResizableFrame> */}
+                     <UY.Misc.Frame tw='gap-2 ' col>
+                        {activePrompt ? (
+                           <>
+                              <UY.boolean.defualt
+                                 toggleGroup='y802w34ty80we4th80er0erh8008'
+                                 value={activePrompt.fields.enabled.value}
+                                 onValueChange={(v) => (activePrompt.fields.enabled.value = v)}
+                                 widgetLabel='Prompt Enabled'
+                                 text='Prompt Enabled'
+                                 // Tooltip needs to be gathered from the field
+                                 tooltip='Whether or not the prompt effects the generation'
+                                 // display='button'
+                                 expand
+                              />
+                              <UY.Misc.ResizableFrame tw='!bg-transparent'>
+                                 <UY.group.Default tw='flex-1' field={activePrompt} />
+                              </UY.Misc.ResizableFrame>
+                           </>
+                        ) : (
+                           <>No prompt</>
+                        )}
                      </UY.Misc.Frame>
                   )}
                </>

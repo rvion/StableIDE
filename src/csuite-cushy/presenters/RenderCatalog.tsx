@@ -1,5 +1,6 @@
 import { Button } from '../../csuite/button/Button'
 import { InputBoolCheckboxUI } from '../../csuite/checkbox/InputBoolCheckboxUI'
+import { InputBoolUI } from '../../csuite/checkbox/InputBoolUI'
 import { WidgetChoices_HeaderButtonsUI } from '../../csuite/fields/choices/WidgetChoices_HeaderButtonsUI'
 import { WidgetChoices_HeaderSelectUI } from '../../csuite/fields/choices/WidgetChoices_HeaderSelectUI'
 import { WidgetChoices_HeaderTabBarUI } from '../../csuite/fields/choices/WidgetChoices_HeaderTabBarUI'
@@ -15,6 +16,7 @@ import { WidgetString_SmallInput } from '../../csuite/fields/string/WidgetString
 import { WidgetString_summary } from '../../csuite/fields/string/WidgetString_summary'
 import { WidgetString_TextareaInput } from '../../csuite/fields/string/WidgetString_TextareaInput'
 import { Frame } from '../../csuite/frame/Frame'
+import { ResizableFrame } from '../../csuite/resizableFrame/resizableFrameUI'
 import { WidgetCardUI } from '../catalog/Decorations/WidgetCardUI'
 import { WidgetPadUI } from '../catalog/Decorations/WidgetPadUI'
 import { QuickForm } from '../catalog/group/QuickForm'
@@ -126,6 +128,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       Frame: Frame,
       Button: Button,
       Checkbox: InputBoolCheckboxUI,
+      ResizableFrame: ResizableFrame,
    },
    // #region Form components
    Title: {
@@ -145,6 +148,9 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       /** inline WidgetNumber */
       input: WidgetNumberUI,
       simple: WidgetNumberSimpleUI,
+   },
+   boolean: {
+      defualt: InputBoolUI,
    },
    choices: {
       TabbedInline: WidgetChoices_HeaderTabBarUI,
