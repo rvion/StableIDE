@@ -1,6 +1,7 @@
 import Color, { type SpaceAccessor } from 'colorjs.io'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useRef, useState } from 'react'
+import { createRef, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Frame } from '../frame/Frame'
 import { InputStringUI } from '../input-string/InputStringUI'
@@ -10,7 +11,199 @@ import { Kolor } from '../kolor/Kolor'
 
 type ColorPickerProps = {
    color: Kolor
-   onColorChange: (value: Kolor) => void
+   onColorChange: (value: string) => void
+}
+
+class ColorPickerState {
+   color: Color
+
+   /** Previous color to return to when cancelling */
+   pcolor: Color | undefined
+   onColorChange: (value: string) => void
+   cancelled: boolean = false
+
+   /** Hue/Saturation circle Reference */
+   HSRef = createRef<HTMLCanvasElement>()
+   /** Value bar Reference */
+   VRef = createRef<HTMLCanvasElement>()
+
+   startY: number = 0
+   startX: number = 0
+   offsetX: number = 0
+   offsetY: number = 0
+
+   canvas: HTMLCanvasElement | undefined | null
+
+   constructor(public props: ColorPickerProps) {
+      this.color = props.color.color
+      this.onColorChange = props.onColorChange
+
+      makeAutoObservable(this)
+   }
+
+   startHueSaturation = (e: MouseEvent): void => {
+      this.canvas = this.HSRef.current
+      window.document.addEventListener('mousemove', this.handleHueSaturation, true)
+      window.document.addEventListener('pointerup', this.stopHueSaturation, true)
+
+      if (!this.HSRef || !this.pcolor) {
+         return
+      }
+
+      if (!this.canvas) {
+         return
+      }
+
+      const canvas = this.canvas
+
+      const phsv = ensureHSV(this.pcolor.hsv)
+
+      const rect = canvas.getBoundingClientRect()
+      this.startX = e.clientX - rect.left
+      this.startY = e.clientY - rect.top
+   }
+
+   handleHueSaturation = (e: MouseEvent): void => {
+      e.stopPropagation()
+      e.preventDefault()
+
+      if (!this.HSRef || !this.pcolor) {
+         return
+      }
+
+      this.offsetX += e.movementX
+      this.offsetY += e.movementY
+
+      const phsv = ensureHSV(this.pcolor.hsv)
+
+      const x = this.startX + this.offsetX
+      const y = this.startY + this.offsetY
+
+      const radius = CANVASSIZE / 2
+
+      // Calculate relative position
+      const dx = x - radius
+      const dy = y - radius
+      const distance = Math.sqrt(dx * dx + dy * dy)
+
+      // Saturation is the distance from the center normalized to the radius
+      const saturation = Math.min(1, distance / radius)
+
+      // Hue is the angle from the center (in degrees, 0–360)
+      let hue = Math.atan2(dy, dx) * (180 / Math.PI)
+
+      // Adjust 90 degrees (Probably arbitrary, but I'm literally just copying how blender "looks", their code is probably cleaner cause they actually know math there LMAO)
+      hue = (hue - 90) % 360
+      if (hue < 0) {
+         hue += 360
+      }
+
+      const nCol = new Color('hsv', [hue, saturation * 100, phsv.v]).oklch
+
+      this.onColorChange(`oklch(${nCol[0]} ${nCol[1]}, ${nCol[2]})`)
+   }
+
+   //    startLightness = (e: MouseEvent): void => {
+   //       if (!this.VRef || !this.pcolor) {
+   //          return
+   //       }
+
+   //       const canvas = this.VRef.current
+   //       if (!canvas) return
+
+   //       const rect = canvas.getBoundingClientRect()
+   //       const y = e.clientY - rect.top
+   //       const lightness = Math.round((1 - y / CANVASSIZE) * 100)
+
+   //       const phsv = ensureHSV(this.pcolor.hsv)
+   //       const newColor = new Color('hsv', [phsv.h, phsv.s, lightness])
+
+   //       const nCol = newColor.oklch
+   //       this.onColorChange(`oklch(${nCol[0]} ${nCol[1]}, ${nCol[2]})`)
+   //    }
+
+   startLightness = (e: MouseEvent): void => {
+      this.canvas = this.VRef.current
+
+      if (!this.VRef || !this.pcolor) {
+         return
+      }
+
+      const canvas = this.VRef.current
+      if (!canvas) return
+
+      const rect = canvas.getBoundingClientRect()
+      this.startY = e.clientY - rect.top
+
+      window.document.addEventListener('mousemove', this.handleLightness, true)
+      window.document.addEventListener('pointerup', this.stopLightness, true)
+
+      this.handleLightness(e)
+   }
+
+   handleLightness = (e: MouseEvent): void => {
+      e.stopPropagation()
+      e.preventDefault()
+
+      if (!this.pcolor) {
+         return
+      }
+
+      this.offsetY += e.movementY
+
+      const y = this.startY + this.offsetY
+      const value = Math.round((1 - y / CANVASSIZE) * 100)
+
+      const phsv = ensureHSV(this.pcolor.hsv)
+      const newColor = new Color('hsv', [phsv.h, phsv.s, value])
+
+      const nCol = newColor.oklch
+      this.onColorChange(`oklch(${nCol[0]} ${nCol[1]}, ${nCol[2]})`)
+   }
+
+   cancel = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, isLightness: boolean): void => {
+      //
+   }
+
+   start = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, isLightness: boolean): void => {
+      this.pcolor = new Color(this.color.toString())
+      this.startX = 0
+      this.startY = 0
+      this.offsetX = 0
+      this.offsetY = 0
+
+      if (isLightness) {
+         this.startLightness(e.nativeEvent)
+         return
+      }
+
+      this.startHueSaturation(e.nativeEvent)
+   }
+
+   //    stop = (): void => {
+   //       window.document.removeEventListener('mousemove', this.handleHueSaturation, true)
+   //       window.document.removeEventListener('pointerup', this.stopHueSaturation, true)
+   //       window.document.removeEventListener('mousemove', this.handleLightness, true)
+   //       window.document.removeEventListener('pointerup', this.stopLightness, true)
+   //    }
+
+   stopLightness = (e: MouseEvent): void => {
+      if (e.button != 0) {
+         return
+      }
+      this.handleLightness(e)
+      window.document.removeEventListener('mousemove', this.handleLightness, true)
+      window.document.removeEventListener('pointerup', this.stopLightness, true)
+   }
+
+   stopHueSaturation = (e: MouseEvent): void => {
+      if (e.button != 0) {
+         return
+      }
+      this.handleHueSaturation(e)
+      window.document.removeEventListener('mousemove', this.handleHueSaturation, true)
+      window.document.removeEventListener('pointerup', this.stopHueSaturation, true)
+   }
 }
 
 const CANVASSIZE = 200
@@ -42,25 +235,32 @@ function ensureHSV(hsv: SpaceAccessor): { h: number; s: number; v: number } {
 let mode: 'rgb' | 'hsv' | 'oklch' = 'rgb'
 
 export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProps) {
+   const uist = useMemo(() => new ColorPickerState(p), [])
+
+   // ensure new properties that could change during lifetime of the component stays up-to-date in the stable state.
+   runInAction(() => Object.assign(uist.props, p))
+
    mode = 'rgb'
-   const hueSatCanvasRef = useRef<HTMLCanvasElement>(null)
-   const valueCanvasRef = useRef<HTMLCanvasElement>(null)
    const [tempHex, setTempHex] = useState<string>('')
 
    const theme = cushy.preferences.theme.value
-   const onColorChange = p.onColorChange
    const color = p.color
 
    // Make sure we have a valid hsv color
-   const phsv = ensureHSV(color.color.hsv)
+   const hsv = ensureHSV(color.color.hsv)
 
    useEffect(() => {
+      //   uist.stop()
       // ------------ Hue/Sat Circle ----------------- //
-      const canvas = hueSatCanvasRef.current
-      if (!canvas) return
+      const canvas = uist.HSRef.current
+      if (!canvas) {
+         return
+      }
 
       const ctx = canvas.getContext('2d')
-      if (!ctx) return
+      if (!ctx) {
+         return
+      }
 
       const radius = canvas.width / 2
 
@@ -90,18 +290,22 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
       ctx.globalCompositeOperation = 'multiply'
 
       // May not be accurate since converting from HSV "lightness" to hsl's, but I don't notice it. It should be fine since it only controls lightness
-      ctx.fillStyle = `hsl(0deg 0% ${phsv.v}%)`
+      ctx.fillStyle = `hsl(0deg 0% ${hsv.v}%)`
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       // Go back to normal blend mode
       ctx.globalCompositeOperation = 'source-over'
 
       // ------------ Lightness Bar ----------------- //
-      const valueCanvas = valueCanvasRef.current
-      if (!valueCanvas) return
+      const valueCanvas = uist.VRef.current
+      if (!valueCanvas) {
+         return
+      }
 
       const valueCtx = valueCanvas.getContext('2d')
-      if (!valueCtx) return
+      if (!valueCtx) {
+         return
+      }
 
       const gradientLightness = valueCtx.createLinearGradient(0, 0, 0, CANVASSIZE)
       gradientLightness.addColorStop(0, 'rgba(255, 255, 255, 1)')
@@ -129,7 +333,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
    }
 
    // -180 to adjust for the rotated hue, saturation should be 0-1, so divide by 100 prob not needed. clean later
-   const circlePosition = getCanvasPositionFromHueSaturation(phsv.h - 180, phsv.s / 100, CANVASSIZE / 2)
+   const circlePosition = getCanvasPositionFromHueSaturation(hsv.h - 180, hsv.s / 100, CANVASSIZE / 2)
 
    return (
       <Frame col tw='gap-2'>
@@ -161,7 +365,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                </div>
 
                <canvas
-                  ref={hueSatCanvasRef}
+                  ref={uist.HSRef}
                   width={CANVASSIZE}
                   height={CANVASSIZE}
                   style={{
@@ -170,40 +374,10 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                         ? 'default'
                         : 'pointer',
                   }}
-                  onClick={(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-                     console.log('[FD] CLICKED')
-                     const canvas = hueSatCanvasRef.current
-                     if (!canvas) return
-
-                     const rect = canvas.getBoundingClientRect()
-                     const x = e.clientX - rect.left
-                     const y = e.clientY - rect.top
-
-                     const radius = canvas.width / 2
-                     const centerX = radius
-                     const centerY = radius
-
-                     // Calculate relative position
-                     const dx = x - centerX
-                     const dy = y - centerY
-                     const distance = Math.sqrt(dx * dx + dy * dy)
-
-                     // Saturation is the distance from the center normalized to the radius
-                     const saturation = Math.min(1, distance / radius)
-
-                     // Hue is the angle from the center (in degrees, 0–360)
-                     let hue = Math.atan2(dy, dx) * (180 / Math.PI)
-
-                     // Adjust 90 degrees (Probably arbitrary, but I'm literally just copying how blender "looks", their code is probably cleaner cause they actually know math there LMAO)
-                     hue = (hue - 90) % 360
-                     if (hue < 0) hue += 360
-
-                     const newCol = new Color('hsv', [hue, saturation * 100, phsv.v]).hsl
-
-                     // const adjustedRgb = hslToRGB(hue, saturation, lightness / 100)
-                     onColorChange(Kolor.fromString(`hsl(${newCol[0]}deg, ${newCol[1]}%, ${newCol[2]}%)`))
-
-                     // onColorChange(`rgb(${r}, ${g}, ${b})`)
+                  onMouseDown={(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+                     if (e.button == 0) {
+                        uist.start(e, false)
+                     }
                   }}
                />
             </Frame>
@@ -218,22 +392,13 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                   roundness={theme.global.roundness}
                >
                   <canvas
-                     ref={valueCanvasRef}
+                     ref={uist.VRef}
                      width={BAR_CANVAS_WIDTH}
                      height={CANVASSIZE}
-                     onClick={(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-                        const canvas = valueCanvasRef.current
-                        if (!canvas) return
-
-                        const rect = canvas.getBoundingClientRect()
-                        const y = e.clientY - rect.top
-                        const lightness = Math.round((1 - y / CANVASSIZE) * 100)
-
-                        const newColor = new Color('hsv', [phsv.h, phsv.s, lightness])
-
-                        const asHSL = newColor.hsl
-
-                        onColorChange(Kolor.fromString(`hsl(${asHSL[0]}deg, ${asHSL[1]}%, ${asHSL[2]}%)`))
+                     onMouseDown={(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+                        if (e.button == 0) {
+                           uist.start(e, true)
+                        }
                      }}
                   />
                </Frame>
@@ -242,7 +407,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                   tw='pointer-events-none absolute'
                   style={{
                      border: '1px solid black',
-                     top: `${CANVASSIZE - (phsv.v / 100) * CANVASSIZE}px`,
+                     top: `${CANVASSIZE - (hsv.v / 100) * CANVASSIZE}px`,
                      left: `50%`,
                      transform: 'translateX(-50%) translateY(-50%)',
                   }}
@@ -254,7 +419,7 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                         // Only add by a multiple of two here, this is centered in the transform above and numbers not divisible by two will be blurry
                         width: BAR_CANVAS_WIDTH + 2,
                         border: '1px solid white',
-                        background: `hsl(0deg, 0%, ${phsv.v}%)`,
+                        background: `hsl(0deg, 0%, ${hsv.v}%)`,
                      }}
                   />
                </div>
@@ -268,7 +433,6 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                 step={10}
                 value={Math.round(hsl[0])}
                 onValueChange={(val) => {
-                   console.log('[FD] Hue: ', val)
                    const adjustedRgb = hslToRGB(val, hsl[1] / 100, hsl[2] / 100)
                    onColorChange(Kolor.fromString(`rgb(${adjustedRgb.r}, ${adjustedRgb.g}, ${adjustedRgb.b})`))
                 }}
@@ -281,7 +445,6 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                 step={0.1}
                 value={parseFloatNoRoundingErr(hsl[1] / 100)}
                 onValueChange={(val) => {
-                   console.log('[FD] Saturation: ', val)
                    const adjustedRgb = hslToRGB(hsl[0], hsl[1] / 100, hsl[2] / 100)
                    onColorChange(Kolor.fromString(`rgb(${adjustedRgb.r}, ${adjustedRgb.g}, ${adjustedRgb.b})`))
                 }}
@@ -294,7 +457,6 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                 step={0.1}
                 value={parseFloatNoRoundingErr(hsl[2] / 100)}
                 onValueChange={(val) => {
-                   console.log('[FD] VALUE: ', val)
                    const adjustedRgb = hslToRGB(hsl[0], hsl[1] / 100, val)
                    onColorChange(Kolor.fromString(`rgb(${adjustedRgb.r}, ${adjustedRgb.g}, ${adjustedRgb.b})`))
                 }}
@@ -338,15 +500,12 @@ export const ColorPickerUI = observer(function ColorPickerUI_(p: ColorPickerProp
                return `#${formatHex(asSRGB.r)}${formatHex(asSRGB.g)}${formatHex(asSRGB.b)}`
             }}
             setValue={(value) => {
-               console.log('[FD] HEX: ', value)
                const col = Kolor.fromString(value)
                const asSRGB = col.color.to('srgb')
 
-               console.log('[FD] col: ', col)
-
                setTempHex(`#${formatHex(asSRGB.r)}${formatHex(asSRGB.g)}${formatHex(asSRGB.b)}`)
 
-               onColorChange(col)
+               //    uist.onColorChange(col)
             }}
          />
       </Frame>

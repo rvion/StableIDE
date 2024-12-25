@@ -126,9 +126,8 @@ export const InputStringUI = observer(
                         <div tw='p-2'>
                            <ColorPickerUI
                               color={color}
-                              onColorChange={(value: Kolor) => {
-                                 const next = `${value.toOKLCH()}`
-                                 console.log('[FD] NEXT: ', next)
+                              onColorChange={(value: string) => {
+                                 const next = `${value}`
                                  p.setValue(next)
                               }}
                            />
