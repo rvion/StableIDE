@@ -39,11 +39,13 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
       // })
       const model = ui.field.Model
       const latent = ui.field.Latent
-      ui.set<Field_list<X.XOptional<X.XPrompt>>>('@list.@optional.@prompt^^', {
+      ui.set<Field_list<X.XGroup<{ enabled: X.XBool; prompt: X.XPrompt }>>>('@list..@prompt^^', {
          Header: false,
          Body: observer((p) => {
-            const positive = ui.field.value.positive
-            const activePrompt = positive.prompts[positive.activeIndex]
+            // return <>FUCK ME</>
+
+            const positive = p.field.parent?.value
+            const activePrompt = p.field.items[positive.activeIndex]
             return (
                <>
                   <UY.list.BlenderLike<typeof p.field> //
@@ -59,8 +61,13 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                               key={item.id}
                               onMouseDown={() => (positive.activeIndex = index)}
                            >
-                              <span tw={['line-clamp-1 w-full flex-grow px-1', !item.active && 'opacity-50']}>
-                                 {item.child.text}
+                              <span
+                                 tw={[
+                                    'line-clamp-1 w-full flex-grow px-1',
+                                    !item.fields.enabled.value && 'opacity-50',
+                                 ]}
+                              >
+                                 {item.fields.prompt.text}
                               </span>
                               <div tw='flex-none'>
                                  <IkonOf name={conditioningIcon} />
@@ -77,8 +84,8 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                                  <UY.Misc.Checkbox
                                     square // TODO(bird_d/ui): Buttons like this, where there's only an icon, should just automatically apply square if there's no text/children.
                                     toggleGroup='prompt'
-                                    value={item.active}
-                                    onValueChange={(v) => item.setActive(v)}
+                                    value={item.fields.enabled.value}
+                                    onValueChange={(v) => (item.fields.enabled.value = v)}
                                  />
                               </div>
                            </UY.Misc.Frame>
@@ -100,10 +107,14 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                   </UY.Misc.Button>
 
                   {positive.showEditor && (
-                     <UY.Misc.Frame tw='p-2' base={cushy.preferences.theme.value.global.contrast}>
-                        <ResizableFrame tw='!bg-transparent'>
-                           {activePrompt ? <PromptEditorUI promptID={activePrompt.id} /> : <>No prompt</>}
-                        </ResizableFrame>
+                     <UY.Misc.Frame
+                        //
+                        // tw='p-2'
+                        base={cushy.preferences.theme.value.global.contrast}
+                     >
+                        {/* <ResizableFrame tw='!bg-transparent'> */}
+                        {activePrompt ? <UY.group.Default field={activePrompt} /> : <>No prompt</>}
+                        {/* </ResizableFrame> */}
                      </UY.Misc.Frame>
                   )}
                </>
@@ -112,10 +123,13 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
       })
       // already handled by its parent
       ui.set(ui.field.Positive.Prompts, { collapsible: false, Head: false, Header: false })
+      ui.set(ui.field.Negative.Prompts, { collapsible: false, Head: false, Header: false })
 
       ui.set('', (ui2) => {
          if (ui2.field.parent?.parent === ui.field.Positive.Prompts) ui2.set({ Head: false })
-         if (ui2.field.parent === ui.field.Positive.Prompts) ui2.set({ Shell: ShellOptionalEnabledUI })
+         if (ui2.field.parent?.parent === ui.field.Negative.Prompts) ui2.set({ Head: false })
+         // No longer needed as not using optional, opting for the enabled field. It didn't even work anyways.
+         // if (ui2.field.parent === ui.field.Positive.Prompts) ui2.set({ Shell: ShellOptionalEnabledUI })
       })
       ui.set(latent.bField, { Shell: UY.Shell.Left })
       // ui.set(latent, { Shell: UY.Shell.Left })
