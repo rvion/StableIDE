@@ -39,6 +39,18 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
       // })
       const model = ui.field.Model
       const latent = ui.field.Latent
+
+      // ui.set(ui.field, {
+      //    Body: (layout) => {
+      //       return (
+      //          <div tw='bg-red-500 flex flex-row '>
+      //             <ui.field.fields.positive.UI />
+      //             <ui.field.fields.negative.UI />
+      //          </div>
+      //       )
+      //    },
+      // })
+
       ui.set<Field_list<X.XGroup<{ enabled: X.XBool; name: X.XString; prompt: X.XPrompt }>>>(
          '@list..@prompt^^',
          {
