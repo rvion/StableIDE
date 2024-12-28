@@ -7,7 +7,7 @@ import { FixedSizeGrid } from 'react-window'
 import { Frame } from '../../csuite/frame/Frame'
 import { hashStringToNumber } from '../../csuite/hashUtils/hash'
 import { useSizeOf } from '../../csuite/smooth-size/useSizeOf'
-import { ImageUI } from '../../widgets/galleries/ImageUI'
+import { ImageUI, ImageUIDumb } from '../../widgets/galleries/ImageUI'
 import { useGalleryConf } from './galleryConf'
 
 function handleStepDecoration(): CSSProperties {
@@ -82,7 +82,7 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
                         currentStepContainer = []
                         currentStepID = img.step.id
                         stepContainerState = 'start'
-                        currentStepHue = hashStringToNumber(img.step.id) & 360
+                        currentStepHue = hashStringToNumber(img.step.id) % 360
                         applied = true
                      }
 
@@ -156,6 +156,8 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
 
                   return (
                      <div
+                        onMouseEnter={img.onMouseEnter}
+                        onMouseLeave={img.onMouseLeave}
                         tw='flex flex-1 items-center justify-center'
                         style={{
                            ...style,
@@ -172,7 +174,7 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
                            base={{
                               // contrast: 0.1,
                               chromaBlend: 2.5,
-                              hue: currentStepHue % 360,
+                              hue: currentStepHue,
                            }}
                            style={{
                               borderWidth,
@@ -184,16 +186,17 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
                               //
                               tw='overflow-clip'
                               hover
-                              base={{ contrast: -0.1 }}
+                              base={{ contrast: -0.1, chromaBlend: 0.333 }}
                               border={{ contrast: 0.15 }}
                               roundness={'3px'}
                               dropShadow={cushy.preferences.theme.value.global.shadow}
+                              style={{
+                                 // 16% of itemWidth for consistent "padding", Should maybe be an interface/panel option
+                                 width: itemWidth - itemWidth * 0.16,
+                                 height: itemWidth - itemWidth * 0.16,
+                              }}
                            >
-                              <ImageUI //
-                                 onClick={p.onClick}
-                                 size={itemWidth - 18}
-                                 img={img}
-                              />
+                              <ImageUIDumb img={img} />
                            </Frame>
                         </Frame>
                      </div>
