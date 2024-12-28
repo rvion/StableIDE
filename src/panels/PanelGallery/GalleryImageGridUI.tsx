@@ -57,15 +57,23 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
                   const img = ALLIMAGES[rowIndex * nbCols + columnIndex]
                   if (img == null) return null
                   const borderWidth = '1px'
+                  const padding = '0.25rem'
+                  const innerPadding = '4px'
 
                   // Initializes the starting decoration for a step here.
                   let decorationStyle: CSSProperties = {
                      // borderColor: 'gold',
-                     borderRightColor: 'transparent',
                      borderTopLeftRadius: '5px',
                      borderBottomLeftRadius: '5px',
                      paddingLeft: '4px',
+                     borderRightWidth: '0px',
                   }
+                  let layoutStyle: CSSProperties = {
+                     padding,
+                     paddingRight: '0px',
+                     paddingBottom: '0px',
+                  }
+
                   // Used because I was too lazy to clean up in to a function that returns when needed
                   let applied = false
 
@@ -74,17 +82,21 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
                         currentStepContainer = []
                         currentStepID = img.step.id
                         stepContainerState = 'start'
-                        currentStepHue += 60
+                        currentStepHue = hashStringToNumber(img.step.id) & 360
                         applied = true
                      }
 
                      const nextImg = ALLIMAGES[rowIndex * nbCols + columnIndex + 1]
                      if (nextImg == null || nextImg.step == null) {
-                        if (!applied && stepContainerState == 'start') {
+                        if (stepContainerState == 'start') {
                            applied = true
                            decorationStyle = {
-                              // borderColor: 'black',
                               borderRadius: '5px',
+                           }
+                           layoutStyle = {
+                              // padding: '0.25rem',
+                              paddingRight: '0rem',
+                              paddingLeft: '0rem',
                            }
                         }
                         if (!applied && stepContainerState == 'inbetween') {
@@ -100,61 +112,91 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
                      }
 
                      if (currentStepID != nextImg.step.id) {
-                        stepContainerState = 'end'
-                        if (!applied) {
+                        if (!applied || stepContainerState == 'start') {
                            applied = true
-                           decorationStyle = {
-                              // borderColor: 'pink',
-                              borderLeftColor: 'transparent',
-                              borderTopRightRadius: '5px',
-                              borderBottomRightRadius: '5px',
-                              paddingRight: '4px',
+                           if (stepContainerState == 'start') {
+                              // If next thing does not share same ID, just round the single item
+                              decorationStyle = { borderRadius: '5px' }
+                              // layoutStyle = {}
+                           } else {
+                              // Else, we are at the end of the chain, in which case round the right
+                              decorationStyle = {
+                                 // borderColor: 'pink',
+                                 borderLeftColor: 'transparent',
+                                 borderTopRightRadius: '5px',
+                                 borderBottomRightRadius: '5px',
+                                 paddingRight: '4px',
+                                 borderLeftWidth: '0px',
+                              }
+                              layoutStyle = {
+                                 ...layoutStyle,
+                                 paddingRight: '0rem',
+                                 paddingLeft: '0rem',
+                              }
                            }
+                           stepContainerState = 'end'
                         }
                      } else {
+                        // REAL INBETWEEN
                         stepContainerState = 'inbetween'
                         if (!applied) {
                            applied = true
                            decorationStyle = {
-                              borderLeftColor: 'transparent',
-                              borderRightColor: 'transparent',
-                              paddingLeft: '2px',
-                              paddingRight: '2px',
-
-                              // borderLeftWidth: '0px'
-                              // borderColor: 'green',
-                              // borderTopRightRadius: '5px',
-                              // borderBottomRightRadius: '5px',
+                              borderLeftWidth: '0px',
+                              borderRightWidth: '0px',
+                           }
+                           layoutStyle = {
+                              ...layoutStyle,
+                              paddingRight: '0rem',
+                              paddingLeft: '0rem',
                            }
                         }
                      }
                   }
 
                   return (
-                     <Frame
-                        // Step Decoration
-                        tw='flex items-center justify-center'
-                        border={{
-                           contrast: 0.1,
-                           chromaBlend: 5,
-                        }}
-                        base={{
-                           contrast: 0.1,
-                           chromaBlend: 3,
-                           hue: currentStepHue % 360,
-                        }}
+                     <div
+                        tw='flex flex-1 items-center justify-center'
                         style={{
-                           borderWidth,
                            ...style,
-                           ...decorationStyle,
+                           ...layoutStyle,
                         }}
                      >
-                        <ImageUI //
-                           onClick={p.onClick}
-                           size={itemWidth}
-                           img={img}
-                        />
-                     </Frame>
+                        <Frame
+                           // Step Decoration
+                           tw='flex h-full w-full flex-1 items-center justify-center overflow-clip !object-contain'
+                           border={{
+                              contrast: 0.2,
+                              chromaBlend: 10,
+                           }}
+                           base={{
+                              // contrast: 0.1,
+                              chromaBlend: 2.5,
+                              hue: currentStepHue % 360,
+                           }}
+                           style={{
+                              borderWidth,
+                              // ...style,
+                              ...decorationStyle,
+                           }}
+                        >
+                           <Frame
+                              //
+                              tw='overflow-clip'
+                              hover
+                              base={{ contrast: -0.1 }}
+                              border={{ contrast: 0.15 }}
+                              roundness={'3px'}
+                              dropShadow={cushy.preferences.theme.value.global.shadow}
+                           >
+                              <ImageUI //
+                                 onClick={p.onClick}
+                                 size={itemWidth - 18}
+                                 img={img}
+                              />
+                           </Frame>
+                        </Frame>
+                     </div>
                   )
                }}
             </FixedSizeGrid>
