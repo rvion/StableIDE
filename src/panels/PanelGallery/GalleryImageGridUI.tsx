@@ -28,7 +28,7 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
    return (
       <div //
          ref={refFn}
-         tw='flex-1'
+         tw='flex-1 select-none'
          // applying filter on the whole gallery is way faster than doing it on every individual images
          style={conf.value.onlyShowBlurryThumbnails ? { filter: 'blur(10px)' } : undefined}
       >
@@ -46,7 +46,7 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
    )
 })
 
-export const GalleryGridUI = observer(function GalleryGridUI_(p: {
+const GalleryGridUI = observer(function GalleryGridUI_(p: {
    containerHeight: number
    containerWidth: number
    nbCols: number
