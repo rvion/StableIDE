@@ -7,7 +7,7 @@ import { createMediaImage_fromBlobObject } from '../../../models/createMediaImag
 import { FPath } from '../../../models/FPath'
 import { PanelGalleryUI } from '../../../panels/PanelGallery/PanelGalleryUI'
 import { useImageDrop } from '../../../widgets/galleries/dnd'
-import { ImageUI } from '../../../widgets/galleries/ImageUI'
+import { ImageUI, ImageUIDumb } from '../../../widgets/galleries/ImageUI'
 import { Button } from '../../button/Button'
 import { SpacerUI } from '../../components/SpacerUI'
 import { Frame } from '../../frame/Frame'
@@ -104,9 +104,9 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
             style={dropStyle}
             ref={dropRef}
             className='DROP_IMAGE_HANDLER'
-            tw='_WidgetSelectImageUI flex h-full w-full flex-1'
+            tw='_WidgetSelectImageUI flex h-full w-full flex-1 items-center justify-center'
          >
-            <ImageUI img={image} size={field.size} />
+            <ImageUIDumb img={image} />
          </div>
       </ResizableFrame>
    ) : (
