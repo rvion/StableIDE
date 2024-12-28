@@ -1,10 +1,10 @@
-import type { MediaImageL } from '../../models/MediaImage'
 import type { CSSProperties } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
 import { Frame } from '../../csuite/frame/Frame'
 import { hashStringToNumber } from '../../csuite/hashUtils/hash'
+import { MediaImageL } from '../../models/MediaImage'
 import { useGalleryConf } from './galleryConf'
 import { GalleryImageCardUI } from './GalleryImageCardUI'
 
@@ -88,7 +88,7 @@ function computeStyles(
       return styles['start']
    }
 
-   if (!cImg.step) {
+   if (!cImg.step || cImg.step.outputs.filter((output) => output instanceof MediaImageL).length <= 1) {
       // Not part of a group.
       return styles['single']
    }
@@ -176,14 +176,17 @@ export const StepGroupUI = observer(function StepGroupUI_(p: {
             }}
             base={{
                // contrast: 0.1,
-               chromaBlend: 2.5,
+               // chromaBlend: 2.5,
+               chromaBlend: img.step ? 2.5 : 0,
                hue: hue,
                // hue: 180,
                // hue: p.grouper.currentHue,
             }}
             style={{
                borderRadius: `${theme.global.roundness}px`,
+               borderWidth: img.step ? '1px' : '2px',
                ...decoration,
+               borderStyle: img.step ? 'solid' : 'dotted',
             }}
          >
             <GalleryImageCardUI img={img} size={p.size - p.size * 0.1} />
