@@ -81,6 +81,10 @@ const GalleryGridUI = observer(function GalleryGridUI_(p: {
                      size={itemWidth}
                      style={style}
                      index={index}
+                     decoration={{
+                        wrapLeft: columnIndex == 0,
+                        wrapRight: nbCols - 1 == columnIndex,
+                     }}
                   />
                )
             }

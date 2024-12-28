@@ -8,6 +8,7 @@ import { MediaImageL } from '../../models/MediaImage'
 import { useGalleryConf } from './galleryConf'
 import { GalleryImageCardUI } from './GalleryImageCardUI'
 
+// This is very brittle, but it works and shouldn't need to touch it hopefully.
 const styles = {
    start: {
       layout: {
@@ -21,6 +22,13 @@ const styles = {
          // Re-aligns the image vertically
          paddingRight: '4px',
       },
+      wrapRight: {
+         borderRightStyle: 'dashed',
+         borderRightWidth: '1px',
+         // marginRight: '0.25rem',
+         // // Do not re-align
+         // paddingRight: '0px',
+      },
    },
    inbetween: {
       layout: {
@@ -32,19 +40,36 @@ const styles = {
          borderLeftWidth: '0px',
          borderRightWidth: '0px',
       },
+      wrapRight: {
+         borderRightStyle: 'dashed',
+         borderRightWidth: '1px',
+         // marginRight: '0.25rem',
+         // paddingLeft: '0.25rem',
+      },
+      wrapLeft: {
+         borderLeftStyle: 'dashed',
+         borderLeftWidth: '1px',
+         // marginLeft: '0.25rem',
+         // paddingRight: '0.25rem',
+      },
    },
    end: {
       layout: {
          paddingLeft: '0px',
       },
       decoration: {
-         borderLeftColor: 'transparent',
          borderTopLeftRadius: '0px',
          borderBottomLeftRadius: '0px',
          borderLeftWidth: '0px',
 
          // Re-aligns the image vertically
          paddingLeft: '4px',
+      },
+      wrapLeft: {
+         borderLeftStyle: 'dashed',
+         borderLeftWidth: '1px',
+         // marginLeft: '0.25rem',
+         // paddingLeft: '0px',
       },
    },
    single: {
@@ -60,14 +85,17 @@ const styles = {
          // border: '1px dashed red',
       },
    },
-} as const satisfies Record<string, { layout: CSSProperties; decoration: CSSProperties }>
+} as const satisfies Record<
+   string,
+   { layout: CSSProperties; decoration: CSSProperties; wrapLeft?: CSSProperties; wrapRight?: CSSProperties }
+>
 
 /** Returns a CSS style based on the images, probably a convoluted way of doing this */
 function computeStyles(
    pImg?: MediaImageL,
    cImg?: MediaImageL,
    nImg?: MediaImageL,
-): { layout: CSSProperties; decoration: CSSProperties } {
+): { layout: CSSProperties; decoration: CSSProperties; wrapLeft?: CSSProperties; wrapRight?: CSSProperties } {
    if (!cImg) {
       // No current image, wtf??
       return styles['warning']
@@ -120,7 +148,7 @@ function computeStyles(
       }
 
       // The next image is part of the group, and we have a previous image that is also part of the group, so make sure to place inbetween the group
-      return styles['inbetween']
+      return { ...styles['inbetween'] }
    }
 
    // Should not happen?
@@ -132,6 +160,10 @@ export const StepGroupUI = observer(function StepGroupUI_(p: {
    // grouper: StepGrouper
    style: CSSProperties
    size: number
+   decoration?: {
+      wrapLeft?: boolean
+      wrapRight?: boolean
+   }
 }) {
    const conf = useGalleryConf()
    const ALLIMAGES = conf.imageToDisplay
@@ -151,10 +183,14 @@ export const StepGroupUI = observer(function StepGroupUI_(p: {
    const pImg = ALLIMAGES[p.index - 1]
    const nImg = ALLIMAGES[p.index + 1]
 
-   const { layout, decoration } = computeStyles(pImg, img, nImg)
+   const { layout, decoration, wrapLeft, wrapRight } = computeStyles(pImg, img, nImg)
 
    // Inefficient, could be cached/re-used somehow
    const hue = hashStringToNumber(img.step ? img.step.id : '0')
+
+   const canWrap = img.step && img.step.outputs.filter((output) => output instanceof MediaImageL).length > 1
+   const shouldWrapLeft = canWrap && p.decoration ? (p.decoration.wrapLeft ?? false) : false
+   const shouldWrapRight = canWrap && p.decoration ? (p.decoration.wrapRight ?? false) : false
 
    return (
       <div
@@ -187,6 +223,13 @@ export const StepGroupUI = observer(function StepGroupUI_(p: {
                borderWidth: img.step ? '1px' : '2px',
                ...decoration,
                borderStyle: img.step ? 'solid' : 'dotted',
+
+               ...(canWrap && shouldWrapLeft && wrapLeft),
+               ...(canWrap && shouldWrapRight && wrapRight),
+               // ...(wrapLeft && { borderLeftWidth: '1px', borderLeftStyle: 'dashed' }),
+               // ...(wrapRight && { borderRightWidth: '1px', borderRightStyle: 'dashed' }),
+               // borderLeftStyle: wrapLeft ? 'dashed' : 'inherit',
+               // borderRightStyle: wrapRight ? 'dashed' : 'inherit',
             }}
          >
             <GalleryImageCardUI img={img} size={p.size - p.size * 0.1} />
