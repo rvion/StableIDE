@@ -186,6 +186,7 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
                               //
                               tw='overflow-clip'
                               hover
+                              hovered={() => cushy.hovered == img}
                               base={{ contrast: -0.1, chromaBlend: 0.333 }}
                               border={{ contrast: 0.15 }}
                               roundness={'3px'}
