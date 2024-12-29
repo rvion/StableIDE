@@ -30,7 +30,7 @@ export const GalleryImageCardUI = observer(function GalleryImageCardUI_(p: {
             // Currently, this will make it get highlighted whenever the image is hovered ANYWHERE.
             // Which will make the gallery flash when hovering over the image in the Step Panel.
             hovered={() => cushy.hovered == p.img}
-            base={{ contrast: -0.1, chromaBlend: 0.333 }}
+            base={{ contrast: -0.05, chromaBlend: 0.5 }}
             // border={p.favorited ? { contrast: 0.3, chromaBlend: 5, hue: 90 } : { contrast: 0.15 }}
             border={{ contrast: 0.15 }}
             roundness={theme.global.roundness}
