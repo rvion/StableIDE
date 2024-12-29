@@ -97,7 +97,7 @@ export class LiveTable<
    /**
     * do not hydrate entities;
     * you can use joins, select only a few fields, etc
-    * see also `select` for simpler use cases, or when you need hydated entities
+    * see also `select` for simpler use cases, or when you need hydated entities
     */
    selectRaw = <T>(
       fn: (x: SelectQueryBuilder<KyselyTables, TABLE['$TableName'], {}>) => SelectQueryBuilder<any, any, T>,
@@ -114,7 +114,7 @@ export class LiveTable<
    /**
     * do not hydrate entities;
     * you can use joins, select only a few fields, etc
-    * see also `select` for simpler use cases, or when you need hydated entities
+    * see also `select` for simpler use cases, or when you need hydated entities
     */
    selectRaw2 = <T>(
       fn: (x: SelectQueryBuilder<KyselyTables, TABLE['$TableName'], {}>) => SelectQueryBuilder<any, any, T>,
