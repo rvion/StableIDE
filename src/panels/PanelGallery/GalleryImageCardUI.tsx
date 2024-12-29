@@ -11,6 +11,8 @@ export const GalleryImageCardUI = observer(function GalleryImageCardUI_(p: {
    style?: CSSProperties
    //    favorited: boolean
    size: number
+   onMouseEnter?: React.MouseEventHandler<HTMLDivElement>
+   onMouseLeave?: React.MouseEventHandler<HTMLDivElement>
 }) {
    const theme = cushy.preferences.theme.value
 
@@ -18,8 +20,8 @@ export const GalleryImageCardUI = observer(function GalleryImageCardUI_(p: {
       <div // Layouting
          tw='flex items-center justify-center p-1'
          style={p.style}
-         onMouseEnter={p.img.onMouseEnter}
-         onMouseLeave={p.img.onMouseLeave}
+         onMouseEnter={p.onMouseEnter}
+         onMouseLeave={p.onMouseLeave}
       >
          <Frame // Decoration
             tw='overflow-clip'

@@ -94,6 +94,8 @@ const GalleryGridUI = observer(function GalleryGridUI_(p: {
 
             return (
                <GalleryImageCardUI //
+                  onMouseEnter={img.onMouseEnter}
+                  onMouseLeave={img.onMouseLeave}
                   img={img}
                   size={itemWidth}
                   style={style}
