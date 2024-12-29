@@ -374,7 +374,7 @@ async function START() {
             if (BrowserWindow.getAllWindows().length === 0) void createWindow()
         })
 
-        if (mode === 'dev') {
+        if (mode === 'dev' && !!process.env.USE_REACT_DEVTOOLS) {
             void app.whenReady().then(installExtensions)
         }
     })

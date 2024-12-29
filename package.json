@@ -192,7 +192,7 @@
         "@typescript-eslint/parser": "^8.7.0",
         "@unocss/eslint-config": "^0.63.4",
         "cross-env": "^7.0.3",
-        "electron-devtools-installer": "^3.2.0",
+        "electron-devtools-installer": "^4.0.0",
         "eslint-plugin-react-refresh": "^0.4.12",
         "eslint-plugin-tailwindcss": "^3.17.5",
         "eslint-plugin-unused-imports": "^4.1.4",
@@ -207,5 +207,4 @@
     "overrides": {
         "@types/node": "22.10.1"
     }
-
 }
