@@ -1,17 +1,9 @@
-import type { DisplayRuleCtx, DisplaySlotFn } from '../../../src/csuite-cushy/presenters/RenderTypes'
+import type { DisplaySlotFn } from '../../../src/csuite-cushy/presenters/RenderTypes'
 import type { Field_list } from '../../../src/csuite/fields/list/FieldList'
 import type { IconName } from '../../../src/csuite/icons/icons'
 import type { $CushySDXLUI } from './_cushySDXLSchema'
 
 import { observer } from 'mobx-react-lite'
-
-import { Button } from '../../../src/csuite/button/Button'
-import { ShellOptionalEnabledUI } from '../../../src/csuite/fields/optional/WidgetOptional'
-import { Frame } from '../../../src/csuite/frame/Frame'
-import { IkonOf } from '../../../src/csuite/icons/iconHelpers'
-import { InputNumberUI } from '../../../src/csuite/input-number/InputNumberUI'
-import { ResizableFrame } from '../../../src/csuite/resizableFrame/resizableFrameUI'
-import { PromptEditorUI } from '../../../src/prompt/__TEMP__'
 
 export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>> {
    return (ui) => {
@@ -84,7 +76,7 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                                        : item.fields.name.value}
                                  </span>
                                  <div tw='flex-none'>
-                                    <IkonOf name={conditioningIcon} />
+                                    <UY.IkonOf name={conditioningIcon} />
                                  </div>
                                  <div tw='w-2' />
                                  <div tw='flex-none'>

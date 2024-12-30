@@ -16,6 +16,7 @@ import { WidgetString_SmallInput } from '../../csuite/fields/string/WidgetString
 import { WidgetString_summary } from '../../csuite/fields/string/WidgetString_summary'
 import { WidgetString_TextareaInput } from '../../csuite/fields/string/WidgetString_TextareaInput'
 import { Frame } from '../../csuite/frame/Frame'
+import { IkonOf } from '../../csuite/icons/iconHelpers'
 import { MessageErrorUI } from '../../csuite/messages/MessageErrorUI'
 import { MessageInfoUI } from '../../csuite/messages/MessageInfoUI'
 import { MessageWarningUI } from '../../csuite/messages/MessageWarningUI'
@@ -113,6 +114,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       Card: WidgetCardUI,
       Pad: WidgetPadUI,
    },
+   IkonOf: IkonOf,
    Message: {
       Error: MessageErrorUI,
       Info: MessageInfoUI,

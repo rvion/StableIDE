@@ -33,8 +33,7 @@ export function checkLibraryScriptFences(
 
    // prettier-ignore
    const backCheck = extensionsDepGraph.validate([
-      fence("scripts.next"),
-      fence("../front/reusable"),
+      fence("library"),
       fenceParentNodeModule("nanoid"),
       fenceParentNodeModule("date-fns"),
       fenceParentNodeModule("date-fns-tz"),
