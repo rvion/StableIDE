@@ -32,6 +32,7 @@ import type { StepOutput } from '../types/StepOutput'
 import type { CSCriticalError } from '../widgets/CSCriticalError'
 import type { Wildcards } from '../widgets/prompter/nodes/wildcards/wildcards'
 import type { SupabaseClient } from '@supabase/supabase-js'
+import type { DragDropManager } from 'dnd-core'
 
 import { closest } from 'fastest-levenshtein'
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'fs'
@@ -563,6 +564,7 @@ export class STATE {
    constructor(
       /** path of the workspace */
       public rootPath: AbsolutePath,
+      public dragDropManager: DragDropManager,
    ) {
       // -----------------------------------------------------------
       // console.log('[🛋️] starting Cushy')

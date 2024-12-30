@@ -1,8 +1,9 @@
+import type { DragDropManager } from 'dnd-core'
+
 import { runInAction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider, useDragDropManager } from 'react-dnd'
 import { ToastContainer } from 'react-toastify'
 
 import { CushyUI } from '../../app/layout/AppUI'
@@ -15,14 +16,15 @@ import { useGlobalDropHook } from './useGlobalDropHook'
 const path = asAbsolutePath(process.cwd())
 
 export const MainUI = observer(function MainUI_() {
-   const st = useMemo(() => runInAction(() => new STATE(path)), [])
+   const dragDropManager: DragDropManager = useDragDropManager()
+   const st = useMemo(() => runInAction(() => new STATE(path, dragDropManager)), [])
    useGlobalDropHook(st)
    return (
-      <DndProvider backend={HTML5Backend}>
+      <>
          <ToastContainer />
          <TargetBox>
             <CushyUI />
          </TargetBox>
-      </DndProvider>
+      </>
    )
 })

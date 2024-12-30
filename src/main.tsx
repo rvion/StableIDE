@@ -21,9 +21,15 @@ import './theme/Tree.css'
 import './theme/theme.css'
 import './csuite/input-number/InputNumberUI.css'
 
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import ReactDOM from 'react-dom/client'
 
 import { MainUI } from './widgets/misc/MainUI'
 
 const root = document.getElementById('root') as HTMLElement
-ReactDOM.createRoot(root).render(<MainUI />)
+ReactDOM.createRoot(root).render(
+   <DndProvider backend={HTML5Backend}>
+      <MainUI />
+   </DndProvider>,
+)
