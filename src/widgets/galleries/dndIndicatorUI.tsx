@@ -35,14 +35,25 @@ export class CushyDnDHandler {
 
    constructor() {
       makeAutoObservable(this)
+
+      const monitor = cushy.dragDropManager.getMonitor()
+      monitor.subscribeToStateChange(() => {
+         const _isDragging = monitor.isDragging()
+         if (this._visible !== _isDragging) this.visible = _isDragging
+      })
    }
 
    get visible(): boolean {
       return this._visible
    }
 
+   // 🔴 need cleanup; not sure we want that to be set anywhere else apart from the
+   // constructor
    set visible(value: boolean) {
-      console.log('[FD] visible: ', value)
+      // early abort for perf
+      if (this._visible === value) return
+
+      console.warn('[FD] visible: ', value)
       this._visible = value
 
       if (!value) {
@@ -134,7 +145,7 @@ export class CushyDnDHandler {
 }
 
 export const DnDDragIndicatorUI = observer(function DnDDragIndicateUI_() {
-   const uist = cushy.dndHandler
+   const dndHandler = cushy.dndHandler
    const theme = cushy.preferences.theme.value
    const widgetHeight = cushy.preferences.interface.value.widgetHeight
 
@@ -143,11 +154,11 @@ export const DnDDragIndicatorUI = observer(function DnDDragIndicateUI_() {
          tw={[
             'absolute',
             'pointer-events-none  z-[1000000000000000] select-none',
-            uist.visible ? 'block' : 'hidden',
+            dndHandler.visible ? 'block' : 'hidden',
          ]}
          style={{
-            top: uist.y,
-            left: uist.x,
+            top: dndHandler.y,
+            left: dndHandler.x,
          }}
       >
          <Frame
@@ -162,18 +173,18 @@ export const DnDDragIndicatorUI = observer(function DnDDragIndicateUI_() {
             }}
          >
             <Frame
-               tw={['items-center justify-center', uist.label && 'px-2']}
+               tw={['items-center justify-center', dndHandler.label && 'px-2']}
                roundness={theme.global.roundness}
                border
                base={theme.global.contrast}
                line
                expand
                size='widget'
-               icon={uist.icon}
-               suffixIcon={uist.suffixIcon}
-               square={uist.label == undefined}
+               icon={dndHandler.icon}
+               suffixIcon={dndHandler.suffixIcon}
+               square={dndHandler.label == undefined}
             >
-               {uist.label}
+               {dndHandler.label}
             </Frame>
             {/* <Frame tw='w-20 h-20'>TEST</Frame> */}
          </Frame>

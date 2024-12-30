@@ -15,6 +15,7 @@ import type { Field_choices, Field_choices_serial } from './choices/FieldChoices
 import type { Field_date, Field_date_serial } from './date/FieldDate'
 import type { Field_dynamic } from './dynamic/FieldDynamic'
 import type { Field_group, Field_group_serial } from './group/FieldGroup'
+import type { Field_image } from './image/FieldImage'
 import type { Field_link, Field_link_serial } from './link/FieldLink'
 import type { Field_list, Field_list_serial } from './list/FieldList'
 import type { Field_number, Field_number_serial } from './number/FieldNumber'
@@ -67,6 +68,7 @@ export const isFieldGroup = _checkIfIs<Field_group<any>>('group')
 export const isFieldString = _checkIfIs<Field_string>('str')
 export const isFieldNumber = _checkIfIs<Field_number>('number')
 export const isFieldBool = _checkIfIs<Field_bool>('bool')
+export const isFieldImage = _checkIfIs<Field_image>('image')
 export const isFieldList = _checkIfIs<Field_list<any>>('list')
 export const isFieldSelectOne = _checkIfIs<Field_selectOne<any, any>>('selectOne')
 export const isFieldSelectMany = _checkIfIs<Field_selectMany<any, any>>('selectMany')

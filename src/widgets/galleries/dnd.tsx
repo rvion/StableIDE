@@ -27,7 +27,6 @@ export const useImageDrag = (
          type: ItemTypes.Image,
          item: { image },
          collect: (monitor): { opacity: number } => {
-            cushy.dndHandler.visible = monitor.isDragging()
             if (cushy.dndHandler.visible) {
                if (cushy.dndHandler.label === undefined || cushy.dndHandler.icon) {
                   cushy.dndHandler.setDragContent({ icon: 'mdiImage' })
@@ -105,7 +104,7 @@ export const useImageDrop = (
    }))
 
 /** Used for the Draft panel to allow drag and dragging in to the panel's area, and having a pop-up menu with the available slots that can consume it. (Image Widgets/Fields) */
-export const useImageSlotDrop = (fn: (image: MediaImageL) => void): [boolean, ConnectDropTarget] => {
+export const useImageSlotDrop = (dropAction: (image: MediaImageL) => void): [boolean, ConnectDropTarget] => {
    return useDrop<Drop1, void, boolean>(() => ({
       accept: [ItemTypes.Image],
       collect(monitor): boolean {
@@ -116,7 +115,7 @@ export const useImageSlotDrop = (fn: (image: MediaImageL) => void): [boolean, Co
       },
       drop(item: Drop1, monitor): void {
          const image: MediaImageL = item.image
-         return fn(image)
+         return dropAction(image)
       },
       hover(item, monitor): void {
          if (monitor.isOver({ shallow: true })) {

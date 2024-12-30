@@ -5,6 +5,13 @@ import type { FC, KeyboardEvent, MouseEvent, UIEvent } from 'react'
 
 export type DomId = string
 
+export type ActivityUIProps = {
+   activity: Activity
+   routine: Routine
+   /** call that function to stop the activity */
+   stop: () => void
+}
+
 /**
  * Activities are <....TODO>
  *
@@ -70,12 +77,7 @@ export type Activity = {
     * activity UI overlay
     * you can leave that empty if you only care about processign events
     * */
-   UI?: FC<{
-      activity: Activity
-      routine: Routine
-      /** call that function to stop the activity */
-      stop: () => void
-   }>
+   UI?: FC<ActivityUIProps>
 
    /**
     * @since 2024-05-21
