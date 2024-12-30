@@ -22,6 +22,7 @@ import { useImageSlotDrop } from '../../widgets/galleries/dnd'
 import { draftContext } from '../../widgets/misc/useDraft'
 import { AppCompilationErrorUI } from './AppCompilationErrorUI'
 import { DraftHeaderUI } from './DraftHeaderUI'
+import { DraftImageSlotPickerUI } from './DraftImageSlotPickerPopup'
 import { ErrorPanelUI } from './ErrorPanelUI'
 import { run_justify, ui_justify } from './prefab_justify'
 import { RecompileUI } from './RecompileUI'
@@ -41,6 +42,19 @@ export const DraftUI = observer(function Panel_Draft_(p: { draft: Maybe<DraftL> 
    const draft = p.draft
    const justify = cushy.forms.use(ui_justify)
    const [isDnDHovered, dropRef] = useImageSlotDrop((img) => {
+      if (draft == null) return
+      cushy.activityManager.start({
+         stopOnBackdropClick: true,
+         backdrop: true,
+         shell: 'popup-lg',
+         UI: (p) => (
+            <DraftImageSlotPickerUI //
+               image={img}
+               draft={draft}
+               stop={p.stop}
+            />
+         ),
+      })
       // Make pop-up open with a list of Image fields to pick from, the picked field is set to the dropped image
       // The list of options should display their path from their top-level group to the field
       // For example, CushySXDL's Latent Image field would be "Latent->Image"
