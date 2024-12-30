@@ -50,7 +50,7 @@ export const useImageDrop = (
 
       // 2. add golden border when hovering over
       collect(monitor): CSSProperties {
-         return { outline: monitor.isOver() ? '1px solid gold' : undefined }
+         return { opacity: monitor.isOver() ? '0.5' : undefined }
       },
 
       // 3. import as ImageL if needed

@@ -114,6 +114,7 @@ export const ImageUIDumb = observer(function ImageUIDumb_({
             <img
                className={className}
                tw='h-full w-full bg-contain bg-center bg-no-repeat object-contain'
+               style={{ opacity: opacity }}
                src={image.url}
                onAuxClick={(ev) => {
                   if (ev.button === 1) return image.onMiddleClick()
