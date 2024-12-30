@@ -65,7 +65,7 @@ export const useImageDrop = (
             monitor.isOver()
                ? {
                     icon: 'mdiImage',
-                    label: isExternal ? 'Import and Set Image' : 'Set Image',
+                    label: isExternal ? 'Import and Drop Image' : 'Drop Image',
                     suffixIcon: 'mdiArrowDownRight',
                  }
                : {
@@ -79,10 +79,6 @@ export const useImageDrop = (
       // 3. import as ImageL if needed
       drop(item: Drop1 | Drop2, monitor): void {
          cushy.dndHandler.visible = false
-         cushy.dndHandler.setContent({
-            icon: 'mdiImage',
-            label: 'Drop in Slot',
-         })
 
          if (monitor.getItemType() == ItemTypes.Image) {
             const image: MediaImageL = (item as Drop1).image
@@ -126,8 +122,8 @@ export const useImageSlotDrop = (fn: (image: MediaImageL) => void): [boolean, Co
          if (monitor.isOver({ shallow: true })) {
             cushy.dndHandler.setContent({
                icon: 'mdiImage',
-               label: 'Set Image Slot',
-               suffixIcon: 'mdiArrowDownRight',
+               label: 'Drop Image in to Slot',
+               suffixIcon: 'mdiMenuOpen',
             })
          }
       },

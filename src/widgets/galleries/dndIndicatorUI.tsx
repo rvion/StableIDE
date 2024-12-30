@@ -5,6 +5,8 @@ import { observer } from 'mobx-react-lite'
 
 import { Frame } from '../../csuite/frame/Frame'
 
+// TODO(bird_d/ui/dnd): Separate Drop Action info (Put on the right of the cursor). It should usually be an icon and very minimal info about the action
+
 export type DnDHandlerContent = {
    suffixIcon?: IconName
    icon?: IconName
