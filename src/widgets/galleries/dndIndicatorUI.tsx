@@ -5,16 +5,31 @@ import { observer } from 'mobx-react-lite'
 
 import { Frame } from '../../csuite/frame/Frame'
 
+export type DnDHandlerContent = {
+   suffixIcon?: IconName
+   icon?: IconName
+   label?: string
+   content?: () => JSX.Element
+}
+
 export class CushyDnDHandler {
    private _visible: boolean = false
+
+   // Content
    private _suffixIcon?: IconName = undefined
    private _icon?: IconName = undefined
    private _label?: string = undefined
+   private _content?: () => JSX.Element
+
+   /** Fallback content, set via setStartContent */
+   private _startContent: DnDHandlerContent = {
+      suffixIcon: undefined,
+      label: undefined,
+      content: undefined,
+   }
 
    x: number = 0
    y: number = 0
-
-   private _content?: () => JSX.Element
 
    constructor() {
       makeAutoObservable(this)
@@ -40,6 +55,10 @@ export class CushyDnDHandler {
       console.log('[FD] SETUP!!!!!')
       //   window.document.addEventListener('mousemove', this.onMouseMove, false)
       window.document.addEventListener('drag', this.onMouseMove, true)
+   }
+
+   onDragEnd = (e: MouseEvent): void => {
+      this.visible = false
    }
 
    clear = (): void => {
@@ -69,17 +88,36 @@ export class CushyDnDHandler {
       this._content = content
    }
 
+   /** Call this when starting a drag to have the indicator have a fallback when the normal content is cleared */
+   setDragContent({
+      suffixIcon,
+      icon,
+      label,
+      content,
+   }: {
+      suffixIcon?: IconName
+      icon?: IconName
+      label?: string
+      /** Underneath the other parameters, display whatever you need to */
+      content?: () => JSX.Element
+   }): void {
+      this._startContent.suffixIcon = suffixIcon
+      this._startContent.icon = icon
+      this._startContent.label = label
+      this._startContent.content = content
+   }
+
    get suffixIcon(): Maybe<IconName> {
-      return this._suffixIcon
+      return this._suffixIcon ?? this._startContent.suffixIcon
    }
    get icon(): Maybe<IconName> {
-      return this._icon
+      return this._icon ?? this._startContent.icon
    }
    get label(): Maybe<string> {
-      return this._label
+      return this._label ?? this._startContent.label
    }
    get content(): Maybe<() => JSX.Element> {
-      return this._content
+      return this._content ?? this._startContent.content
    }
 
    onMouseMove = (e: MouseEvent): void => {
@@ -96,7 +134,7 @@ export class CushyDnDHandler {
 export const DnDDragIndicatorUI = observer(function DnDDragIndicateUI_() {
    const uist = cushy.dndHandler
    const theme = cushy.preferences.theme.value
-   const widgetHeight = cushy.preferences.interface.value.inputHeight
+   const widgetHeight = cushy.preferences.interface.value.widgetHeight
 
    return (
       <div

@@ -29,8 +29,8 @@ export const useImageDrag = (
          collect: (monitor): { opacity: number } => {
             cushy.dndHandler.visible = monitor.isDragging()
             if (cushy.dndHandler.visible) {
-               if (cushy.dndHandler.label === undefined) {
-                  cushy.dndHandler.setContent({ icon: 'mdiImage' })
+               if (cushy.dndHandler.label === undefined || cushy.dndHandler.icon) {
+                  cushy.dndHandler.setDragContent({ icon: 'mdiImage' })
                }
             }
             return { opacity: monitor.isDragging() ? 0.5 : 1 }
@@ -72,17 +72,9 @@ export const useImageDrop = (
                     icon: 'mdiImage',
                  },
          )
-         return { opacity: monitor.isOver() ? '0.5' : undefined }
+         return { opacity: monitor.isOver() ? '0.75' : undefined }
       },
-      hover(item, monitor): void {
-         const sourceOffset = monitor.getSourceClientOffset()
-         const mouseOffset = monitor.getClientOffset()
-         if (!mouseOffset) {
-            return
-         }
-         cushy.dndHandler.updatePosition(mouseOffset.x, mouseOffset.y)
-         return
-      },
+      hover(item, monitor): void {},
 
       // 3. import as ImageL if needed
       drop(item: Drop1 | Drop2, monitor): void {
@@ -116,18 +108,28 @@ export const useImageDrop = (
       },
    }))
 
-export const useImageSlotDrop = (
-   st: STATE,
-   fn: (image: MediaImageL) => void,
-): [CSSProperties, ConnectDropTarget] => {
-   return useDrop<Drop1, void, CSSProperties>(() => ({
+/** Used for the Draft panel to allow drag and dragging in to the panel's area, and having a pop-up menu with the available slots that can consume it. (Image Widgets/Fields) */
+export const useImageSlotDrop = (fn: (image: MediaImageL) => void): [boolean, ConnectDropTarget] => {
+   return useDrop<Drop1, void, boolean>(() => ({
       accept: [ItemTypes.Image],
-      collect(monitor): CSSProperties {
-         return { outline: monitor.isOver() ? '1px solid gold' : undefined }
+      collect(monitor): boolean {
+         if (!monitor.isOver()) {
+            cushy.dndHandler.setContent({})
+         }
+         return monitor.isOver({ shallow: true })
       },
       drop(item: Drop1, monitor): void {
          const image: MediaImageL = item.image
          return fn(image)
+      },
+      hover(item, monitor): void {
+         if (monitor.isOver({ shallow: true })) {
+            cushy.dndHandler.setContent({
+               icon: 'mdiImage',
+               label: 'Set Image Slot',
+               suffixIcon: 'mdiArrowDownRight',
+            })
+         }
       },
    }))
 }
