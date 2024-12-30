@@ -134,11 +134,13 @@ export class Kolor implements Tint {
          // console.log(`[🤠] dir`, dir_)
          const x1 = this.color
             .clone()
+            // .set({ 'oklch.l': (v: any) => (v += cr) })
             .set({ 'hct.t': (v: any) => (v += cr * 100) })
             .toGamut('srgb')
 
          const x2 = this.color
             .clone()
+            // .set({ 'oklch.l': (v: any) => (v -= cr) })
             .set({ 'hct.t': (v: any) => (v -= cr * 100) })
             .toGamut('srgb')
 
