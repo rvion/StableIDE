@@ -161,7 +161,12 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
          // No longer needed as not using optional, opting for the enabled field. It didn't even work anyways.
          // if (ui2.field.parent === ui.field.Positive.Prompts) ui2.set({ Shell: ShellOptionalEnabledUI })
       })
-      ui.set(latent.bField, { Shell: UY.Shell.Left })
+
+      // ui.set(latent.bField, { Shell: UY.Shell.Right })
+      // ui.set(ui.field.Latent..bField.fields.emptyLatent && latent.bField.fields.emptyLatent.fields.batchSize, {
+      //    Head: false,
+      //    Header: false,
+      // })
       // ui.set(latent, { Shell: UY.Shell.Left })
       ui.set('', (ui2) => {
          // ui2.for()
@@ -170,8 +175,9 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
             ui2.field.path.startsWith(latent.bField.path + '.') &&
             ui2.field.type !== 'shared' &&
             ui2.field.type !== 'optional'
-         )
+         ) {
             ui2.set({ Shell: UY.Shell.Right })
+         }
 
          if (ui2.field.path.startsWith(model.path + '.')) ui2.set({ Shell: UY.Shell.Right })
 
