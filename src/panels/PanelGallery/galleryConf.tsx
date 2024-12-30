@@ -18,7 +18,6 @@ export function useGalleryConf(): GalleryConf {
 type GalleryConfData = X.XGroup<{
    defaultSort: X.XSelectOne_<'createdAt' | 'updatedAt'>
    gallerySize: X.XNumber
-   virtualized: X.XBool
    galleryMaxImages: X.XNumber
    galleryBgColor: X.XOptional<X.XColor>
    galleryHoverOpacity: X.XNumber
@@ -28,6 +27,7 @@ type GalleryConfData = X.XGroup<{
    filterTag: X.XString
    filterStar: X.XBool
    filterAppName: X.XOptional<X.XSelectOne<{ id: CushyAppID; label: string }, CushyAppID>>
+   enableStepGrouping: X.XBool
 }>
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -35,8 +35,7 @@ const galleryConfDataSchema = (ui: CushySchemaBuilder): GalleryConfData => {
    // const y = ui.selectOneString(['createdAt', 'updatedAt'] as const, { default: 'createdAt' })
    return ui.fields({
       defaultSort: ui.selectOneString(['createdAt', 'updatedAt'] as const, { default: 'createdAt' }),
-      virtualized: ui.boolean({ label: 'Virtualized', default: false }),
-      gallerySize: ui.int({ label: 'Preview Size', default: 48, min: 24, step: 8, softMax: 512, max: 1024, tooltip: 'Size of the preview images in px', unit: 'px' }), // prettier-ignore
+      gallerySize: ui.int({ label: 'Preview Size', default: 48, min: 24, step: 16, softMax: 512, max: 1024, tooltip: 'Size of the preview images in px', unit: 'px' }), // prettier-ignore
       galleryMaxImages: ui.int({ label: 'Number of items', min: 10, softMax: 300, default: 50, tooltip: 'Maximum number of images to display', }), // prettier-ignore
       galleryBgColor: ui.colorV2({ label: 'background' }).optional(),
       galleryHoverOpacity: ui.number({ label: 'hover opacity', min: 0, max: 1, step: 0.01 }),
@@ -49,11 +48,12 @@ const galleryConfDataSchema = (ui: CushySchemaBuilder): GalleryConfData => {
       filterTag: ui.string({
          clearable: true,
          innerIcon: 'mdiTagSearch',
-         placeHolder: 'tags',
+         placeHolder: 'Filter by Tags',
          autoResize: false,
       }), //.optional(), // emptyAsNullWhenOptional: true
       filterStar: ui.boolean({ icon: 'mdiStar', default: false, tooltip: 'Only show favorites' }), //.optional(), // emptyAsNullWhenOptional: true
       filterAppName: ui.app().optional(),
+      enableStepGrouping: ui.boolean({ default: false }),
    })
 }
 

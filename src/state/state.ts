@@ -93,6 +93,7 @@ import { ElectronUtils } from '../utils/electron/ElectronUtils'
 import { SearchManager } from '../utils/electron/findInPage'
 import { openInVSCode } from '../utils/electron/openInVsCode'
 import { asAbsolutePath, asRelativePath } from '../utils/fs/pathUtils'
+import { CushyDnDHandler } from '../widgets/galleries/dndIndicatorUI'
 import { DanbooruTags } from '../widgets/prompter/nodes/booru/BooruLoader'
 import { UserTags } from '../widgets/prompter/nodes/usertags/UserLoader'
 import { AuthState } from './AuthState'
@@ -446,6 +447,9 @@ export class STATE {
    }
 
    comfyUIIframeRef = createRef<HTMLIFrameElement>()
+   // dndVisualRef = createRef<HTMLDivElement>()
+   dndHandler = new CushyDnDHandler()
+
    expandNodes: boolean = false
 
    showConfettiAndBringFun = async (): Promise<void> => {

@@ -18,6 +18,7 @@ import { QuickTableUI } from '../../csuite/utils/quicktable'
 import { FramePhoneUI } from '../../csuite/wrappers/FramePhoneUI'
 import { InstallRequirementsBtnUI } from '../../manager/REQUIREMENTS/InstallRequirementsBtnUI'
 import { usePanel } from '../../router/usePanel'
+import { useImageSlotDrop } from '../../widgets/galleries/dnd'
 import { draftContext } from '../../widgets/misc/useDraft'
 import { AppCompilationErrorUI } from './AppCompilationErrorUI'
 import { DraftHeaderUI } from './DraftHeaderUI'
@@ -39,6 +40,13 @@ export const PanelDraftUI = observer(function PanelDraftUI_(p: PanelDraftProps) 
 export const DraftUI = observer(function Panel_Draft_(p: { draft: Maybe<DraftL> }) {
    const draft = p.draft
    const justify = cushy.forms.use(ui_justify)
+   const [isDnDHovered, dropRef] = useImageSlotDrop((img) => {
+      // Make pop-up open with a list of Image fields to pick from, the picked field is set to the dropped image
+      // The list of options should display their path from their top-level group to the field
+      // For example, CushySXDL's Latent Image field would be "Latent->Image"
+      return null
+   })
+   const theme = cushy.preferences.theme.value
 
    // useEffect(() => draft?.AWAKE(), [draft?.id])
    const panel: PanelState<any> = usePanel()
@@ -105,7 +113,12 @@ export const DraftUI = observer(function Panel_Draft_(p: { draft: Maybe<DraftL> 
                 })}
             /> */}
          <DraftHeaderUI draft={draft} />
-         <Frame tw={'overflow-auto'}>
+         <Frame
+            ref={dropRef}
+            border={isDnDHovered ? { contrast: 0.5 } : { contrast: 0 }}
+            roundness={theme.global.roundness}
+            tw={'h-full overflow-auto'}
+         >
             {fpath.existsSync ? null : (
                <MessageErrorUI title='File Does not exists'>
                   <QuickTableUI

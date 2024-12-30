@@ -137,8 +137,8 @@ export const BlenderListUI = observer(function BlenderListUI_<T extends Field_li
             <Frame>Prompt</Frame>
          </Frame> */}
 
-         <Frame
-            /* TODO(bird_d/ui/logic): Need an inline collapsible "group" sort of thing here */
+         {/* <Frame
+            // TODO(bird_d/ui/logic): Need an inline collapsible "group" sort of thing here
             tw='h-input flex-grow items-center text-center'
             row
             base={{ contrast: 0.1 }}
@@ -189,7 +189,7 @@ export const BlenderListUI = observer(function BlenderListUI_<T extends Field_li
                   First Prompt is used as a base and cannot adjust strength/conditioning type
                </p>
             )}
-         </div>
+         </div> */}
          {/* <div // Temporary, just to separate from old stuff
             tw='h-input'
          >

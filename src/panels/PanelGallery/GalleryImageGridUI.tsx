@@ -4,8 +4,9 @@ import { observer } from 'mobx-react-lite'
 import { FixedSizeGrid } from 'react-window'
 
 import { useSizeOf } from '../../csuite/smooth-size/useSizeOf'
-import { ImageUI } from '../../widgets/galleries/ImageUI'
 import { useGalleryConf } from './galleryConf'
+import { GalleryImageCardUI } from './GalleryImageCardUI'
+import { StepGroupUI } from './StepGroups'
 
 export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
    /** when not specified, it will just open the default image menu */
@@ -13,6 +14,7 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
 }) {
    const { ref: refFn, size } = useSizeOf()
    const conf = useGalleryConf()
+
    const ALLIMAGES = conf.imageToDisplay
    const total = ALLIMAGES.length
 
@@ -22,49 +24,84 @@ export const GalleryImageGridUI = observer(function GalleryImageGridUI_(p: {
    const containerHeight = size.height ?? 100
    const nbCols = Math.floor(containerWidth / itemWidth) || 1
    const nbRows = Math.ceil(total / nbCols)
+
    return (
       <div //
          ref={refFn}
-         tw='flex-1'
+         tw='flex-1 select-none overflow-auto'
          // applying filter on the whole gallery is way faster than doing it on every individual images
          style={conf.value.onlyShowBlurryThumbnails ? { filter: 'blur(10px)' } : undefined}
       >
-         {conf.Virtualized.value ? (
-            // alt 1. virtualized grid
-            <FixedSizeGrid
-               height={containerHeight}
-               width={containerWidth}
-               columnCount={nbCols}
-               rowCount={nbRows}
-               columnWidth={itemWidth}
-               rowHeight={itemHeight}
-            >
-               {({ columnIndex, rowIndex, style }) => {
-                  const img = ALLIMAGES[rowIndex * nbCols + columnIndex]
-                  if (img == null) return null
-                  return (
-                     <ImageUI //
-                        onClick={p.onClick}
-                        size={itemWidth}
-                        img={img}
-                        style={style}
-                     />
-                  )
-               }}
-            </FixedSizeGrid>
-         ) : (
-            // alt 2. a simple flex wrap
-            <div tw='flex flex-wrap'>
-               {ALLIMAGES.map((i) => (
-                  <ImageUI //
-                     key={i.id}
-                     onClick={p.onClick}
-                     size={itemWidth}
-                     img={i}
-                  />
-               ))}
-            </div>
-         )}
+         <GalleryGridUI
+            containerHeight={containerHeight}
+            containerWidth={containerWidth}
+            nbCols={nbCols}
+            nbRows={nbRows}
+            itemWidth={itemWidth}
+            itemHeight={itemHeight}
+            enableStepGrouping={conf.value.enableStepGrouping}
+            images={ALLIMAGES}
+         />
       </div>
+   )
+})
+
+const GalleryGridUI = observer(function GalleryGridUI_(p: {
+   containerHeight: number
+   containerWidth: number
+   nbCols: number
+   nbRows: number
+   itemWidth: number
+   itemHeight: number
+   enableStepGrouping: boolean
+   images: MediaImageL[]
+}) {
+   const containerHeight = p.containerHeight
+   const containerWidth = p.containerWidth
+   const nbCols = p.nbCols
+   const nbRows = p.nbRows
+   const itemWidth = p.itemWidth
+   const itemHeight = p.itemHeight
+
+   return (
+      <FixedSizeGrid
+         height={containerHeight}
+         width={containerWidth}
+         columnCount={nbCols}
+         rowCount={nbRows}
+         columnWidth={itemWidth}
+         rowHeight={itemHeight}
+      >
+         {({ columnIndex, rowIndex, style }) => {
+            const index = rowIndex * nbCols + columnIndex
+
+            if (p.enableStepGrouping) {
+               return (
+                  <StepGroupUI //
+                     size={itemWidth}
+                     style={style}
+                     index={index}
+                     decoration={{
+                        wrapLeft: columnIndex == 0,
+                        wrapRight: nbCols - 1 == columnIndex,
+                     }}
+                  />
+               )
+            }
+
+            const img = p.images[index]
+            if (img == null) return null
+
+            return (
+               <GalleryImageCardUI //
+                  onMouseEnter={img.onMouseEnter}
+                  onMouseLeave={img.onMouseLeave}
+                  img={img}
+                  size={itemWidth}
+                  style={style}
+               />
+            )
+         }}
+      </FixedSizeGrid>
    )
 })

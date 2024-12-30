@@ -18,6 +18,7 @@ export class Kolor implements Tint {
          return new Kolor(l!, c!, isNaN(h!) ? 0 : h!)
       } catch (e) {
          console.error(`[🔴] getLCHFromString FAILURE (string is: "${str}")`)
+         console.error(`[🔴] Real Error: ${e}`)
          return new Kolor(0.5, 0.1, 0)
       }
    }
@@ -66,10 +67,26 @@ export class Kolor implements Tint {
       }
       if (isNaN(this.chroma)) throw new Error('isNaN(this.chroma)')
       if (isNaN(this.hue)) throw new Error('isNaN(this.hue)')
-      if (this.lightness < 0) throw new Error(`this.lightness (${this.lightness}) < 0`)
-      if (this.lightness > 1) throw new Error(`this.lightness (${this.lightness}) > 1`)
-      if (this.chroma < 0) throw new Error(`this.chroma (${this.chroma}) < 0`)
-      if (this.chroma > 1) throw new Error(`this.chroma (${this.chroma}) > 1`)
+      if (this.lightness < 0) {
+         console.warn(this, `Had an invalid lightness and was clamped from ${this.lightness}=>0`)
+         this.lightness = 0
+      }
+      if (this.lightness > 1) {
+         console.warn(this, `Had an invalid lightness and was clamped from ${this.lightness}=>1`)
+         this.lightness = 1
+      }
+      if (this.chroma < 0) {
+         console.warn(this, `Had an invalid chroma and was clamped from ${this.chroma}=>0`)
+         this.chroma = 0
+      }
+      if (this.chroma > 1) {
+         console.warn(this, `Had an invalid chroma and was clamped from ${this.chroma}=>1`)
+         this.chroma = 1
+      }
+      // if (this.lightness < 0) throw new Error(`this.lightness (${this.lightness}) < 0`)
+      // if (this.lightness > 1) throw new Error(`this.lightness (${this.lightness}) > 1`)
+      // if (this.chroma < 0) throw new Error(`this.chroma (${this.chroma}) < 0`)
+      // if (this.chroma > 1) throw new Error(`this.chroma (${this.chroma}) > 1`)
       // if (this.hue < 0) throw new Error(`this.hue (${this.hue}) < 0`)
       // if (this.hue > 360) throw new Error(`this.hue (${this.hue}) > 360`)
    }

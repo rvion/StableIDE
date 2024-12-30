@@ -10,7 +10,10 @@ import { Button } from '../button/Button'
 import { extractConfigValue } from '../errors/extractConfig'
 import { Frame, type FrameProps } from '../frame/Frame'
 import { IkonOf } from '../icons/iconHelpers'
+import { ColorPickerUI } from '../input-color/ColorPickerUI'
 import { getLCHFromStringAsString } from '../kolor/getLCHFromStringAsString'
+import { Kolor } from '../kolor/Kolor'
+import { RevealUI } from '../reveal/RevealUI'
 import { knownOKLCHHues } from '../tinyCSS/knownHues'
 
 type ClassLike = string | { [cls: string]: any } | null | undefined | boolean
@@ -111,6 +114,51 @@ export const InputStringUI = observer(
                >
                   {interfacePref.widget.color.showText && getLCHFromStringAsString(value)}
                </Frame>
+            )
+
+            return (
+               <RevealUI
+                  placement='above-no-min-no-max-size'
+                  content={() => {
+                     const color = Kolor.fromString(p.getValue())
+
+                     return (
+                        <div tw='p-2'>
+                           <ColorPickerUI
+                              color={color}
+                              onColorChange={(value: string) => {
+                                 const next = `${value}`
+                                 p.setValue(next)
+                              }}
+                           />
+                        </div>
+                     )
+                  }}
+               >
+                  <Frame
+                     noColorStuff={p.noColorStuff}
+                     className={p.className}
+                     style={p.style}
+                     base={theme.global.contrast}
+                     text={{ contrast: 1, chromaBlend: 1 }}
+                     hover={3}
+                     // dropShadow={dropShadow}
+                     roundness={theme.global.roundness}
+                     role='textbox'
+                     border={
+                        isDirty //
+                           ? { contrast: 0.3, hue: knownOKLCHHues.warning, chroma: 0.2 }
+                           : theme.global.border
+                     }
+                     tw={[
+                        //
+                        p.icon && !p.clearable ? 'pr-1' : 'px-0',
+                        'UI-InputString h-input relative flex items-center overflow-clip text-sm',
+                     ]}
+                  >
+                     {visualHelper}
+                  </Frame>
+               </RevealUI>
             )
             break
          default:

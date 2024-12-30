@@ -123,6 +123,7 @@ export const ResizableFrame = observer(function ResizableFrame_(p: ResizableFram
          {p.header && (
             <Frame
                //
+               tw='p-1'
                row
                base={{ contrast: 0.0777 }}
             >

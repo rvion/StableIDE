@@ -7,11 +7,11 @@ import { createMediaImage_fromBlobObject } from '../../../models/createMediaImag
 import { FPath } from '../../../models/FPath'
 import { PanelGalleryUI } from '../../../panels/PanelGallery/PanelGalleryUI'
 import { useImageDrop } from '../../../widgets/galleries/dnd'
-import { ImageUI } from '../../../widgets/galleries/ImageUI'
+import { ImageUI, ImageUIDumb } from '../../../widgets/galleries/ImageUI'
 import { Button } from '../../button/Button'
 import { SpacerUI } from '../../components/SpacerUI'
 import { Frame } from '../../frame/Frame'
-import { Ikon } from '../../icons/iconHelpers'
+import { Ikon, IkonOf } from '../../icons/iconHelpers'
 import { ResizableFrame } from '../../resizableFrame/resizableFrameUI'
 import { RevealUI } from '../../reveal/RevealUI'
 
@@ -39,27 +39,15 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
          snap={16}
          base={{ contrast: -0.025 }}
          header={
-            <>
-               <SpacerUI />
+            <Frame expand line>
                {/* <Button onClick={() => {}} subtle icon='mdiCircle'></Button>
                <Button onClick={() => {}} subtle icon='mdiSquare'></Button> */}
-               <RevealUI //
-                  relativeTo='mouse'
-                  shell='popup-sm'
-                  children={<Button subtle icon='mdiImageSearchOutline' />}
-                  content={(p) => (
-                     <PanelGalleryUI
-                        onClick={(img) => {
-                           field.value = img
-                           p.reveal.close()
-                        }}
-                     />
-                  )}
-               />
+
                <Button
                   square
                   subtle
                   icon='mdiContentPaste'
+                  tooltip='Paste image data from the clipboard'
                   onClick={() => {
                      // XXX: This is slow, should probably be done through electron's api, but works for now. Could also be made re-usable? getImageFromClipboard()?
                      navigator.clipboard
@@ -83,14 +71,41 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
                         })
                   }}
                />
+               <SpacerUI />
+               <RevealUI //
+                  relativeTo='mouse'
+                  placement='autoVerticalEnd'
+                  shell='popup-sm'
+                  children={
+                     <Button
+                        tw='!justify-start'
+                        subtle
+                        icon='mdiImageSearchOutline'
+                        suffixIcon={'mdiChevronDown'}
+                     >
+                        {image.id}
+                        <SpacerUI />
+                     </Button>
+                  }
+                  content={(p) => (
+                     <PanelGalleryUI
+                        onClick={(img) => {
+                           field.value = img
+                           p.reveal.close()
+                        }}
+                     />
+                  )}
+               />
+               <SpacerUI />
                <Button //
+                  disabled={field.value == cushy.defaultImage}
                   tooltip='reset'
                   square
                   subtle
                   icon={'mdiRestore'}
                   onClick={() => (field.value = cushy.defaultImage)}
                />
-            </>
+            </Frame>
          }
          footer={
             <Frame // Dimensions
@@ -104,9 +119,9 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
             style={dropStyle}
             ref={dropRef}
             className='DROP_IMAGE_HANDLER'
-            tw='_WidgetSelectImageUI flex h-full w-full flex-1'
+            tw='_WidgetSelectImageUI flex h-full w-full flex-1 items-center justify-center'
          >
-            <ImageUI img={image} size={field.size} />
+            <ImageUIDumb img={image} />
          </div>
       </ResizableFrame>
    ) : (

@@ -49,7 +49,7 @@ export const ShellPopoverUI = observer(function ShellPopoverUI_(p: RevealShellPr
             <Frame // LOCK
                icon='mdiLock'
                text={{ contrast: 0.3 }}
-               tw='flex items-center justify-center gap-1 text-sm italic'
+               tw='flex select-none items-center justify-center gap-1 text-sm italic'
             >
                shift+right-click to unlock
             </Frame>
