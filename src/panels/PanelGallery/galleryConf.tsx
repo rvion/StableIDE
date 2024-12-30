@@ -48,7 +48,7 @@ const galleryConfDataSchema = (ui: CushySchemaBuilder): GalleryConfData => {
       filterTag: ui.string({
          clearable: true,
          innerIcon: 'mdiTagSearch',
-         placeHolder: 'tags',
+         placeHolder: 'Filter by Tags',
          autoResize: false,
       }), //.optional(), // emptyAsNullWhenOptional: true
       filterStar: ui.boolean({ icon: 'mdiStar', default: false, tooltip: 'Only show favorites' }), //.optional(), // emptyAsNullWhenOptional: true
