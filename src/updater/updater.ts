@@ -139,12 +139,19 @@ export class GitManagedFolder {
             return
          }
 
-         this.activeBranchName = await this._activeBranch()
-         this.activeRemoteName = await this._activeRemote()
-         this.activeCommitText = await this._activeCommit()
-         this.behindCount = (await git.log(['HEAD..@{upstream}'])).all.length
-         this.aheadCount = (await git.log(['@{upstream}..HEAD'])).all.length
+         const _activeBranchName = await this._activeBranch()
+         const _activeRemoteName = await this._activeRemote()
+         const _activeCommitText = await this._activeCommit()
+         const _behindCount = (await git.log(['HEAD..@{upstream}'])).all.length
+         const _aheadCount = (await git.log(['@{upstream}..HEAD'])).all.length
 
+         runInAction(() => {
+            this.activeBranchName = _activeBranchName
+            this.activeRemoteName = _activeRemoteName
+            this.activeCommitText = _activeCommitText
+            this.behindCount = _behindCount
+            this.aheadCount = _aheadCount
+         })
          // Get the default remote branch name
          const remoteInfo = await git.raw(['symbolic-ref', 'HEAD'])
          // console.log({ remoteInfo })
