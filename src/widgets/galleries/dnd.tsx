@@ -1,7 +1,7 @@
 import type { MediaImageL } from '../../models/MediaImage'
 import type { STATE } from '../../state/state'
-import type { CSSProperties } from 'react'
 
+import { type CSSProperties } from 'react'
 import {
    type ConnectDragPreview,
    type ConnectDragSource,
@@ -27,6 +27,12 @@ export const useImageDrag = (
          type: ItemTypes.Image,
          item: { image },
          collect: (monitor): { opacity: number } => {
+            cushy.dndHandler.visible = monitor.isDragging()
+            if (cushy.dndHandler.visible) {
+               if (cushy.dndHandler.label === undefined) {
+                  cushy.dndHandler.setContent({ icon: 'mdiImage' })
+               }
+            }
             return { opacity: monitor.isDragging() ? 0.5 : 1 }
          },
       }),
@@ -50,11 +56,37 @@ export const useImageDrop = (
 
       // 2. add golden border when hovering over
       collect(monitor): CSSProperties {
+         cushy.dndHandler.setContent(
+            monitor.isOver()
+               ? {
+                    icon: 'mdiImage',
+                    label: 'Set Image',
+                    suffixIcon: 'mdiArrowDownRight',
+                 }
+               : {
+                    icon: 'mdiImage',
+                 },
+         )
          return { opacity: monitor.isOver() ? '0.5' : undefined }
+      },
+      hover(item, monitor): void {
+         const sourceOffset = monitor.getSourceClientOffset()
+         const mouseOffset = monitor.getClientOffset()
+         if (!mouseOffset) {
+            return
+         }
+         cushy.dndHandler.updatePosition(mouseOffset.x, mouseOffset.y)
+         return
       },
 
       // 3. import as ImageL if needed
       drop(item: Drop1 | Drop2, monitor): void {
+         cushy.dndHandler.visible = false
+         cushy.dndHandler.setContent({
+            icon: 'mdiImage',
+            label: 'Drop in Slot',
+         })
+
          if (monitor.getItemType() == ItemTypes.Image) {
             const image: MediaImageL = (item as Drop1).image
             return fn(image)
@@ -78,3 +110,19 @@ export const useImageDrop = (
          throw new Error('Unknown drop type')
       },
    }))
+
+export const useImageSlotDrop = (
+   st: STATE,
+   fn: (image: MediaImageL) => void,
+): [CSSProperties, ConnectDropTarget] => {
+   return useDrop<Drop1, void, CSSProperties>(() => ({
+      accept: [ItemTypes.Image],
+      collect(monitor): CSSProperties {
+         return { outline: monitor.isOver() ? '1px solid gold' : undefined }
+      },
+      drop(item: Drop1, monitor): void {
+         const image: MediaImageL = item.image
+         return fn(image)
+      },
+   }))
+}

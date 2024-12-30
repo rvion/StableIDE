@@ -17,6 +17,7 @@ import { useRegionMonitor } from '../../csuite/regions/RegionMonitor'
 import { Trigger } from '../../csuite/trigger/Trigger'
 import { window_addEventListener } from '../../csuite/utils/window_addEventListenerAction'
 import { GlobalSearchUI } from '../../utils/electron/globalSearchUI'
+import { DnDDragIndicatorUI } from '../../widgets/galleries/dndIndicatorUI'
 import { FavBarUI } from './FavBarUI'
 import { FooterBarUI } from './FooterBarUI'
 import { ProjectUI } from './ProjectUI'
@@ -82,6 +83,7 @@ export const CushyUI = observer(function CushyUI_() {
    const textShadow = theme.global.text.shadow
    return (
       <CSuiteProvider config={cushy.csuite}>
+         <DnDDragIndicatorUI />
          <div
             id='CushyStudio'
             style={{
