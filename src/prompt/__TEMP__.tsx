@@ -133,8 +133,8 @@ export const PromptEditorUI = observer(function PromptEditorUI_(p: { promptID: F
 
    return (
       <div tw='flex flex-col gap-1 p-2'>
-         <MessageInfoUI title='instructions'> select the [from] to change the to widget </MessageInfoUI>
-         <div className='flex flex-wrap'>
+         {/* <MessageInfoUI title='instructions'> select the [from] to change the to widget </MessageInfoUI> */}
+         {/* <div className='flex flex-wrap'>
             {cushy.repository.getWidgetsByType<Field_prompt>('prompt').map((widget) => (
                <ToggleButtonUI //
                   toggleGroup='prompt-link'
@@ -144,15 +144,10 @@ export const PromptEditorUI = observer(function PromptEditorUI_(p: { promptID: F
                   onValueChange={() => (uist.currentlyLinkedWidget = widget)}
                />
             ))}
-         </div>
-         <textarea
-            onChange={(e) => uist.setInternalText(e.target.value)}
-            tw='basic-cushy-input bg-white'
-            value={uist.linkedText}
-         />
+         </div> */}
 
          <div ref={uist.mountRef}></div>
-         <Button onClick={() => uist.setInternalText(uist.linkedText + '!')}>add "!"</Button>
+         {/* <Button onClick={() => uist.setInternalText(uist.linkedText + '!')}>add "!"</Button>
          <SelectUI<X>
             value={() => ({ id: p.promptID, label: 'current' })}
             getLabelText={(i) => i.label ?? i.id}
@@ -169,7 +164,7 @@ export const PromptEditorUI = observer(function PromptEditorUI_(p: { promptID: F
                const allPrompts = cushy.repository.getWidgetsByType<Field_prompt>('prompt')
                return allPrompts.map((i) => ({ id: i.id, label: i.text ?? '' }))
             }}
-         />
+         /> */}
       </div>
    )
 })

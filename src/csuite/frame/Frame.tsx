@@ -117,8 +117,7 @@ export const Frame = observer(
             ...rest
         } = p
 
-      const csuite = useCSuite()
-      const enableTriggerOnPress = csuite.enableRollingClick ?? true
+      const enableTriggerOnPress = true // (bird_d): Assuming this is for triggering onMouseDown on various components?
 
       // TEMPLATE -------------------------------------------
       // const theme = useTheme().value

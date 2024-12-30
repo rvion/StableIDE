@@ -16,7 +16,7 @@ export const ImageErrorDisplayUI = observer(function ImageErrorDisplayUI_(p: {
       <Frame
          className={p.className}
          tw='h-full w-full select-none flex-col items-center justify-center !border-dotted text-center'
-         roundness={theme.inputRoundness}
+         roundness={theme.global.roundness}
          border={{ lightness: 0.8, chroma: 0.1, hue: 0 }}
          base={{ chroma: 0.1, hue: 0 }}
          square

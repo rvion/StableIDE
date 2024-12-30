@@ -13,7 +13,7 @@ export type PanelComfyHostProps = {
 export const PanelComfyHostsUI = observer(function PanelComfyHostsUI_(p: PanelComfyHostProps) {
    const allHosts = cushy.hosts
    const mainHost = cushy.mainHost
-   const csuite = useCSuite()
+   const theme = cushy.preferences.theme.value
 
    return (
       <div tw='flex h-full w-full flex-col gap-2 p-2'>
@@ -24,7 +24,7 @@ export const PanelComfyHostsUI = observer(function PanelComfyHostsUI_(p: PanelCo
                border
                line
                tw='flex flex-grow'
-               roundness={csuite.inputRoundness}
+               roundness={theme.global.roundness}
             >
                <SelectUI
                   tooltip='The Primary host is the one used for typings, and to send prompts to by default.'

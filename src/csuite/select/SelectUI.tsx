@@ -5,7 +5,6 @@ import { useMemo } from 'react'
 
 import { Button } from '../button/Button'
 import { csuiteConfig } from '../config/configureCsuite'
-import { useCSuite } from '../ctx/useCSuite'
 import { Frame } from '../frame/Frame'
 import { Ikon } from '../icons/iconHelpers'
 import { RevealUI } from '../reveal/RevealUI'
@@ -17,9 +16,9 @@ import { SelectValueContainerUI } from './SelectValueContainerUI'
 // TODO fork this component
 export const SelectUI = observer(function SelectUI_<T>(p: SelectProps<T>) {
    const select = useMemo(() => new AutoCompleteSelectState(/* st, */ p), [])
-   const csuite = useCSuite()
    const PopupComp = p.slotPopupUI ?? SelectPopupUI
    const AnchorContentComp = p.slotAnchorContentUI ?? AnchorContentUI
+   const theme = cushy.preferences.theme.value
 
    // if (p.readonly) return <AnchorContentComp select={select} />
    if (p.readonly)
@@ -77,10 +76,10 @@ export const SelectUI = observer(function SelectUI_<T>(p: SelectProps<T>) {
                p.hasErrors && 'rsx-field-error',
             ]}
             align
-            base={csuite.inputContrast}
-            border={csuite.inputBorder}
-            roundness={csuite.inputRoundness}
-            dropShadow={cushy.theme.value.inputShadow}
+            base={theme.global.contrast}
+            border={theme.global.border}
+            roundness={theme.global.roundness}
+            dropShadow={cushy.preferences.theme.value.global.shadow}
             expand // </RevealUI>={p.expand ?? true}
             tabIndex={0}
             tooltip={p.tooltip}
@@ -127,18 +126,17 @@ export const AnchorContentUI = observer(function AnchorContentUI_<OPTION>(p: {
    if (p.select.p.slotDisplayValueUI != null) return <p.select.p.slotDisplayValueUI select={p.select} />
    const displayValue = p.select.displayValueInAnchor
 
-   const csuite = useCSuite()
-   if (!csuite.showSelectIcons)
-      return (
-         <div tw={['w-full', 'grid', 'p-input']} style={{ gridTemplateColumns: '1fr' }}>
-            <SelectValueContainerUI //
-               valuesCount={p.select.values.length}
-               wrap={p.select.p.wrap ?? false}
-            >
-               {displayValue}
-            </SelectValueContainerUI>
-         </div>
-      )
+   // if (!cushy.preferences.interface.value.widget.showSelectIcons)
+   //    return (
+   //       <div tw={['w-full', 'grid', 'p-input']} style={{ gridTemplateColumns: '1fr' }}>
+   //          <SelectValueContainerUI //
+   //             valuesCount={p.select.values.length}
+   //             wrap={p.select.p.wrap ?? false}
+   //          >
+   //             {displayValue}
+   //          </SelectValueContainerUI>
+   //       </div>
+   //    )
 
    return WRAP_SHOULD_NOT_IMPACT_ICONS ? (
       // IN THIS BRANCH, LAYOUT IS DONE VIA GRID

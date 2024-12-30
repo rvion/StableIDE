@@ -1,7 +1,7 @@
 import type { OpenRouter_ModelInfo } from '../../src/csuite/openrouter/OpenRouter_ModelInfo'
 
 import { InputStringUI } from '../../src/csuite/input-string/InputStringUI'
-import { LegacyFieldUI } from '../../src/panels/PanelConfig/LegacyFieldUI'
+import { LegacyFieldUI } from '../../src/panels/PanelPreferences/LegacyFieldUI'
 
 const _defaultSystemPrompt = [
    `You are an assistant in charge of converting image prompt written in nataural language to sequence of danbooru tags, coma separated`,

@@ -7,7 +7,6 @@ import { observer } from 'mobx-react-lite'
 import { forwardRef, useState } from 'react'
 
 import { Button } from '../button/Button'
-import { useCSuite } from '../ctx/useCSuite'
 import { extractConfigValue } from '../errors/extractConfig'
 import { Frame, type FrameProps } from '../frame/Frame'
 import { IkonOf } from '../icons/iconHelpers'
@@ -98,7 +97,7 @@ export const InputStringUI = observer(
       let inputTailwind: string | ClassLike[] | undefined
       let visualHelper: ReactElement<any, any> | undefined
 
-      const theme = cushy.theme.value
+      const theme = cushy.preferences.theme.value
       const interfacePref = cushy.preferences.interface.value
 
       switch (p.type) {
@@ -118,13 +117,12 @@ export const InputStringUI = observer(
             inputTailwind = 'w-full h-full !outline-none bg-transparent px-2'
             break
       }
-      const csuite = useCSuite()
       const input = (
          <input
             ref={ref}
             size={autoResize ? 1 : undefined}
             className={p.inputClassName}
-            style={{ fontSize: `${theme.inputText}pt`, ...p.inputStyle }}
+            style={{ fontSize: `${theme.global.text.size}pt`, ...p.inputStyle }}
             tw={[inputClassNameWhenAutosize, inputTailwind]}
             type={reveal ? 'text' : p.type}
             pattern={extractConfigValue(p.pattern)?.toString()}
@@ -164,22 +162,22 @@ export const InputStringUI = observer(
             }}
          />
       )
-      const dropShadow = p.dropShadow ?? theme.inputShadow
+      const dropShadow = p.dropShadow ?? theme.global.shadow
       return (
          <Frame
             noColorStuff={p.noColorStuff}
             className={p.className}
             style={p.style}
-            base={csuite.inputContrast}
+            base={theme.global.contrast}
             text={{ contrast: 1, chromaBlend: 1 }}
             hover={3}
             dropShadow={dropShadow}
-            roundness={csuite.inputRoundness}
+            roundness={theme.global.roundness}
             role='textbox'
             border={
                isDirty //
                   ? { contrast: 0.3, hue: knownOKLCHHues.warning, chroma: 0.2 }
-                  : csuite.inputBorder
+                  : theme.global.border
             }
             tw={[
                //

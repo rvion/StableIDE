@@ -34,7 +34,7 @@ export const WidgetHeaderContainerUI = observer(function WidgetHeaderContainerUI
 
                // 💬 2024-06-03 rvion, changing 'items-center' to 'items-start'
                // as well as adding some `h-input` class to <WidgetLabelContainerUI />
-               'items-start',
+               'items-center',
             ]}
             // hover={2} // 🚂 we prefer to not have this hover
             triggerOnPress={triggerOnPress ?? { startingState: isCollapsed, toggleGroup: 'collapse' }}

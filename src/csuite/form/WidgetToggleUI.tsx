@@ -18,7 +18,7 @@ export const WidgetToggleUI = observer(function WidgetToggleUI_(p: WidgetToggleP
    return (
       <InputBoolUI // toggle to activate/deactivate the optional widget
          toggleGroup={p.field.id}
-         tw='UI-WidgetToggle items-center self-stretch'
+         tw='UI-WidgetToggle !self-center'
          className={p.className}
          value={isActive}
          expand={false}

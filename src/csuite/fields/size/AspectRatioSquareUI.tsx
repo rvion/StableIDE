@@ -7,17 +7,18 @@ import { Frame } from '../../frame/Frame'
 
 export const AspectRatioSquareUI = observer(function AspectRatioSquareUI_(p: { sizeHelper: Field_size }) {
    const uist = p.sizeHelper
-   const csuite = useCSuite()
    const ratioDisplaySize =
-      csuite.inputHeight * 2.05 * parseFloat(getComputedStyle(document.documentElement).fontSize)
-   const theme = cushy.theme.value
+      cushy.preferences.interface.value.inputHeight *
+      2.05 *
+      parseFloat(getComputedStyle(document.documentElement).fontSize)
+   const theme = cushy.preferences.theme.value
 
    return (
       <Frame // Aspect ratio display background
-         border={csuite.inputBorder}
-         roundness={csuite.inputRoundness}
-         base={csuite.inputContrast}
-         dropShadow={theme.inputShadow}
+         border={theme.global.border}
+         roundness={theme.global.roundness}
+         base={theme.global.contrast}
+         dropShadow={theme.global.shadow}
          hover
          square
          tw={[

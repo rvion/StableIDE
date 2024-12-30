@@ -17,14 +17,13 @@ export const WidgetSizeX_LineUI = observer(function WidgetSize_LineUI_(p: {
    // const ratio = uist.width / uist.height
    // const ratioIcon = ratio == 1.0 ? 'mdiApproximatelyEqual' : ratio > 1.0 ? 'mdiCropLandscape' : 'mdiCropPortrait'
 
-   const csuite = useCSuite()
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
 
    return (
       <div className='full flex flex-1 gap-1'>
          <Frame //Joined container
-            border={csuite.inputBorder}
-            roundness={csuite.inputRoundness}
+            border={theme.global.border}
+            roundness={theme.global.roundness}
             align
             col
             expand

@@ -34,7 +34,7 @@ export class BuilderMisc<Schemaᐸ_ᐳ extends SchemaAndAliasesᐸ_ᐳ> extends 
          height: 512,
          width: 512,
       }
-      return this.size_({ default: def, ...config })
+      return this.size_({ collapsed: false, default: def, ...config })
    }
 
    seed(config: Field_seed_config = {}): Schemaᐸ_ᐳ['Seed'] {

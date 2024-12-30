@@ -24,7 +24,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
    return (
       <>
          <Frame //
-            base={cushy.theme.value.appbar ?? { contrast: -0.077 }}
+            base={cushy.preferences.theme.value.appbar ?? { contrast: -0.077 }}
             tw='flex overflow-auto px-1'
             // style={{ width: `${size + 20}px` }}
          >
@@ -160,7 +160,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                         <Frame
                            border={20}
                            tooltip={app.name}
-                           roundness={cushy.theme.value.inputRoundness}
+                           roundness={cushy.preferences.theme.value.global.roundness}
                            key={app.id}
                            style={{ width: tempSize, height: tempSize }}
                            tw='flex overflow-clip object-contain'

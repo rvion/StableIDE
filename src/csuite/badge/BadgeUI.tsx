@@ -50,6 +50,7 @@ export const BadgeUI = observer(function BadgeUI_({
             // 'h-1/2',
             'items-center',
             'select-none',
+            'h-2/3',
          ]}
          hover={hasAction}
          base={{

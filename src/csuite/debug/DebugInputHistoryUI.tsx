@@ -10,7 +10,7 @@ export const DebugInputHistoryUI = observer(function DebugInputHistoryUI_(p: {})
             return (
                <Frame //
                   tw='px-2'
-                  roundness={cushy.theme.value.inputRoundness}
+                  roundness={cushy.preferences.theme.value.global.roundness}
                   base={{ contrast: -0.075 }}
                >
                   {text}

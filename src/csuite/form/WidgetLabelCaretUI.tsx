@@ -2,11 +2,10 @@ import type { Field } from '../model/Field'
 
 import { observer } from 'mobx-react-lite'
 
-import { Ikon } from '../../csuite/icons/iconHelpers'
-import { useCSuite } from '../ctx/useCSuite'
+import { Frame } from '../frame/Frame'
 import { WidgetLabelCaretPlaceholderUI } from './WidgetLabelCaretPlaceholderUI'
 
-export const LabelCaretWidth: "1rem" = '1rem'
+export const LabelCaretWidth: '1rem' = '1rem'
 
 export type WidgetLabelCaretProps = {
    className?: string
@@ -16,8 +15,10 @@ export type WidgetLabelCaretProps = {
 }
 
 export const WidgetLabelCaretUI = observer(function WidgetLabelCaretUI_(p: WidgetLabelCaretProps) {
-   const csuite = useCSuite()
-   if (!csuite.showExpandCarets) return null
+   const preferences = cushy.preferences
+
+   // (bird_d): This is always true in cushy, does not have an option.
+   // if (!preferences.interface.value.widgetshowExpandCarets) return null
    if (p.field.parent == null) return null
    if (!p.field.isCollapsed && !p.field.isCollapsible) {
       const showPlaceholder = p.placeholder ?? true
@@ -41,33 +42,20 @@ const WidgetLabelCaretAlwaysUI = observer(function WidgetLabelCaretAlways_({
    className?: string
    isCollapsed: boolean
 }) {
-   // 🔴 TODO: caret
-   if (isCollapsed)
-      return (
-         <Ikon.mdiChevronRight //
-            className={className}
-            tw={[
-               //
-               'UI-WidgetLabelCaret minh-widget self-start',
-               'COLLAPSE-PASSTHROUGH shrink-0',
-            ]}
-         />
-      )
+   // 🔴 TODO:caret
+
    return (
-      <Ikon.mdiChevronDown
-         //
+      <Frame
          className={className}
          tw={[
             //
             'UI-WidgetLabelCaret minh-widget self-start',
-            'COLLAPSE-PASSTHROUGH shrink-0 opacity-35',
+            'COLLAPSE-PASSTHROUGH shrink-0',
+            'px-0.5',
          ]}
+         // TODO(bird_d/variables/negative): isCollapsed should be isExpanded. We should try to always use a "positive" version of an action.
+         icon={isCollapsed ? 'mdiChevronRight' : 'mdiChevronDown'}
+         square
       />
    )
-   // return (
-   //     <div
-   //         icon={isCollapsed ? 'mdiChevronRight' : 'mdiChevronDown'}
-   //         tw={['WIDGET-COLLAPSE-BTN COLLAPSE-PASSTHROUGH', 'opacity-30 hover:opacity-100 cursor-pointer']}
-   //     />
-   // )
 })

@@ -36,13 +36,13 @@ export const PanelHeaderUI = observer(function PanelHeader({
    //
 } & FrameProps) {
    const state = usePanel()
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
 
    if (!state.showHeader) {
       return (
          <Button
             tw='absolute -top-1 z-[1000] !rounded-t-none opacity-90'
-            style={{ right: theme.inputRoundness > 30 ? `${theme.inputRoundness}px` : '30px' }}
+            style={{ right: theme.global.roundness > 30 ? `${theme.global.roundness}px` : '30px' }}
             size='xs'
             square
             icon='mdiChevronDown'
@@ -53,7 +53,7 @@ export const PanelHeaderUI = observer(function PanelHeader({
       )
    }
 
-   const adjustedPadding = cushy.theme.value.inputRoundness + 2
+   const adjustedPadding = cushy.preferences.theme.value.global.roundness + 2
 
    return (
       <RevealUI

@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { useCSuite } from '../../csuite/ctx/useCSuite'
 import { fieldActionMenu } from '../../csuite/form/fieldActionMenu'
 import { WidgetLabelContainerUI } from '../../csuite/form/WidgetLabelContainerUI'
 import { Frame } from '../../csuite/frame/Frame'
@@ -22,18 +21,20 @@ const CushyShellUI = observer(function CushySHell(
    const field = p.field
    const utils = p.presenter.utils
    const provenance = useProvenance()
-   const csuite = useCSuite()
    const isCollapsed = ((): boolean => {
       if (p.collapsible != null) return p.collapsible // UI config most important
       if (!p.field.isCollapsible) return false
       return field.isCollapsed
    })()
    if (p.field.isHidden && !p.shouldShowHiddenFields) return null
+
+   const theme = cushy.preferences.theme.value
+
    let WUI: ReactNode = (
       <Frame
          className={p.className ?? undefined}
          tw={['UI-WidgetWithLabel !border-b-0 !border-l-0 !border-r-0']}
-         roundness={csuite.inputRoundness}
+         roundness={theme.global.roundness}
          base={field.background}
          // border={p.card ? 1 : field.border}
          {...p.field.config.box}

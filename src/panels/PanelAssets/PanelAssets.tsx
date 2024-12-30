@@ -70,12 +70,12 @@ const AssetContent = observer(function AssetContent_(p: { st: PanelAssetsState }
  */
 const AssetPageLora = observer(function AssetPageLora_(p: { st: PanelAssetsState }) {
    const loras = cushy.schema.getLoras()
-   const csuite = useCSuite()
 
    if (!cushy.mainHost.isConnected) {
       return 'Not connected to host, can not display Loras'
    }
 
+   const theme = cushy.preferences.theme.value
    const selectedItems = p.st.props.selected
 
    return (
@@ -112,7 +112,7 @@ const AssetPageLora = observer(function AssetPageLora_(p: { st: PanelAssetsState
                   border={false}
                   base={selected ? { contrast: 0.1, chroma: 0.11 } : { contrast: 0 }}
                   hover
-                  roundness={csuite.inputRoundness}
+                  roundness={theme.global.roundness}
                   onMouseDown={(e) => {
                      e.stopPropagation()
                      if (e.ctrlKey && e.shiftKey) {

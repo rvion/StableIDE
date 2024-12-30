@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite'
 
 import { Button } from '../../button/Button'
 import { UI } from '../../components/UI'
-import { useCSuite } from '../../ctx/useCSuite'
 import { WidgetSingleLineSummaryUI } from '../../form/WidgetSingleLineSummaryUI'
 
 // HEADER
@@ -13,15 +12,15 @@ export const WidgetGroup_LineUI = observer(function WidgetGroup_LineUI_(p: {
    //
    field: Field_group<Field_group_types<any>>
 }) {
-   const csuite = useCSuite()
    const field = p.field
    if (p.field.serial.collapsed)
       return <WidgetSingleLineSummaryUI>{p.field.summary}</WidgetSingleLineSummaryUI>
 
+   const preferences = cushy.preferences
    const presets = field.config.presets
    const presetCount = presets?.length ?? 0
    const out: ReactNode[] = []
-   const showFoldButtons = csuite.showFoldButtons
+   const showFoldButtons = preferences.interface.value.widget.showFoldButtons
    const hasFoldableSubfields = field.hasFoldableSubfields
    if (presets && presetCount > 0 && field.config.presetButtons) {
       out.push(

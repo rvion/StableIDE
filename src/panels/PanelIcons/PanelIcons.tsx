@@ -49,7 +49,7 @@ export const PanelIconUI = observer(function PanelIconUI_(p: NO_PROPS) {
    const containerHeight = size.height ?? 100
    const nbCols = Math.floor(containerWidth / itemWidth) || 1
    const nbRows = Math.ceil(total / nbCols) + 1
-   const csuite = useCSuite()
+   const theme = cushy.preferences.theme.value
 
    return (
       <div tw='flex h-full w-full flex-col'>
@@ -58,8 +58,8 @@ export const PanelIconUI = observer(function PanelIconUI_(p: NO_PROPS) {
             <SpacerUI />
             <Frame // TODO(bird_d): (FIX-FIELD) Should use a "row" component here? Need a component so I don't have to keep adding the theming over and over for this
                align
-               border={csuite.inputBorder}
-               roundness={csuite.inputRoundness}
+               border={theme.global.border}
+               roundness={theme.global.roundness}
             >
                <InputStringUI
                   // autoResize

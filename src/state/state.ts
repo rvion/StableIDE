@@ -25,7 +25,7 @@ import type { HostL } from '../models/Host'
 import type { MediaImageL } from '../models/MediaImage'
 import type { ProjectL } from '../models/Project'
 import type { StepL } from '../models/Step'
-import type { ConfigMode } from '../panels/PanelConfig/PanelConfig'
+import type { PreferenceMode } from '../panels/PanelPreferences/PanelPreferences'
 import type { Database } from '../supa/database.types'
 import type { CleanedEnumResult } from '../types/EnumUtils'
 import type { StepOutput } from '../types/StepOutput'
@@ -140,7 +140,7 @@ export class STATE {
    sid: Maybe<string> = null
    comfyStatus: Maybe<ComfyStatus> = null
    configFile: JsonFile<ConfigFile>
-   configMode: ConfigMode = 'legacy'
+   configMode: PreferenceMode = 'legacy'
    updater: GitManagedFolder
    hovered: Maybe<StepOutput> = null
    electron: ElectronUtils
@@ -964,7 +964,6 @@ export class STATE {
       writeFileSync(absPath, content, 'utf-8')
    }
 
-   theme = themeConf
    preferences = {
       interface: interfaceConf,
       system: systemConf,
@@ -974,7 +973,7 @@ export class STATE {
    csuite: CSuiteConfig = new CSuite_ThemeCushy(this)
 
    get themeText(): Tint {
-      return run_tint(this.theme.value.text)
+      return run_tint(this.preferences.theme.value.text)
    }
 
    resolveFromRoot(relativePath: RelativePath): AbsolutePath {

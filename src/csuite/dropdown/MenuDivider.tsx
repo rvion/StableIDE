@@ -13,7 +13,7 @@ export const MenuDivider = observer(function Divider_(p: { children?: ReactNode 
                line
                border
                tw='z-1 !h-widget relative justify-self-center px-2'
-               roundness={cushy.theme.value.inputRoundness}
+               roundness={cushy.preferences.theme.value.global.roundness}
             >
                {p.children}
             </Frame>

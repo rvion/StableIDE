@@ -6,7 +6,7 @@ export const MenuThemeUI = observer(function MenuThemeUI_(p: {}) {
    return (
       <Dropdown //
          title='Theme'
-         content={() => <div tw='[width:38rem]'>{cushy.theme.UI()}</div>}
+         content={() => <div tw='[width:38rem]'>{cushy.preferences.theme.UI()}</div>}
       />
    )
 })

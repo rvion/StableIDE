@@ -71,8 +71,8 @@ export const OutputPreview_ContentUI = observer(function OutputPreview_ContentUI
             tw='h-full'
             square
             // border={}
-            roundness={theme.inputRoundness}
-            dropShadow={theme.inputShadow}
+            roundness={theme.global.roundness}
+            dropShadow={theme.global.shadow}
             tooltip='Step was null'
             icon={'mdiAlert'}
             iconSize='80%'
@@ -96,8 +96,8 @@ export const OutputPreview_ContentUI = observer(function OutputPreview_ContentUI
                ? { contrast: 0.4, chromaBlend: 100, hueShift: 0 }
                : { contrast: 0.2, chromaBlend: 0, hueShift: 0 }
          }
-         roundness={theme.inputRoundness}
-         dropShadow={theme.inputShadow}
+         roundness={theme.global.roundness}
+         dropShadow={theme.global.shadow}
          // onClick={() => cushy.layout.open('Output', { stepID: step.id })}
       >
          {getOutput(p.step, p.output)}

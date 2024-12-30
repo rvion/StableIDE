@@ -3,7 +3,6 @@ import type { HostL } from '../../models/Host'
 import { observer } from 'mobx-react-lite'
 
 import { Button } from '../../csuite/button/Button'
-import { useCSuite } from '../../csuite/ctx/useCSuite'
 import { Frame } from '../../csuite/frame/Frame'
 import { Ikon } from '../../csuite/icons/iconHelpers'
 import { LegacyMessageUI } from '../../csuite/inputs/LegacyMessageUI'
@@ -15,7 +14,7 @@ export const ConnectionInfoUI = observer(function ConnectionInfoUI_(p: { host: H
    const host = p.host
    const size = host.schema?.size ?? 0
    const connected = p.host.isConnected
-   const csuite = useCSuite()
+
    return (
       <RevealUI
          showDelay={0}

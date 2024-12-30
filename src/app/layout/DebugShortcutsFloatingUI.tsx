@@ -12,13 +12,13 @@ import { Frame, type FrameProps } from '../../csuite/frame/Frame'
 */
 
 export const DebugShortcutsFloatingUI = observer(function DebugShortcutsFloating(p: FrameProps) {
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
 
    return (
       <Frame //
          tw='pointer-events-none absolute bottom-14 left-4 flex flex-col gap-2 p-2 opacity-80'
-         roundness={theme.inputRoundness}
-         dropShadow={theme.inputShadow}
+         roundness={theme.global.roundness}
+         dropShadow={theme.global.shadow}
          {...p}
       >
          <DebugControlsUI />

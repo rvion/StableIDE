@@ -10,14 +10,13 @@ import { WigetSizeXUI } from './WigetSizeXUI'
 
 export const AspectLockButtonUI = observer(function AspectLockButtonUI_(p: { sizeHelper: Field_size }) {
    const uist = p.sizeHelper
-   const csuite = useCSuite()
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
 
    return (
       <Frame
-         border={csuite.inputBorder}
-         roundness={csuite.inputRoundness}
-         dropShadow={theme.inputShadow}
+         border={theme.global.border}
+         roundness={theme.global.roundness}
+         dropShadow={theme.global.shadow}
          align
          col
       >
@@ -59,7 +58,7 @@ export const AspectLockButtonUI = observer(function AspectLockButtonUI_(p: { siz
                <Button
                   square
                   size='input'
-                  base={csuite.inputContrast}
+                  base={theme.global.contrast}
                   tw='flex flex-1 !gap-0 !rounded-none !px-0.5'
                   suffixIcon={'mdiChevronDown'}
                />

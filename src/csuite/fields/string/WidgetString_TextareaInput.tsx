@@ -10,10 +10,11 @@ export const WidgetString_TextareaInput = observer(function WidgetString_Textare
    readonly?: boolean
 }) {
    const field = p.field
-   const csuite = useCSuite()
    if (p.readonly) return <pre>{field.value_or_zero}</pre>
+
+   const theme = cushy.preferences.theme.value
    return (
-      <Frame base={csuite.inputContrast} expand>
+      <Frame base={theme.global.contrast} expand>
          {/* <pre>{JSON.stringify(Object.keys(p))}</pre> */}
          <textarea
             style={{

@@ -64,7 +64,7 @@ export const _PieMenuItem = observer(function _PieMenuItem_(p: MenuItemProps) {
          ? disabled()
          : disabled
 
-   const csuite = useCSuite()
+   const theme = cushy.preferences.theme.value
 
    return (
       <Frame
@@ -74,9 +74,9 @@ export const _PieMenuItem = observer(function _PieMenuItem_(p: MenuItemProps) {
             contrast: active ? 0.1 : 0,
             chroma: active ? 0.1 : undefined,
          }}
-         dropShadow={cushy.theme.value.inputShadow}
-         roundness={csuite.inputRoundness}
-         border={csuite.inputBorder}
+         dropShadow={theme.global.shadow}
+         roundness={theme.global.roundness}
+         border={theme.global.border}
          // hover={{ contrast: 0.15, chroma: 0.2, hueShift: 180 }}
          hover={15}
          onClick={async (ev) => {

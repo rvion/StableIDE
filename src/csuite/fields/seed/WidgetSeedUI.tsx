@@ -11,7 +11,7 @@ import { InputNumberUI } from '../../input-number/InputNumberUI'
 export const WidgetSeedUI = observer(function WidgetSeedUI_(p: { field: Field_seed }) {
    const field = p.field
    const val = field.value_or_zero
-   const csuite = useCSuite()
+   const theme = cushy.preferences.theme.value
 
    return (
       <Frame
@@ -22,8 +22,8 @@ export const WidgetSeedUI = observer(function WidgetSeedUI_(p: { field: Field_se
             // bird_d: Need to put this as a tw alias or make a wrapper component
          ]}
          align
-         roundness={csuite.inputRoundness}
-         border={csuite.inputBorder}
+         roundness={theme.global.roundness}
+         border={theme.global.border}
       >
          <ToggleButtonUI // Random
             toggleGroup={field.id}

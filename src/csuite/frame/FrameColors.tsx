@@ -125,7 +125,7 @@ export function computeColors(
    if (boxText != null) variables.color = KBase.tintFg(boxText).toOKLCH()
 
    // TEXT-SHADOW
-   if (box.textShadow) variables.textShadow = `0px 0px 2px ${KBase.tintFg(box.textShadow).toOKLCH()}`
+   // if (box.textShadow) variables.textShadow = `0px 0px 2px ${KBase.tintFg(box.textShadow).toOKLCH()}`
 
    // BORDER
    // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴

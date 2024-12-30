@@ -17,8 +17,7 @@ export const ListControlsUI = observer(function ListControlsUI_({
    field: IWidgetListLike
    children?: React.ReactNode
 }) {
-   const csuite = useCSuite()
-
+   const showFoldButtons = cushy.preferences.interface.value.widget.showFoldButtons
    return (
       <div
          tw='sticky top-0 z-[50] flex w-full items-center gap-0.5'
@@ -32,8 +31,8 @@ export const ListControlsUI = observer(function ListControlsUI_({
          {children}
          <div tw='flex-1' />
          <ListButtonClearUI field={field} />
-         {csuite.showFoldButtons && <ListButtonFoldUI field={field} />}
-         {csuite.showFoldButtons && <ListButtonUnfoldUI field={field} />}
+         {showFoldButtons && <ListButtonFoldUI field={field} />}
+         {showFoldButtons && <ListButtonUnfoldUI field={field} />}
          {/* <ListButtonAdd100ItemsUI field={field} /> */}
       </div>
    )

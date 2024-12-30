@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite'
 import { createRef, useLayoutEffect, useMemo } from 'react'
 
 import { Button } from '../button/Button'
-import { useCSuite } from '../ctx/useCSuite'
 import { Frame, type FrameProps } from '../frame/Frame'
 import { IkonOf } from '../icons/iconHelpers'
 import { clamp } from '../utils/clamp'
@@ -105,8 +104,7 @@ class ResizableFrameStableState {
 export const ResizableFrame = observer(function ResizableFrame_(p: ResizableFrameProps) {
    // create stable state, that we can programmatically mutate witout caring about stale references
    const uist = useMemo(() => new ResizableFrameStableState(p), [])
-   const csuite = useCSuite()
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
 
    const { currentSize, ...props } = p
    return (
@@ -117,9 +115,9 @@ export const ResizableFrame = observer(function ResizableFrame_(p: ResizableFram
             gap: '0px',
             ...p.style,
          }}
-         border={theme.inputBorder}
-         dropShadow={theme.inputShadow}
-         roundness={csuite.inputRoundness}
+         border={theme.global.border}
+         dropShadow={theme.global.shadow}
+         roundness={theme.global.roundness}
          {...props}
       >
          {p.header && (
@@ -135,7 +133,7 @@ export const ResizableFrame = observer(function ResizableFrame_(p: ResizableFram
          <Frame // Content
             ref={uist.containerRef}
             tw='w-full flex-grow overflow-auto'
-            base={csuite.inputContrast}
+            base={theme.global.contrast}
             style={{
                borderBottomLeftRadius: '0px',
                borderBottomRightRadius: '0px',
@@ -148,7 +146,7 @@ export const ResizableFrame = observer(function ResizableFrame_(p: ResizableFram
 
          <Frame // Footer
             className='flex w-full flex-col'
-            base={csuite.inputContrast}
+            base={theme.global.contrast}
          >
             <Frame
                tw='inset-0 z-10 flex h-4 cursor-ns-resize items-center justify-center'

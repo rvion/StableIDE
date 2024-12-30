@@ -16,6 +16,9 @@ import { type $prefabModelSD15andSDXL, prefabModelSD15andSDXL } from '../SD15/_m
 
 export type $CushySDXLUI = X.XGroup<{
    positive: X.XGroup<{
+      activeIndex: X.Number
+      showEditor: X.Bool
+      showOptions: X.Bool
       prompts: X.XList<X.XOptional<X.XPrompt>>
       regionalPrompt: S.SOptional<UI_regionalPrompting_v1>
       artists: X.XSelectMany_<string>
@@ -43,6 +46,9 @@ export function _cushySDXLSchema(b: X.Builder): $CushySDXLUI {
    return b.fields({
       positive: b.fields(
          {
+            activeIndex: b.int({ default: 0, hidden: true }),
+            showEditor: b.bool({ default: true, hidden: true }),
+            showOptions: b.bool({ default: true, hidden: true }),
             prompts: b
                .prompt({
                   icon: 'mdiPlusBoxOutline',

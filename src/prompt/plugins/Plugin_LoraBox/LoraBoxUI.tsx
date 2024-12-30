@@ -26,7 +26,7 @@ export const LoraBoxUI = observer(function LoraBoxUI_(p: {
    const associatedText = loraMetadata?.text ?? ''
    const associatedUrl = loraMetadata?.url ?? ''
    const weighted = p.weightedASTNode
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
 
    // const numbers = def.ref.node.getChildren('Number')
    return (
@@ -34,9 +34,9 @@ export const LoraBoxUI = observer(function LoraBoxUI_(p: {
          <Frame //Join Lora selection and Delete Button
             align
             expand
-            border={theme.inputBorder}
-            dropShadow={theme.inputShadow}
-            roundness={theme.inputRoundness}
+            border={theme.global.border}
+            dropShadow={theme.global.shadow}
+            roundness={theme.global.roundness}
          >
             <SelectUI<string>
                value={() => loraName}
@@ -125,9 +125,9 @@ export const LoraBoxUI = observer(function LoraBoxUI_(p: {
                tw='w-full'
                align
                expand
-               border={theme.inputBorder}
-               dropShadow={theme.inputShadow}
-               roundness={theme.inputRoundness}
+               border={theme.global.border}
+               dropShadow={theme.global.shadow}
+               roundness={theme.global.roundness}
             >
                <InputStringUI
                   //
@@ -167,9 +167,9 @@ export const LoraBoxUI = observer(function LoraBoxUI_(p: {
                tw='w-full'
                align
                expand
-               border={theme.inputBorder}
-               dropShadow={theme.inputShadow}
-               roundness={theme.inputRoundness}
+               border={theme.global.border}
+               dropShadow={theme.global.shadow}
+               roundness={theme.global.roundness}
             >
                <InputStringUI // TODO(bird_d): Get this from the lora metadata itself?
                   type='text'

@@ -13,56 +13,54 @@ import { openInVSCode } from '../../utils/electron/openInVsCode'
 import { PanelComfyHostsUI } from '../PanelComfyHosts/PanelComfyHostsUI'
 import { LegacyOptions } from './LegacyOptions'
 
-export type ConfigMode = 'hosts' | 'input' | 'interface' | 'legacy' | 'system' | 'theme'
+export type PreferenceMode = 'hosts' | 'input' | 'interface' | 'legacy' | 'system' | 'theme'
 
-export const PanelConfig = new Panel({
-   name: 'Config',
-   icon: 'mdiCogOutline',
+export const PanelPreferences = new Panel({
+   name: 'Preferences',
+   icon: 'mdiCog',
    category: 'settings',
-   widget: (): FC<NO_PROPS> => PanelConfigUI,
-   header: (p): PanelHeader => ({ title: 'Config', icon: undefined }),
-   def: (): PanelConfigProps => ({}),
+   widget: (): FC<NO_PROPS> => PanelPreferencesUI,
+   header: (p): PanelHeader => ({ title: 'Preferences', icon: undefined }),
+   def: (): PanelPreferencesProps => ({}),
 })
 
-// hacky alias
-export const PanelSettings = new Panel({
-   name: 'Settings',
-   icon: 'mdiCogOutline',
-   category: 'settings',
-   widget: (): FC<NO_PROPS> => PanelConfigUI,
-   header: (p): PanelHeader => ({ title: 'Settings', icon: undefined }),
-   def: (): PanelConfigProps => ({}),
-})
+export type PanelPreferencesProps = NO_PROPS
 
-export type PanelConfigProps = NO_PROPS
+const PreferenceTabs: PreferenceMode[] = ['hosts', 'input', 'interface', 'legacy', 'system', 'theme']
 
-const configTabs: ConfigMode[] = ['hosts', 'input', 'interface', 'legacy', 'system', 'theme']
-
-export const PanelConfigUI = observer(function Panel_Config_(p: PanelConfigProps) {
+export const PanelPreferencesUI = observer(function Panel_Preferences_(p: PanelPreferencesProps) {
    const panel = usePanel()
 
    const panelState = panel.usePersistentModel('abcd', (ui) =>
       ui.fields({
-         configMode: ui.selectOneString(configTabs),
+         preferenceMode: ui.selectOneString(PreferenceTabs),
          //TODO(bird_d): Needs to be done through panel state?
          // shelfSize: ui.int(),
       }),
    )
-   // return <>test</>
-   // const xxx = cushy.forms.document((b) => {
-   //     return b.string()
-   // })
-   // return <xxx.UI />
-   const modeField = panelState.fields.configMode
-   const configMode = modeField.value
+
+   const modeField = panelState.fields.preferenceMode
    const page: JSX.Element = ((): JSX.Element => {
-      const mode = configMode
-      if (mode === 'hosts') return <PanelComfyHostsUI />
-      if (mode === 'input') return <>Not Implemented</>
-      if (mode === 'interface') return <FormUI tw='flex-1' field={cushy.preferences.interface} />
-      if (mode === 'legacy') return <LegacyOptions />
-      if (mode === 'system') return <FormUI tw='flex-1' field={cushy.preferences.system} />
-      if (mode === 'theme') return <FormUI tw='flex-1' field={cushy.theme} />
+      switch (modeField.value) {
+         case 'hosts': {
+            return <PanelComfyHostsUI />
+         }
+         case 'input': {
+            return <>Not Implemented</>
+         }
+         case 'interface': {
+            return <FormUI tw='flex-1' field={cushy.preferences.interface} />
+         }
+         case 'legacy': {
+            return <LegacyOptions />
+         }
+         case 'system': {
+            return <FormUI tw='flex-1' field={cushy.preferences.system} />
+         }
+         case 'theme': {
+            return <FormUI tw='flex-1' field={cushy.preferences.theme} />
+         }
+      }
       return <Fragment>❌ unknown tab</Fragment>
    })()
 
@@ -88,33 +86,37 @@ export const PanelConfigUI = observer(function Panel_Config_(p: PanelConfigProps
          <UI.Frame expand row tw='overflow-auto'>
             <UI.Shelf anchor='left' defaultSize={140}>
                <UI.Shelf.Column>
-                  <ConfigTabButtonUI field={modeField} mode='legacy' />
+                  <PreferenceTabButtonUI field={modeField} mode='legacy' />
                   <UI.Shelf.Group align hueShift={100}>
-                     <ConfigTabButtonUI field={modeField} mode='interface' />
-                     <ConfigTabButtonUI field={modeField} mode='input' />
-                     <ConfigTabButtonUI field={modeField} mode='theme' />
+                     <PreferenceTabButtonUI field={modeField} mode='interface' />
+                     <PreferenceTabButtonUI field={modeField} mode='input' />
+                     <PreferenceTabButtonUI field={modeField} mode='theme' />
                   </UI.Shelf.Group>
                   <UI.Shelf.Group align hueShift={200}>
-                     <ConfigTabButtonUI field={modeField} mode='system' />
-                     <ConfigTabButtonUI field={modeField} mode='hosts' />
+                     <PreferenceTabButtonUI field={modeField} mode='system' />
+                     <PreferenceTabButtonUI field={modeField} mode='hosts' />
                   </UI.Shelf.Group>
                </UI.Shelf.Column>
             </UI.Shelf>
-            <UI.Shelf.Content>{page}</UI.Shelf.Content>
+            <UI.Shelf.Content
+            // (bird_d): This isn't actually part of the shelf's content? It's part of the region's/panel's.
+            >
+               {page}
+            </UI.Shelf.Content>
          </UI.Frame>
       </UI.Panel>
    )
 })
 
-const ConfigTabButtonUI = observer(function ConfigTabButtonUI_(p: {
+const PreferenceTabButtonUI = observer(function PreferenceTabButtonUI_(p: {
    //
-   mode: ConfigMode
-   field: X.SelectOne_<ConfigMode>
+   mode: PreferenceMode
+   field: X.SelectOne_<PreferenceMode>
 }) {
    return (
       <ToggleButtonUI //
-         toggleGroup='config-tab'
-         tw='h-10 capitalize'
+         toggleGroup='preference-tab'
+         tw='!h-10 capitalize'
          value={p.field.is(p.mode)}
          text={p.mode}
          onValueChange={(_) => p.field.setValue(p.mode)}

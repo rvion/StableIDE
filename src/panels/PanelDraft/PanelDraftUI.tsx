@@ -24,6 +24,7 @@ import { DraftHeaderUI } from './DraftHeaderUI'
 import { ErrorPanelUI } from './ErrorPanelUI'
 import { run_justify, ui_justify } from './prefab_justify'
 import { RecompileUI } from './RecompileUI'
+import { ScriptWarningsUI } from './ScriptWarnings'
 
 export type PanelDraftProps = {
    draftID: DraftID
@@ -122,6 +123,7 @@ export const DraftUI = observer(function Panel_Draft_(p: { draft: Maybe<DraftL> 
                <MessageInfoUI>Autorun active: this draft will execute when the form changes</MessageInfoUI>
             )}
             <RecompileUI app={draft.app} />
+            <ScriptWarningsUI file={draft.file} />
             <Frame
                base={0}
                style={toJS(containerStyle ?? defaultContainerStyle)}

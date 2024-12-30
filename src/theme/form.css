@@ -34,6 +34,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .box.box-square.box-input {
     width: var(--input-height);
     height: var(--input-height);
@@ -41,6 +42,7 @@
     min-height: var(--input-height);
     @apply text-sm;
 }
+
 .box.box-square.box-widget {
     width: var(--widget-height);
     height: var(--widget-height);
@@ -49,28 +51,57 @@
     @apply text-sm;
 }
 
-.box.box-square.box-xs { @apply w-6  h-6; }
-.box.box-square.box-sm { @apply w-8  h-8; }
-.box.box-square.box-md { @apply w-10 h-10; }
-.box.box-square.box-lg { @apply w-12 h-12; }
-.box.box-square.box-xl { @apply w-14 h-14; }
+.box.box-square.box-xs {
+    @apply w-6 h-6;
+}
+
+.box.box-square.box-sm {
+    @apply w-8 h-8;
+}
+
+.box.box-square.box-md {
+    @apply w-10 h-10;
+}
+
+.box.box-square.box-lg {
+    @apply w-12 h-12;
+}
+
+.box.box-square.box-xl {
+    @apply w-14 h-14;
+}
 
 .box.box-input {
     height: var(--input-height);
     min-height: var(--input-height);
     @apply text-sm;
 }
+
 .box.box-widget {
     height: var(--widget-height);
     min-height: var(--widget-height);
     @apply text-sm;
 }
 
-.box.box-xs { @apply text-xs  px-0.5 py-0.5; }
-.box.box-sm { @apply text-sm  px-1   py-1; }
-.box.box-md { @apply px-2   py-1; }
-.box.box-lg { @apply text-lg  px-4   py-2; }
-.box.box-xl { @apply text-3xl px-5   py-5; }
+.box.box-xs {
+    @apply text-xs px-0.5 py-0.5;
+}
+
+.box.box-sm {
+    @apply text-sm px-1 py-1;
+}
+
+.box.box-md {
+    @apply px-2 py-1;
+}
+
+.box.box-lg {
+    @apply text-lg px-4 py-2;
+}
+
+.box.box-xl {
+    @apply text-3xl px-5 py-5;
+}
 
 
 .animated {
@@ -80,77 +111,234 @@
 /* ------------------------------------------------------------------------------------------------------- */
 
 /* CELL SIZE */
-.w-widget { width: var(--widget-height); min-width: var(--widget-height); }
-.h-widget { height: var(--widget-height); min-height: var(--widget-height); }
-.minh-widget { min-height: var(--widget-height); }
-.minw-widget { min-width: var(--widget-height); }
-.lh-widget { line-height: var(--widget-height); }
+.w-widget {
+    width: var(--widget-height);
+    min-width: var(--widget-height);
+}
 
-.h-widget-2 { height: calc(var(--widget-height) - 2px); }
-.w-widget-2 { width: calc(var(--widget-height) - 2px); }
-.minh-widget-2 { min-height: calc(var(--widget-height) - 2px); }
-.minw-widget-2 { min-width: calc(var(--widget-height) - 2px); }
-.lh-widget-2 { line-height: calc(var(--widget-height) - 2px); }
+.h-widget {
+    height: var(--widget-height);
+    min-height: var(--widget-height);
+}
+
+.minh-widget {
+    min-height: var(--widget-height);
+}
+
+.minw-widget {
+    min-width: var(--widget-height);
+}
+
+.lh-widget {
+    line-height: var(--widget-height);
+}
+
+.h-widget-2 {
+    height: calc(var(--widget-height) - 2px);
+}
+
+.w-widget-2 {
+    width: calc(var(--widget-height) - 2px);
+}
+
+.minh-widget-2 {
+    min-height: calc(var(--widget-height) - 2px);
+}
+
+.minw-widget-2 {
+    min-width: calc(var(--widget-height) - 2px);
+}
+
+.lh-widget-2 {
+    line-height: calc(var(--widget-height) - 2px);
+}
 
 /* INPUT SIZE */
-.w-input { width: var(--input-height); min-width: var(--input-height); }
-.h-input { height: var(--input-height); min-height: var(--input-height); }
-.minh-input { min-height: var(--input-height); }
-.minw-input { min-width: var(--input-height); }
-.lh-input { line-height: var(--input-height); }
+.w-input {
+    width: var(--input-height);
+    min-width: var(--input-height);
+}
 
-.h-input-2 { height: calc(var(--input-height) - 2px); }
-.w-input-2 { width: calc(var(--input-height) - 2px); }
-.minh-input-2 { min-height: calc(var(--input-height) - 2px); }
-.minw-input-2 { min-width: calc(var(--input-height) - 2px); }
-.lh-input-2 { line-height: calc(var(--input-height) - 2px); }
+.h-input {
+    height: var(--input-height);
+    min-height: var(--input-height);
+}
+
+.minh-input {
+    min-height: var(--input-height);
+}
+
+.minw-input {
+    min-width: var(--input-height);
+}
+
+.lh-input {
+    line-height: var(--input-height);
+}
+
+.h-input-2 {
+    height: calc(var(--input-height) - 2px);
+}
+
+.w-input-2 {
+    width: calc(var(--input-height) - 2px);
+}
+
+.minh-input-2 {
+    min-height: calc(var(--input-height) - 2px);
+}
+
+.minw-input-2 {
+    min-width: calc(var(--input-height) - 2px);
+}
+
+.lh-input-2 {
+    line-height: calc(var(--input-height) - 2px);
+}
 
 /* INSIDE */
-.w-inside { width: var(--inside-height); min-width: var(--inside-height); }
-.h-inside { height: var(--inside-height); min-height: var(--inside-height); }
-.minh-inside { min-height: var(--inside-height); }
-.minw-inside { min-width: var(--inside-height); }
-.lh-inside { line-height: var(--inside-height); }
+.w-inside {
+    width: var(--inside-height);
+    min-width: var(--inside-height);
+}
 
-.h-inside-2 { height: calc(var(--inside-height) - 2px); }
-.w-inside-2 { width: calc(var(--inside-height) - 2px); }
-.minh-inside-2 { min-height: calc(var(--inside-height) - 2px); }
-.minw-inside-2 { min-width: calc(var(--inside-height) - 2px); }
-.lh-inside-2 { line-height: calc(var(--inside-height) - 2px); }
+.h-inside {
+    height: var(--inside-height);
+    min-height: var(--inside-height);
+}
+
+.minh-inside {
+    min-height: var(--inside-height);
+}
+
+.minw-inside {
+    min-width: var(--inside-height);
+}
+
+.lh-inside {
+    line-height: var(--inside-height);
+}
+
+.h-inside-2 {
+    height: calc(var(--inside-height) - 2px);
+}
+
+.w-inside-2 {
+    width: calc(var(--inside-height) - 2px);
+}
+
+.minh-inside-2 {
+    min-height: calc(var(--inside-height) - 2px);
+}
+
+.minw-inside-2 {
+    min-width: calc(var(--inside-height) - 2px);
+}
+
+.lh-inside-2 {
+    line-height: calc(var(--inside-height) - 2px);
+}
 
 
 /**
  * padding to go from input size to input size
  */
-.p-input  { padding:        calc((var(--input-height) - var(--inside-height)) / 2 - 0px); } /* minus 1px to account for border */
-.py-input { padding-top:    calc((var(--input-height) - var(--inside-height)) / 2 - 0px); padding-bottom: calc((var(--input-height) - var(--inside-height)) / 2 - 0px); }
-.px-input { padding-left:   calc((var(--input-height) - var(--inside-height)) / 2 - 0px); padding-right: calc((var(--input-height) - var(--inside-height)) / 2 - 0px); }
-.pt-input { padding-top:    calc((var(--input-height) - var(--inside-height)) / 2 - 0px); }
-.pb-input { padding-bottom: calc((var(--input-height) - var(--inside-height)) / 2 - 0px); }
-.pl-input { padding-left:   calc((var(--input-height) - var(--inside-height)) / 2 - 0px); }
-.pr-input { padding-right:  calc((var(--input-height) - var(--inside-height)) / 2 - 0px); }
+.p-input {
+    padding: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+}
+
+/* minus 1px to account for border */
+.py-input {
+    padding-top: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+    padding-bottom: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.px-input {
+    padding-left: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+    padding-right: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.pt-input {
+    padding-top: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.pb-input {
+    padding-bottom: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.pl-input {
+    padding-left: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.pr-input {
+    padding-right: calc((var(--input-height) - var(--inside-height)) / 2 - 0px);
+}
 
 /**
 * padding to go from cell/widget size to input size
 */
-.p-widget  { padding:        calc((var(--widget-height) - var(--input-height)) / 2 - 0px); }
-.py-widget { padding-top:    calc((var(--widget-height) - var(--input-height)) / 2 - 0px); padding-bottom: calc((var(--widget-height) - var(--input-height)) / 2 - 0px); }
-.px-widget { padding-left:   calc((var(--widget-height) - var(--input-height)) / 2 - 0px); padding-right: calc((var(--widget-height) - var(--input-height)) / 2 - 0px); }
-.pt-widget { padding-top:    calc((var(--widget-height) - var(--input-height)) / 2 - 0px); }
-.pb-widget { padding-bottom: calc((var(--widget-height) - var(--input-height)) / 2 - 0px); }
-.pl-widget { padding-left:   calc((var(--widget-height) - var(--input-height)) / 2 - 0px); }
-.pr-widget { padding-right:  calc((var(--widget-height) - var(--input-height)) / 2 - 0px); }
+.p-widget {
+    padding: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+}
+
+.py-widget {
+    padding-top: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+    padding-bottom: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+}
+
+.px-widget {
+    padding-left: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+    padding-right: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+}
+
+.pt-widget {
+    padding-top: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+}
+
+.pb-widget {
+    padding-bottom: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+}
+
+.pl-widget {
+    padding-left: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+}
+
+.pr-widget {
+    padding-right: calc((var(--widget-height) - var(--input-height)) / 2 - 0px);
+}
 
 /**
 * padding to go from cell/widget size to input size
 */
-.p-widget-inside  { padding:        calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); }
-.py-widget-inside { padding-top:    calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); padding-bottom: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); }
-.px-widget-inside { padding-left:   calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); padding-right: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); }
-.pt-widget-inside { padding-top:    calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); }
-.pb-widget-inside { padding-bottom: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); }
-.pl-widget-inside { padding-left:   calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); }
-.pr-widget-inside { padding-right:  calc((var(--widget-height) - var(--inside-height)) / 2 - 0px); }
+.p-widget-inside {
+    padding: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.py-widget-inside {
+    padding-top: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+    padding-bottom: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.px-widget-inside {
+    padding-left: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+    padding-right: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.pt-widget-inside {
+    padding-top: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.pb-widget-inside {
+    padding-bottom: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.pl-widget-inside {
+    padding-left: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+}
+
+.pr-widget-inside {
+    padding-right: calc((var(--widget-height) - var(--inside-height)) / 2 - 0px);
+}
 
 .COLLAPSE-PASSTHROUGH:hover .WIDGET-COLLAPSE-BTN {
     opacity: 100% !important;
@@ -172,10 +360,12 @@
     outline: none;
     border: 1px solid oklch(from var(--KLR) calc(l + 0.2 * var(--DIR)) c h);
 }
+
 .csuite-input:hover,
 .csuite-basic-input:hover {
     background: oklch(from var(--KLR) calc(l + 0.06 * var(--DIR)) c h);
 }
+
 .csuite-input,
 .csuite-basic-input {
     /* 🔴 FINISH ME */
@@ -185,24 +375,9 @@
     /* border-radius: 0.2rem; */
     padding: 0 0.3rem;
 }
+
 .csuite-basic-input {
     height: var(--input-height);
-}
-
-/* Form Utils ------------------------------------------------------------------------------------- */
-/* Text Shading - These are defined in theme.css*/
-.text-shadow {
-    text-shadow:
-        0px  1px 1px oklch(from var(--KLR) calc(l + 0.2 * var(--DIR)) c h),
-        1px  1px 1px oklch(from var(--KLR) calc(l + 0.2 * var(--DIR)) c h),
-        -1px 1px 1px oklch(from var(--KLR) calc(l + 0.2 * var(--DIR)) c h);
-}
-
-.text-shadow-inv {
-    text-shadow:
-        0px  1px 1px oklch(from var(--KLR) calc(l + 0.2 * var(--DIR)) c h),
-        1px  1px 1px oklch(from var(--KLR) calc(l + 0.2 * var(--DIR)) c h),
-        -1px 1px 1px oklch(from var(--KLR) calc(l + 0.2 * var(--DIR)) c h);
 }
 
 /* Select Utils ------------------------------------------------------------------------------------- */

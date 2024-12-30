@@ -27,7 +27,7 @@ export const SelectValueContainerUI = observer(function SelectValueContainerUI_<
    }
 
    return (
-      <div tw='w-full shrink grow overflow-hidden'>
+      <div tw='w-full shrink grow overflow-hidden px-1'>
          <div
             ref={handleRef}
             tw={[
@@ -52,7 +52,7 @@ export const SelectValueOverflowUI = observer(function SelectValueOverflowUI(p: 
    return (
       <Frame
          base={0}
-         tw='box minw-inside h-inside rounded-badge absolute right-0 top-0 w-fit whitespace-nowrap px-1 text-center  shadow-md'
+         tw='box minw-inside h-inside absolute right-0 top-0 w-fit whitespace-nowrap px-1 text-center  shadow-md'
          tooltip={`${p.valuesCount} valeurs`}
          style={{
             marginTop: 'calc((var(--input-height) - var(--inside-height)) / 2 - 1px)',

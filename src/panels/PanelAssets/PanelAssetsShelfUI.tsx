@@ -8,7 +8,8 @@ import { BasicShelfUI } from '../../csuite/shelf/ShelfUI'
 
 export const PanelAssetsShelfUI = observer(function PanelAssetsShelfUI_(p: { st: PanelAssetsState }) {
    const activeLora = p.st.props.active > -1 && cushy.schema.getLoras()[p.st.props.active]
-   const csuite = useCSuite()
+   const theme = cushy.preferences.theme.value
+
    return (
       <BasicShelfUI //
          base={{ contrast: 0.055 }}
@@ -23,7 +24,7 @@ export const PanelAssetsShelfUI = observer(function PanelAssetsShelfUI_(p: { st:
                   icon='mdiFileDocument'
                   line
                   tooltip={`Filepath\n${activeLora}`}
-                  roundness={csuite.inputRoundness}
+                  roundness={theme.global.roundness}
                >
                   {activeLora}
                </Frame>

@@ -15,7 +15,6 @@ export const WidgetChoices_HeaderButtonsUI = observer(function WidgetChoices_Hea
 >(p: { field: Field_choices<T> }) {
    const field: Field_choices<T> = p.field
    const choices = field.choicesWithLabels // choicesStr.map((v) => ({ key: v }))
-   const csuite = useCSuite()
    const isActive = !p.field.canBeToggledWithinParent || !p.field.isInsideDisabledBranch
    return (
       <div
@@ -33,7 +32,6 @@ export const WidgetChoices_HeaderButtonsUI = observer(function WidgetChoices_Hea
                   display='button'
                   mode={p.field.isMulti ? 'checkbox' : 'radio'}
                   text={c.label ?? c.key}
-                  box={isSelected ? undefined : { text: csuite.labelText }}
                   onValueChange={(value) => {
                      // 🔴 DUBIOUS
                      if (p.field.canBeToggledWithinParent) p.field.enableSelfWithinParent()

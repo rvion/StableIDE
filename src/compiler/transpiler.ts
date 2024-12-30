@@ -76,6 +76,8 @@ export async function createEsbuildContextFor(p: {
          'three',
          'three/examples/jsm/loaders/MTLLoader.js',
          'three/examples/jsm/loaders/OBJLoader.js',
+         // Regex to exclude all imports that are not relative or absolute paths
+         'stream',
       ],
 
       // ----------------------

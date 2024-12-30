@@ -64,7 +64,7 @@ export const FormUI = observer(function FormUI_(p: FormUIProps) {
    if (field == null) return <MessageErrorUI markdown={`form is not yet initialized`} />
    const canSubmit: boolean = p.allowSubmitWhenErrors || p.field == null || p.field.isValid
    return (
-      <Frame tw='UI-Form' col {...p.theme} className={p.className} style={p.style}>
+      <Frame tw='UI-Form overflow-auto' col {...p.theme} className={p.className} style={p.style}>
          {p.Header && <p.Header />}
          {p.Content ? <p.Content /> : field.UI({ Header: null })}
          {createElement(FormSubmitBtnUI, p)}

@@ -1,12 +1,13 @@
-import type { CSuiteConfig } from '../ctx/CSuiteConfig'
+import type { Tint } from '../kolor/Tint'
 
 import { makeAutoObservable, runInAction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useMemo } from 'react'
 
 import { Button } from '../button/Button'
-import { useCSuite } from '../ctx/useCSuite'
 import { Frame, type FrameProps } from '../frame/Frame'
+import { run_theme_dropShadow } from '../frame/SimpleDropShadow'
+import { run_tint } from '../kolor/prefab_Tint'
 import { parseFloatNoRoundingErr } from '../utils/parseFloatNoRoundingErr'
 import { window_addEventListener } from '../utils/window_addEventListenerAction'
 
@@ -55,10 +56,7 @@ type InputNumberProps = {
 
 /** this class will be instanciated ONCE in every InputNumberUI, (local the the InputNumberUI) */
 class InputNumberStableState {
-   constructor(
-      public props: InputNumberProps,
-      public kit: Maybe<CSuiteConfig>,
-   ) {
+   constructor(public props: InputNumberProps) {
       makeAutoObservable(this)
    }
 
@@ -91,7 +89,7 @@ class InputNumberStableState {
    }
 
    get numberSliderSpeed(): number {
-      return this.kit?.clickAndSlideMultiplicator ?? 1
+      return cushy.preferences.interface.value.widget.valueSliderMultiplier
    }
 
    get isInteger(): boolean {
@@ -242,8 +240,7 @@ class InputNumberStableState {
 
 export const InputNumberUI = observer(function InputNumberUI_(p: InputNumberProps) {
    // create stable state, that we can programmatically mutate witout caring about stale references
-   const csuite = useCSuite()
-   const uist = useMemo(() => new InputNumberStableState(p, csuite), [])
+   const uist = useMemo(() => new InputNumberStableState(p), [])
 
    // ensure new properties that could change during lifetime of the component stays up-to-date in the stable state.
    runInAction(() => Object.assign(uist.props, p))
@@ -256,20 +253,20 @@ export const InputNumberUI = observer(function InputNumberUI_(p: InputNumberProp
    const step = uist.step
    const rounding = uist.rounding
    const isEditing = uist.isEditing
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
 
-   const dropShadow = uist.props.dropShadow ?? theme.inputShadow
+   const dropShadow = uist.props.dropShadow ?? theme.global.shadow
    return (
       <Frame /* Root */
          style={p.style}
-         base={csuite.inputContrast}
-         border={csuite.inputBorder}
+         base={theme.global.contrast}
+         border={theme.global.border}
          hover={{ contrast: 0.03 }}
          className={p.className}
          // unsure about the amount of code we had to use for that prop
          dropShadow={dropShadow ? dropShadow : undefined}
          tooltip={p.tooltip}
-         roundness={p.roundness ?? csuite.inputRoundness}
+         roundness={p.roundness ?? theme.global.roundness}
          disabled={p.disabled}
          tw={[
             'UI-InputNumber',
@@ -294,7 +291,7 @@ export const InputNumberUI = observer(function InputNumberUI_(p: InputNumberProp
          {p.hideSlider ?? (
             <Frame /* Slider display */
                className='inui-foreground'
-               base={{ contrast: 0.1, chromaBlend: 1 }}
+               base={run_tint(theme.global.active)}
                tw={['h-input absolute left-0 z-10']}
                style={{ width: `${((val - uist.rangeMin) / (uist.rangeMax - uist.rangeMin)) * 100}%` }}
             />
@@ -351,7 +348,6 @@ export const InputNumberUI = observer(function InputNumberUI_(p: InputNumberProp
                   ref={uist.inputRef}
                   onDragStart={(ev) => ev.preventDefault()} // Prevents drag n drop of selected text, so selecting is easier.
                   tw={[
-                     // 'text-shadow outline-0',
                      /* `absolute opacity-0` is a bit of a hack around not being able to figure out why the input kept taking up so much width.
                       * Can't use `hidden` here because it messes up focusing. */
                      !isEditing && 'pointer-events-none absolute cursor-not-allowed opacity-0',
@@ -361,7 +357,7 @@ export const InputNumberUI = observer(function InputNumberUI_(p: InputNumberProp
                   placeholder={p.placeholder}
                   style={{
                      fontFamily: 'monospace',
-                     fontSize: `${theme.inputText}pt`,
+                     fontSize: `${theme.global.text.size}pt`,
                      zIndex: 2,
                      background: 'transparent',
                      MozWindowDragging: 'no-drag',
@@ -429,13 +425,13 @@ export const InputNumberUI = observer(function InputNumberUI_(p: InputNumberProp
                            tw={[
                               'z-10 w-full flex-grow truncate border-0 border-transparent pr-1 text-left outline-0',
                            ]}
-                           style={{ fontSize: `${theme.inputText}pt` }}
+                           style={{ fontSize: `${theme.global.text.size}pt` }}
                         >
                            {p.text}
                         </div>
                      )}
                      {/* I couldn't make the input not take up a ton of space so I'm just using this when we're not editing now. */}
-                     <div style={{ fontFamily: 'monospace', fontSize: `${theme.inputText}pt` }}>
+                     <div style={{ fontFamily: 'monospace', fontSize: `${theme.global.text.size}pt` }}>
                         {p.value}
                      </div>
                      {!isEditing && p.suffix ? <div tw='pl-0.5'>{p.suffix}</div> : <></>}

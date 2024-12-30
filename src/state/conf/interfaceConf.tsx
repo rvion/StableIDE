@@ -102,47 +102,46 @@ export const interfaceConf = cushyFactory.document(
          }),
 
          // 4. Widget Components
-         widget: ui.group({
-            items: {
-               showUndo: ui.bool({
-                  label: 'Show',
-                  text: ' Undo',
-                  tooltip: 'Show undo button near every field',
-                  default: true,
-               }),
-               showFoldButtons: ui.bool({
+         widget: ui.fields({
+            valueSliderMultiplier: ui.float({ default: 1.0 }),
+            showUndo: ui.bool({
+               label: 'Show',
+               text: ' Undo',
+               tooltip: 'Show undo button near every field',
+               default: true,
+            }),
+            showFoldButtons: ui.bool({
+               label: false,
+               text: 'Fold',
+               tooltip: 'Show Fold button near every field',
+               default: true,
+            }),
+            showMenu: ui.bool({
+               label: false,
+               text: 'Menu',
+               tooltip: 'Show action buttons at the bottom of the form',
+               default: true,
+            }),
+            showDiff: ui.bool({
+               label: false,
+               text: 'Diff',
+               tooltip: 'Show diff button near every field',
+               default: true,
+            }),
+            showToggleButtonBox: ui.bool({
+               label: false,
+               text: 'Toggle Button Box',
+               default: false,
+               tooltip: 'Show icons in toggle buttons',
+            }),
+            color: ui.fields({
+               showText: ui.bool({
                   label: false,
-                  text: 'Fold',
-                  tooltip: 'Show Fold button near every field',
-                  default: true,
-               }),
-               showMenu: ui.bool({
-                  label: false,
-                  text: 'Menu',
-                  tooltip: 'Show action buttons at the bottom of the form',
-                  default: true,
-               }),
-               showDiff: ui.bool({
-                  label: false,
-                  text: 'Diff',
-                  tooltip: 'Show diff button near every field',
-                  default: true,
-               }),
-               showToggleButtonBox: ui.bool({
-                  label: false,
-                  text: 'Toggle Button Box',
+                  text: 'Text',
                   default: false,
-                  tooltip: 'Show icons in toggle buttons',
+                  tooltip: 'Show text inside color widget',
                }),
-               color: ui.fields({
-                  showText: ui.bool({
-                     label: false,
-                     text: 'Text',
-                     default: false,
-                     tooltip: 'Show text inside color widget',
-                  }),
-               }),
-            },
+            }),
          }),
 
          developerOptions: ui.fields({

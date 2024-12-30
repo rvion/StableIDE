@@ -5,6 +5,8 @@ import { observer } from 'mobx-react-lite'
 // import { twMerge } from 'tailwind-merge'
 import { Button } from '../button/Button'
 import { useCSuite } from '../ctx/useCSuite'
+import { run_theme_dropShadow } from '../frame/SimpleDropShadow'
+import { run_tint } from '../kolor/prefab_Tint'
 import { CheckboxAndRadioIcon } from './_InputBoolToggleButtonBoxUI'
 
 // 🔴 2024-07-31: domi: this should actually look like a button?
@@ -20,11 +22,11 @@ export const ToggleButtonUI = observer(function ToggleButtonUI_(
    },
 ) {
    const isActive = p.value ?? false
-   const csuite = useCSuite()
    // const chroma = getInputBoolChroma(isActive)
    // const border = p.border ?? 10
-   const theme = cushy.theme.value
-   const dropShadow = p.dropShadow ?? theme.inputShadow
+   const theme = cushy.preferences.theme.value
+   const dropShadow = p.dropShadow ?? theme.global.shadow
+   const activeColor = run_tint(theme.global.active)
    return (
       <Button
          tw={
@@ -49,13 +51,17 @@ export const ToggleButtonUI = observer(function ToggleButtonUI_(
          triggerOnPress={{ startingState: isActive, toggleGroup: p.toggleGroup }}
          tooltip={p.tooltip}
          tooltipPlacement={p.tooltipPlacement}
-         look={isActive ? 'primary' : undefined} // 🔴🦀 temp solution to visually broken active options
-         border={csuite.inputBorder}
+         // look={isActive ? 'primary' : undefined} // 🔴🦀 temp solution to visually broken active options
+         base={isActive ? activeColor : {}} // 🔴🦀 temp solution to visually broken active options
+         border={theme.global.border}
          disabled={p.disabled}
          dropShadow={p.look == 'subtle' ? undefined : dropShadow}
-         roundness={csuite.inputRoundness}
+         roundness={theme.global.roundness}
          expand={p.expand}
-         style={p.style}
+         style={{
+            textShadow: run_theme_dropShadow(theme.global.text.shadow),
+            ...p.style,
+         }}
          size={p.size}
          hovered={p.hovered}
          icon={p.icon}
@@ -78,9 +84,8 @@ export const ToggleButtonUI = observer(function ToggleButtonUI_(
          //         : { inset: true, y: -3, blur: 5, spread: 0, color: 5 }
          // }
       >
-         {(p.showToggleButtonBox ?? csuite.showToggleButtonBox) && p.mode != null && (
-            <CheckboxAndRadioIcon disabled isActive={isActive} mode={p.mode} />
-         )}
+         {(p.showToggleButtonBox ?? cushy.preferences.interface.value.widget.showToggleButtonBox) &&
+            p.mode != null && <CheckboxAndRadioIcon disabled isActive={isActive} mode={p.mode} />}
          {/* 2024-06-07 rvion: make sure long label remain legible even on low width
                 - I removed the "line-clamp-1" from the paragraph below
                 - I replaced the "h-input" by "minh-input" in the Frame above

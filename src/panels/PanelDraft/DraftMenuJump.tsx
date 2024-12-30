@@ -18,22 +18,21 @@ export const DraftMenuDataBlockUI = observer(function DraftMenuDataBlockUI_(p: {
    draft: DraftL
    className?: string
 }) {
-   const theme = cushy.theme.value
-   const csuite = cushy.csuite
+   const theme = cushy.preferences.theme.value
 
    return (
       <Frame
          align
          line
-         border={csuite.inputBorder}
-         roundness={csuite.inputRoundness}
+         border={theme.global.border}
+         roundness={theme.global.roundness}
          dropShadow={
-            theme.inputShadow && {
-               x: theme.inputShadow.x,
-               y: theme.inputShadow.y,
-               color: theme.inputShadow.color,
-               blur: theme.inputShadow.blur,
-               opacity: theme.inputShadow.opacity,
+            theme.global.shadow && {
+               x: theme.global.shadow.x,
+               y: theme.global.shadow.y,
+               color: theme.global.shadow.color,
+               blur: theme.global.shadow.blur,
+               opacity: theme.global.shadow.opacity,
             }
          }
       >

@@ -38,7 +38,7 @@ export class CSuite_ThemeCushy implements CSuiteConfig {
    }
 
    get inputRoundness(): number {
-      return this.st.theme.InputRoundness.value ?? 5
+      return this.st.preferences.theme.value.global.roundness ?? 5
    }
 
    // misc ------------------------------------------------------
@@ -63,7 +63,7 @@ export class CSuite_ThemeCushy implements CSuiteConfig {
    }
 
    get labellayout(): FormGlobalLayoutMode {
-      const x = this.st.theme.LabelLayout.value
+      const x = this.st.preferences.theme.LabelLayout.value
       if (x === 'fluid') return 'fluid'
       if (x === 'fixed-left') return 'fixed-left'
       if (x === 'fixed-right') return 'fixed-right'
@@ -77,7 +77,7 @@ export class CSuite_ThemeCushy implements CSuiteConfig {
    // theme
 
    get baseStr(): string {
-      return this.st.theme.Base.value
+      return this.st.preferences.theme.Base.value
    }
 
    get base(): Kolor {
@@ -91,19 +91,19 @@ export class CSuite_ThemeCushy implements CSuiteConfig {
    labelBackground: TintExt = 0 // 3 // {}
 
    get text(): Tint {
-      return run_tint(this.st.theme.Text.value)
+      return run_tint(this.st.preferences.theme.value.global.text.base)
    }
 
    get inputContrast(): TintExt {
-      return this.st.theme.InputContrast.value
+      return this.st.preferences.theme.value.global.contrast
    }
 
    get inputBorder(): TintExt {
-      return this.st.theme.InputBorder.value ?? 10
+      return this.st.preferences.theme.value.global.border ?? 10
    }
 
    get labelText(): Tint | undefined {
-      const raw = this.st.theme.TextLabel.value
+      const raw = this.st.preferences.theme.value.global.textLabel.base
       if (raw == null) return undefined
       return run_tint(raw)
    }
@@ -113,8 +113,8 @@ export class CSuite_ThemeCushy implements CSuiteConfig {
       contrast: Maybe<number>
    } {
       return {
-         border: this.st.theme.FieldGroups.value?.border,
-         contrast: this.st.theme.FieldGroups.value?.contrast,
+         border: this.st.preferences.theme.FieldGroups.value?.border,
+         contrast: this.st.preferences.theme.FieldGroups.value?.contrast,
       }
    }
 }

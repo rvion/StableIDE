@@ -15,7 +15,11 @@ import { WidgetString_SmallInput } from '../../csuite/fields/string/WidgetString
 import { WidgetString_summary } from '../../csuite/fields/string/WidgetString_summary'
 import { WidgetString_TextareaInput } from '../../csuite/fields/string/WidgetString_TextareaInput'
 import { Frame } from '../../csuite/frame/Frame'
+import { MessageErrorUI } from '../../csuite/messages/MessageErrorUI'
+import { MessageInfoUI } from '../../csuite/messages/MessageInfoUI'
+import { MessageWarningUI } from '../../csuite/messages/MessageWarningUI'
 import { WidgetCardUI } from '../catalog/Decorations/WidgetCardUI'
+import { WidgetPadUI } from '../catalog/Decorations/WidgetPadUI'
 import { QuickForm } from '../catalog/group/QuickForm'
 import { WidgetIndentNoLinesUI } from '../catalog/Indent/IndentNoLine'
 import { WidgetIndentUI } from '../catalog/Indent/WidgetIndentUI'
@@ -105,6 +109,12 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
    // #region global stuff
    Decorations: {
       Card: WidgetCardUI,
+      Pad: WidgetPadUI,
+   },
+   Message: {
+      Error: MessageErrorUI,
+      Info: MessageInfoUI,
+      Warning: MessageWarningUI,
    },
    QuickForm: QuickForm,
    Shell: {

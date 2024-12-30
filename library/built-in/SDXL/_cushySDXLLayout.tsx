@@ -5,9 +5,13 @@ import type { $CushySDXLUI } from './_cushySDXLSchema'
 
 import { observer } from 'mobx-react-lite'
 
+import { Button } from '../../../src/csuite/button/Button'
 import { ShellOptionalEnabledUI } from '../../../src/csuite/fields/optional/WidgetOptional'
+import { Frame } from '../../../src/csuite/frame/Frame'
 import { IkonOf } from '../../../src/csuite/icons/iconHelpers'
 import { InputNumberUI } from '../../../src/csuite/input-number/InputNumberUI'
+import { ResizableFrame } from '../../../src/csuite/resizableFrame/resizableFrameUI'
+import { PromptEditorUI } from '../../../src/prompt/__TEMP__'
 
 export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>> {
    return (ui) => {
@@ -37,40 +41,74 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
       const latent = ui.field.Latent
       ui.set<Field_list<X.XOptional<X.XPrompt>>>('@list.@optional.@prompt^^', {
          Header: false,
-         Body: observer((p) => (
-            <UY.list.BlenderLike<typeof p.field> //
-               field={p.field}
-               renderItem={(item, index) => {
-                  const conditioningIcon: IconName = index == 0 ? 'mdiArrowDown' : 'mdiFormatListGroupPlus'
-                  return (
-                     <UY.Misc.Frame tw='flex items-center' hover key={item.id}>
-                        <span tw={['line-clamp-1 w-full flex-grow px-1', !item.active && 'opacity-50']}>
-                           {item.child.text}
-                        </span>
-                        <div tw='flex-none'>
-                           <IkonOf name={conditioningIcon} />
-                        </div>
-                        <div tw='w-2' />
-                        <div tw='flex-none'>
-                           {/* <InputNumberUI
+         Body: observer((p) => {
+            const positive = ui.field.value.positive
+            const activePrompt = positive.prompts[positive.activeIndex]
+            return (
+               <>
+                  <UY.list.BlenderLike<typeof p.field> //
+                     activeIndex={positive.activeIndex}
+                     field={p.field}
+                     renderItem={(item, index) => {
+                        const conditioningIcon: IconName =
+                           index == 0 ? 'mdiArrowDown' : 'mdiFormatListGroupPlus'
+                        return (
+                           <UY.Misc.Frame
+                              tw='flex items-center'
+                              hover
+                              key={item.id}
+                              onMouseDown={() => (positive.activeIndex = index)}
+                           >
+                              <span tw={['line-clamp-1 w-full flex-grow px-1', !item.active && 'opacity-50']}>
+                                 {item.child.text}
+                              </span>
+                              <div tw='flex-none'>
+                                 <IkonOf name={conditioningIcon} />
+                              </div>
+                              <div tw='w-2' />
+                              <div tw='flex-none'>
+                                 {/* <InputNumberUI
                               // TODO(bird_d/ui/logic): Implement showing strength based on the conditioning type, should only appear on blend/add/etc. concate doesn't need it for example.
                               mode='float'
                               hideSlider
                               onValueChange={() => {}}
                               value={ree}
                            /> */}
-                           <UY.Misc.Checkbox
-                              square // TODO(bird_d/ui): Buttons like this, where there's only an icon, should just automatically apply square if there's no text/children.
-                              toggleGroup='prompt'
-                              value={item.active}
-                              onValueChange={(v) => item.setActive(v)}
-                           />
-                        </div>
+                                 <UY.Misc.Checkbox
+                                    square // TODO(bird_d/ui): Buttons like this, where there's only an icon, should just automatically apply square if there's no text/children.
+                                    toggleGroup='prompt'
+                                    value={item.active}
+                                    onValueChange={(v) => item.setActive(v)}
+                                 />
+                              </div>
+                           </UY.Misc.Frame>
+                        )
+                     }}
+                  />
+                  <UY.Misc.Button
+                     hover
+                     tw='w-full !content-start !items-center !justify-start !border-none !bg-transparent py-[15px] pl-3.5 text-center'
+                     icon={positive.showEditor ? 'mdiChevronDown' : 'mdiChevronRight'}
+                     onMouseDown={(e) => {
+                        if (e.button != 0) {
+                           return
+                        }
+                        positive.showEditor = !positive.showEditor
+                     }}
+                  >
+                     Editor
+                  </UY.Misc.Button>
+
+                  {positive.showEditor && (
+                     <UY.Misc.Frame tw='p-2' base={cushy.preferences.theme.value.global.contrast}>
+                        <ResizableFrame tw='!bg-transparent'>
+                           {activePrompt ? <PromptEditorUI promptID={activePrompt.id} /> : <>No prompt</>}
+                        </ResizableFrame>
                      </UY.Misc.Frame>
-                  )
-               }}
-            />
-         )),
+                  )}
+               </>
+            )
+         }),
       })
       // already handled by its parent
       ui.set(ui.field.Positive.Prompts, { collapsible: false, Head: false, Header: false })

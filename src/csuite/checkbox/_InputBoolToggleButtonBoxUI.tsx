@@ -2,6 +2,7 @@ import type { IconName } from '../icons/icons'
 
 import { observer } from 'mobx-react-lite'
 
+import { run_theme_dropShadow } from '../frame/SimpleDropShadow'
 // import { Toggle } from 'rsuite' // 🔴🔴🔴🔴🔴🔴🔴🔴🔴 BAD
 import { IkonOf } from '../icons/iconHelpers'
 
@@ -25,6 +26,19 @@ export const CheckboxAndRadioIcon = observer(function InputBoolToggleButtonBoxUI
               : 'mdiCheckboxBlankOutline'
            : null
 
-   return icon && <IkonOf name={icon} tw={'shrink-0'} size={p.iconSize ?? '1.3em'} />
+   const shadow = run_theme_dropShadow(cushy.preferences.theme.value.global.text.shadow)
+   return (
+      icon && (
+         <IkonOf
+            style={{
+               textShadow: shadow,
+               filter: `drop-shadow(${shadow})`,
+            }}
+            name={icon}
+            tw={'shrink-0'}
+            size={p.iconSize ?? '1.3em'}
+         />
+      )
+   )
    // return <div tw='text-lg mr-1'>{icon && <IkonOf name={icon} />}</div>
 })

@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import React, { type ForwardedRef, forwardRef, useEffect, useMemo } from 'react'
 
 import { Frame } from '../frame/Frame'
+import { run_theme_dropShadow } from '../frame/SimpleDropShadow'
 import { registerComponentAsClonableWhenInsideReveal } from '../reveal/RevealCloneWhitelist'
 import { window_addEventListener } from '../utils/window_addEventListenerAction'
 import { withDefaultProps } from './withDefaultProps'
@@ -34,8 +35,7 @@ const _Button = observer(
       useEffect(() => uist.release, [])
 
       const { size, look, subtle, borderless, iconSize, onClick, square: square_, style, ...rest } = p
-      const theme = cushy.theme.value
-      const csuite = cushy.csuite
+      const theme = cushy.preferences.theme.value
       const square = square_ ?? (p.icon != null && p.children == null)
 
       return (
@@ -61,12 +61,12 @@ const _Button = observer(
                hue: p.hue,
                chroma: p.chroma,
             }}
-            border={borderless ? 0 : csuite.inputBorder}
+            border={borderless ? 0 : theme.global.border}
             hover={p.disabled ? false : 3}
             // active={uist.visuallyActive}
             disabled={p.disabled}
-            dropShadow={p.subtle ? undefined : (p.dropShadow ?? theme.inputShadow)}
-            roundness={csuite.inputRoundness}
+            dropShadow={p.subtle ? undefined : (p.dropShadow ?? theme.global.shadow)}
+            roundness={theme.global.roundness}
             loading={p.loading ?? uist.running}
             tabIndex={p.tabIndex}
             onMouseDown={uist.press}
@@ -75,7 +75,9 @@ const _Button = observer(
             iconSize={iconSize ?? '1.1rem'}
             style={{
                //
-               fontSize: `${theme.inputText}pt`,
+               fontSize: `${theme.global.text.size}pt`,
+               // TODO(bird_d/ui/theme/textShadow): Implement per-widget textShadows
+               // textShadow: run_theme_dropShadow(theme.widget.button.text.shadow),
                ...style,
             }}
             {...rest}

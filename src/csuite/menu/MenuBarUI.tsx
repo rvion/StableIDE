@@ -124,7 +124,7 @@ export const MenuBarUI = observer(function MenuBar({
                   line
                   icon={entry.icon}
                   hover
-                  roundness={cushy.theme.value.inputRoundness}
+                  roundness={cushy.preferences.theme.value.global.roundness}
                >
                   {formatMenuLabel(charIx, label)}
                </Frame>

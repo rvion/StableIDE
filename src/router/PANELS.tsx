@@ -10,7 +10,6 @@ import { PanelCivitai } from '../panels/PanelCivitai/Panel_Civitai'
 import { PanelComfy } from '../panels/PanelComfy/PanelComfy'
 import { PanelComfyHosts } from '../panels/PanelComfyHosts/PanelComfyHosts'
 import { PanelComfyNodeExplorer } from '../panels/PanelComfyNodeExplorer/PanelComfyNodeExplorer'
-import { PanelConfig, PanelSettings } from '../panels/PanelConfig/PanelConfig'
 import { PanelCustom } from '../panels/PanelCustom/PanelCustom'
 import { PanelDraft } from '../panels/PanelDraft/PanelDraft'
 import { PanelDraftSerial } from '../panels/PanelDraftSerial/PanelDraftSerial'
@@ -26,6 +25,7 @@ import { PanelMinipaint } from '../panels/PanelMinipaint/PanelMinipaint'
 import { PanelModels } from '../panels/PanelModels/PanelModels'
 import { PanelStep } from '../panels/PanelOutput/PanelOutput'
 import { PanelPlayground } from '../panels/PanelPlayground/PanelPlayground'
+import { PanelPreferences } from '../panels/PanelPreferences/PanelPreferences'
 import { PanelSafetyRatings } from '../panels/PanelSafetyRatings/PanelSafetyRatings'
 import { PanelShortcuts } from '../panels/PanelShortcuts/PanelShortcuts'
 import { PanelSteps } from '../panels/PanelSteps/PanelSteps'
@@ -79,8 +79,7 @@ export const panels = {
    Squoosh: PanelSquoosh,
 
    // config
-   Config: PanelConfig,
-   Settings: PanelSettings,
+   Config: PanelPreferences,
    Models: PanelModels,
    Hosts: PanelComfyHosts,
    Shortcuts: PanelShortcuts,

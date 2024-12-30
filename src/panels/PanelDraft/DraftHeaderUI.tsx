@@ -28,7 +28,7 @@ export const DraftHeaderUI = observer(function DraftHeader({
    ...rest
 }: { draft: DraftL } & FrameProps) {
    const app = draft.appRef.item
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
 
    return (
       <Frame
@@ -98,7 +98,7 @@ export const DraftHeaderUI = observer(function DraftHeader({
                      setValue={(val) => draft.update({ canvasToolCategory: val ? val : null })}
                      placeholder='Unified Canvas Category'
                   />
-                  {/* {cushy.theme.fields.labelLayout.renderSimple({ label: 'Label' })} */}
+                  {/* {cushy.preferences.theme.fields.labelLayout.renderSimple({ label: 'Label' })} */}
                </div>
             </div>
          </Frame>

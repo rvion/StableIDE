@@ -7,11 +7,11 @@ import { IkonOf } from '../../csuite/icons/iconHelpers'
 import { DebugShortcutsFloatingUI } from './DebugShortcutsFloatingUI'
 
 export const FooterBarUI = observer(function FooterBarUI_(p: FrameProps) {
-   const theme = cushy.theme.value
+   const theme = cushy.preferences.theme.value
    return (
       <Frame
          border={0}
-         base={cushy.theme.value.appbar ?? { contrast: -0.077 }}
+         base={cushy.preferences.theme.value.appbar ?? { contrast: -0.077 }}
          tw='line-clamp-1 flex items-center truncate px-1 py-1'
          {...p}
       >
@@ -30,9 +30,9 @@ export const FooterBarUI = observer(function FooterBarUI_(p: FrameProps) {
          <Frame // Git/Version info
             align
             line
-            base={theme.inputContrast}
-            border={theme.inputBorder}
-            roundness={theme.inputRoundness}
+            base={theme.global.contrast}
+            border={theme.global.border}
+            roundness={theme.global.roundness}
          >
             <Button line tw='!px-0'>
                <Frame
@@ -44,7 +44,7 @@ export const FooterBarUI = observer(function FooterBarUI_(p: FrameProps) {
                         ? { contrast: 0.2, chromaBlend: 25 }
                         : undefined
                   }
-                  // roundness={theme.inputRoundness}
+                  // roundness={theme.global.roundness}
                >
                   <Frame
                      square
@@ -55,8 +55,8 @@ export const FooterBarUI = observer(function FooterBarUI_(p: FrameProps) {
                         <Frame
                            tw='absolute bottom-0.5 right-0.5 h-1.5 w-1.5'
                            roundness={'100%'}
-                           // border={theme.inputBorder}
-                           dropShadow={theme.inputShadow}
+                           // border={theme.global.border}
+                           dropShadow={theme.global.shadow}
                            base={{ contrast: 0.5, chromaBlend: 100, hue: 180 }}
                         />
                      )}
