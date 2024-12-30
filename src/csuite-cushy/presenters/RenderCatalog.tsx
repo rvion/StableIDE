@@ -160,7 +160,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       simple: WidgetNumberSimpleUI,
    },
    boolean: {
-      defualt: InputBoolUI,
+      default: InputBoolUI,
    },
    choices: {
       TabbedInline: WidgetChoices_HeaderTabBarUI,

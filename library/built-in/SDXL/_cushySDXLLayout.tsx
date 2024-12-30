@@ -118,7 +118,7 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                            {activePrompt ? (
                               <>
                                  <UY.string.input field={activePrompt.fields.name} />
-                                 <UY.boolean.defualt
+                                 <UY.boolean.default
                                     toggleGroup='y802w34ty80we4th80er0erh8008'
                                     value={activePrompt.fields.enabled.value}
                                     onValueChange={(v) => (activePrompt.fields.enabled.value = v)}
