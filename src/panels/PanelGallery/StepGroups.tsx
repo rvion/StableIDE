@@ -116,7 +116,7 @@ function computeStyles(
       return styles['start']
    }
 
-   if (!cImg.step || cImg.step.outputs.filter((output) => output instanceof MediaImageL).length <= 1) {
+   if (!cImg.step || cImg.step.images.length <= 1) {
       // Not part of a group.
       return styles['single']
    }
@@ -188,7 +188,7 @@ export const StepGroupUI = observer(function StepGroupUI_(p: {
    // Inefficient, could be cached/re-used somehow
    const hue = hashStringToNumber(img.step ? img.step.id : '0')
 
-   const canWrap = img.step && img.step.outputs.filter((output) => output instanceof MediaImageL).length > 1
+   const canWrap = img.step && img.step.images.length > 1
    const shouldWrapLeft = canWrap && p.decoration ? (p.decoration.wrapLeft ?? false) : false
    const shouldWrapRight = canWrap && p.decoration ? (p.decoration.wrapRight ?? false) : false
 
