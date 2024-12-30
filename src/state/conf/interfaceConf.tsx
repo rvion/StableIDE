@@ -60,7 +60,7 @@ export const interfaceConf = cushyFactory.document(
             suffix: 'px',
          }),
          widgetHeight: ui.number({
-            // label: false,
+            label: false,
             // justifyLabel: false,
             text: 'Widget Height',
             tooltip: 'Height of the Widget line',
