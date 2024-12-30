@@ -8,7 +8,17 @@ import { IkonOf } from '../icons/iconHelpers'
 import { MarkdownUI } from '../markdown/MarkdownUI'
 import { knownOKLCHHues } from '../tinyCSS/knownHues'
 
-export const MessageUI = observer(function MessageInfoUI_(p: {
+export const MessageUI = observer(function MessageInfoUI_({
+   title,
+   type,
+   icon,
+   hue,
+   children,
+   markdown,
+   className,
+   closable,
+   ...rest
+}: {
    title?: string
    type: 'info' | 'error' | 'warning'
    icon?: IconName
@@ -22,22 +32,23 @@ export const MessageUI = observer(function MessageInfoUI_(p: {
    if (uist.closed) return null
    return (
       <Frame
-         base={{ contrast: 0.05, hue: p.hue ?? knownOKLCHHues.info, chroma: 0.04 }}
+         base={{ contrast: 0.05, hue: hue ?? knownOKLCHHues.info, chroma: 0.04 }}
          border={10}
-         className={p.className}
+         className={className}
          tw='flex items-start gap-1 rounded p-0.5'
+         {...rest}
       >
-         {p.icon && (
+         {icon && (
             <Frame text={{ chroma: 0.1, contrast: 0.2 }}>
-               <IkonOf name={p.icon} tw='h-input flex-none text-lg' />
+               <IkonOf name={icon} tw='h-input flex-none text-lg' />
             </Frame>
          )}
          <div>
-            {p.title && <div tw='w-full font-bold'>{p.title}</div>}
-            {p.children}
-            <MarkdownUI markdown={p.markdown} />
+            {title && <div tw='w-full font-bold'>{title}</div>}
+            {children}
+            <MarkdownUI markdown={markdown} />
          </div>
-         {(p.closable ?? true) && (
+         {(closable ?? true) && (
             <Button
                onClick={() => (uist.closed = true)}
                tw='ml-auto'

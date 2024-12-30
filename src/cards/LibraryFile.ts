@@ -4,15 +4,16 @@ import type { CushyScriptL } from '../models/CushyScript'
 import type { STATE } from '../state/state'
 import type { AppMetadata } from './AppManifest'
 import type { Library } from './Library'
-import type { BuildContext, Metafile, OutputFile } from 'esbuild'
+import type { BuildContext, BuildResult, Metafile, OutputFile } from 'esbuild'
 
 import { readFileSync } from 'fs'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import path, { basename, dirname } from 'pathe'
 
+import { checkLibraryScriptFences } from '../apps/scriptFences'
 import { convertLiteGraphToPrompt } from '../comfyui/litegraphToApiRequestPayload'
 import { createEsbuildContextFor } from '../compiler/transpiler'
-import { bang } from '../csuite/utils/bang'
+import { extractErrorMessage } from '../csuite/formatters/extractErrorMessage'
 import { exhaust } from '../csuite/utils/exhaust'
 import { ManualPromise } from '../csuite/utils/ManualPromise'
 import { toastError } from '../csuite/utils/toasts'
@@ -31,7 +32,7 @@ export type LoadStrategy =
 
 // prettier-ignore
 type LoadStatus =
-    | { type: 'SUCCESS', script: CushyScriptL}
+    | { type: 'SUCCESS', script: CushyScriptL, warning?: string }
     | { type: 'FAILURE', msg?: string }
 
 // prettier-ignore
@@ -99,9 +100,16 @@ export class LibraryFile {
 
    // --------------------------------------------------------
    // loaded = new ManualPromise<true>()
-   errors: { title: string; details: any }[] = []
-   addError = (title: string, details: any = null): LoadStatus => {
-      this.errors.push({ title, details })
+   errors: {
+      title: string
+      body: string
+      details?: any
+   }[] = []
+   resetErrors(): void {
+      this.errors = []
+   }
+   addError(title: string, details: any = null): LoadStatus {
+      this.errors.push({ title, body: extractErrorMessage(details), details })
       return { type: 'FAILURE' }
    }
 
@@ -137,6 +145,8 @@ export class LibraryFile {
       return res
    }
 
+   strategyStatus: { [key in LoadStrategy]?: string } = {}
+
    // 🔶 TODO: split into two functions for easier code path understanding from
    // 🔶 other locations.
    extractScriptFromFile = async (p?: { force?: boolean }): Promise<ScriptExtractionResult> => {
@@ -170,15 +180,25 @@ export class LibraryFile {
 
       // try every strategy in order
       let script: Maybe<CushyScriptL> = null
+      this.strategyStatus = {}
+      this.resetErrors()
+
       console.log(`[🔴] extracting ${this.relPath}`)
       for (const strategy of this.strategies) {
          const res = await this.loadWithStrategy(strategy)
          if (res.type === 'SUCCESS') {
-            script = res.script
-            this.lastSuccessfullExtractedScriptDuringSession = res.script
-            this.successfullLoadStrategies = strategy
-            // console.log(`[🟢] LibFile: LOAD SUCCESS !`)
+            runInAction(() => {
+               script = res.script
+               this.lastSuccessfullExtractedScriptDuringSession = res.script
+               this.successfullLoadStrategies = strategy
+               this.strategyStatus[strategy] = res.warning ? `⚠️ ${res.warning}` : '✅'
+               // console.log(`[🟢] LibFile: LOAD SUCCESS !`)
+            })
             break
+         } else {
+            runInAction(() => {
+               this.strategyStatus[strategy] = `❌ failed with error: "${res.msg}"`
+            })
          }
       }
 
@@ -211,7 +231,7 @@ export class LibraryFile {
       if (strategy === 'asComfyUIGeneratedPng') return this.load_asComfyUIGeneratedPng()
       if (strategy === 'asA1111PngGenerated') {
          if (this.png == null) this.png = this.absPath
-         this.addError('❌ can not import file as Automaric1111 image', { reason: 'not supported yet' })
+         this.addError('❌ can not import file as Automaric1111 image', 'not supported yet')
          return { type: 'FAILURE' }
       }
 
@@ -247,7 +267,23 @@ export class LibraryFile {
          // await this.pkg.rebuild()
          // console.log('-- a', { eps: this.relPath })
          const ctx = await this._esbuildContext
-         const res = await ctx.rebuild()
+         let res: BuildResult
+         try {
+            res = await ctx.rebuild()
+         } catch (e) {
+            console.error(`[🔴] LibraryFile > load_asTypescriptFile > ctx.rebuild() failed`, e)
+            return { type: 'FAILURE', msg: extractErrorMessage(e) }
+         }
+         if (res.metafile == null) {
+            return this.addError('❌ transpile error in load_asCushyStudioAction; res.metafile is null', '')
+         }
+         const fenceResult = checkLibraryScriptFences(this.relPath, res.metafile)
+         if (!fenceResult.isValid) {
+            return this.addError(
+               `❌ transpile error in load_asCushyStudioAction; fences failed`,
+               fenceResult.summary.text,
+            )
+         }
 
          if (res.outputFiles == null) {
             return this.addError(
