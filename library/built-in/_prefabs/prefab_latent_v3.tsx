@@ -1,6 +1,5 @@
 import type { Field_size_config } from '../../../src/csuite/fields/size/FieldSize'
 
-import { lazy_viaProxy } from '../../../src/csuite/lazy/lazy_viaProxy'
 import {
    run_LatentShapeGenerator,
    ui_LatentShapeGenerator,
@@ -32,7 +31,7 @@ export type UI_LatentV3 = X.XLink<
    }>
 >
 
-export const latentSizeChanel = lazy_viaProxy(() => new cushy.Channel<{ w: number; h: number }>())
+export const latentSizeChanel = new cushy.Channel<{ w: number; h: number }>()
 
 export function ui_latent_v3(p: { size?: Field_size_config } = {}): UI_LatentV3 {
    const form: X.Builder = getCurrentForm()

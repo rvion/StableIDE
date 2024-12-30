@@ -191,7 +191,7 @@ export class LibraryFile {
                script = res.script
                this.lastSuccessfullExtractedScriptDuringSession = res.script
                this.successfullLoadStrategies = strategy
-               this.strategyStatus[strategy] = res.warning ? `⚠️ ${res.warning}` : '✅'
+               if (res.warning) this.strategyStatus[strategy] = `⚠️ ${res.warning}`
                // console.log(`[🟢] LibFile: LOAD SUCCESS !`)
             })
             break
