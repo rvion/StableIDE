@@ -56,11 +56,16 @@ export const useImageDrop = (
 
       // 2. add golden border when hovering over
       collect(monitor): CSSProperties {
+         const isExternal = monitor.getItemType() == NativeTypes.FILE
+         if (isExternal) {
+            cushy.dndHandler.visible = monitor.isOver()
+         }
+
          cushy.dndHandler.setContent(
             monitor.isOver()
                ? {
                     icon: 'mdiImage',
-                    label: 'Set Image',
+                    label: isExternal ? 'Import and Set Image' : 'Set Image',
                     suffixIcon: 'mdiArrowDownRight',
                  }
                : {
