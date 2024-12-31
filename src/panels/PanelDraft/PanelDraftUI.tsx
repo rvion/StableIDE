@@ -79,7 +79,7 @@ const POPUP = observer(function POPUP___(p: { title?: string; children?: React.R
    const [initialPosition, setInitialPosition] = useState<{ x: number; y: number } | null>(null)
 
    if (!initialPosition) {
-      setInitialPosition(cushy.mousePosition)
+      setInitialPosition({ x: cushy.region.mouseX, y: cushy.region.mouseY })
    }
 
    if (!initialPosition) {

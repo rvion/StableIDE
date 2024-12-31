@@ -195,6 +195,14 @@ export const useRegionMonitor = (): void => {
       // 💡 window_addEventListener('auxclick', handleMouseEvent)
       // 💡 window_addEventListener('contextmenu', handleMouseEvent)
 
+      // Drags
+      window_addEventListener('drag', handleMouseEvent)
+      window_addEventListener('dragstart', handleMouseEvent)
+      window_addEventListener('dragend', handleMouseEvent)
+      window_addEventListener('dragover', handleMouseEvent)
+      window_addEventListener('dragenter', handleMouseEvent)
+      window_addEventListener('dragleave', handleMouseEvent)
+
       window_addEventListener('keydown', handleKeyEvent)
       window_addEventListener('keyup', handleKeyEvent)
       window_addEventListener('keypress', handleKeyEvent)
@@ -211,6 +219,14 @@ export const useRegionMonitor = (): void => {
          window.removeEventListener('mouseout', handleMouseEvent)
          window.removeEventListener('mouseover', handleMouseEvent)
          window.removeEventListener('mouseup', handleMouseEvent)
+
+         // Drags
+         window.removeEventListener('drag', handleMouseEvent)
+         window.removeEventListener('dragstart', handleMouseEvent)
+         window.removeEventListener('dragend', handleMouseEvent)
+         window.removeEventListener('dragover', handleMouseEvent)
+         window.removeEventListener('dragenter', handleMouseEvent)
+         window.removeEventListener('dragleave', handleMouseEvent)
 
          window.removeEventListener('keydown', handleKeyEvent)
          window.removeEventListener('keyup', handleKeyEvent)

@@ -29,26 +29,6 @@ import { MainUI } from './widgets/misc/MainUI'
 
 const root = document.getElementById('root') as HTMLElement
 
-function updateMousePosition(e: MouseEvent): void {
-   if (!cushy) {
-      return
-   }
-   cushy.mousePosition = { x: e.clientX, y: e.clientY }
-}
-window.document.addEventListener('mousemove', updateMousePosition)
-window.document.addEventListener('mouseenter', updateMousePosition)
-window.document.addEventListener('mouseleave', updateMousePosition)
-window.document.addEventListener('mousedown', updateMousePosition)
-window.document.addEventListener('mouseout', updateMousePosition)
-window.document.addEventListener('mouseover', updateMousePosition)
-window.document.addEventListener('mouseup', updateMousePosition)
-window.document.addEventListener('drag', updateMousePosition)
-window.document.addEventListener('dragstart', updateMousePosition)
-window.document.addEventListener('dragend', updateMousePosition)
-window.document.addEventListener('dragover', updateMousePosition)
-window.document.addEventListener('dragenter', updateMousePosition)
-window.document.addEventListener('dragleave', updateMousePosition)
-
 ReactDOM.createRoot(root).render(
    <DndProvider backend={HTML5Backend}>
       <MainUI />
