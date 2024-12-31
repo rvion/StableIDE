@@ -68,7 +68,7 @@ export const DraftImageSlotPickerUI = observer(function DraftImageSlotPickerUI_(
                   <div key={i}>
                      <Button
                         borderless
-                        icon={addDivider && topParent ? topParent.config.icon : 'mdiChevronRight'}
+                        icon={(!i || addDivider) && topParent ? topParent.config.icon : 'mdiChevronRight'}
                         expand
                         subtle
                         // TODO(bird_d/ui/tooltips) : Really fucking annoying until tooltips are fixed
@@ -80,7 +80,7 @@ export const DraftImageSlotPickerUI = observer(function DraftImageSlotPickerUI_(
                            stop()
                         }}
                      >
-                        {addDivider && topParent ? `${topParent.config.label}: ` : ''}
+                        {(!i || addDivider) && topParent ? `${topParent.config.label}: ` : ''}
                         {formatFieldPath(imgField.path)}
                         <span tw='ml-5 flex-1 text-right opacity-50'>{imgField.labelText}</span>
                      </Button>
