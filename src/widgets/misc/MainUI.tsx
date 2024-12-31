@@ -18,7 +18,7 @@ const path = asAbsolutePath(process.cwd())
 export const MainUI = observer(function MainUI_() {
    const dragDropManager: DragDropManager = useDragDropManager()
    const st = useMemo(() => runInAction(() => new STATE(path, dragDropManager)), [])
-   useGlobalDropHook(st)
+   // useGlobalDropHook(st)
    return (
       <>
          <ToastContainer />

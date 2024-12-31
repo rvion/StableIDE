@@ -196,7 +196,7 @@ export const Frame = observer(
                size && `box-${size}`,
                square && `box-square`,
                loading && 'relative',
-               expand && 'flex-1',
+               expand && 'w-full',
                // layout
                p.line && 'flex flex-row items-center gap-x-1',
                // p.linegap && 'flex flex-row items-center gap-x-2',

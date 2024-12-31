@@ -115,7 +115,10 @@ export const useImageSlotDrop = (dropAction: (image: MediaImageL) => void): [boo
       },
       drop(item: Drop1, monitor): void {
          const image: MediaImageL = item.image
-         return dropAction(image)
+
+         if (monitor.isOver({ shallow: true })) {
+            return dropAction(image)
+         }
       },
       hover(item, monitor): void {
          if (monitor.isOver({ shallow: true })) {

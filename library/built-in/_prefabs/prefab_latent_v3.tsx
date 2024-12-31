@@ -50,7 +50,7 @@ export function ui_latent_v3(p: { size?: Field_size_config } = {}): UI_LatentV3 
             image: form.fields(
                {
                   batchSize,
-                  image: form.image({ label: false, justifyLabel: false }),
+                  image: form.image(),
                   resize: form.auto['was.Image Resize']().optional(),
                   // resize2: form.auto['was.Image Resize']().optional(),
                },
