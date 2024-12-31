@@ -450,6 +450,7 @@ export class STATE {
    comfyUIIframeRef = createRef<HTMLIFrameElement>()
    // dndVisualRef = createRef<HTMLDivElement>()
    dndHandler = new CushyDnDHandler()
+   mousePosition: { x: number; y: number } = { x: 0, y: 0 }
 
    expandNodes: boolean = false
 
