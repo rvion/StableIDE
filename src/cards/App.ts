@@ -83,4 +83,9 @@ export type App<FIELD extends Field> = {
    customNodeRequired?: string[]
    /** help text to show user when using their card */
    help?: string
+
+   /** Will be used for compatability handling
+    *  Anything that changes an api path or would break "extensions" should (usually) increment the major version
+    */
+   version?: { major: number; minor: number; patch: number }
 }
