@@ -20,7 +20,6 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
    const sizeStr = size + 'px'
    const tempSize = `${size}px`
 
-   const ree = ['1', '2', '3', '4', '5', '6', '1', '2', '3', '4', '5', '6', '1', '2', '3', '4', '5', '6']
    return (
       <>
          <Frame //
@@ -135,6 +134,28 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                   }
                >
                   <span tw='truncate'>StS</span>
+               </Button>
+               <Button
+                  tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
+                  tooltip='Weaver'
+                  base={{ hue: 90, chromaBlend: 2, contrast: 0.2 }}
+                  style={{
+                     width: tempSize,
+                     height: tempSize,
+                     background: `url(${cushy.db.cushy_app.get('library/built-in/app-Weaver/cushyWeaver.tsx:0')?.illustrationPathWithFileProtocol})`,
+                     backgroundSize: 'cover',
+                     textShadow: '0 1px 10px black',
+                     fontWeight: 'bold',
+                     color: 'white',
+                     fontSize: '1rem',
+                  }}
+                  onClick={() =>
+                     cushy.db.cushy_app
+                        .get('library/built-in/app-Weaver/cushyWeaver.tsx:0')
+                        ?.openLastOrCreateDraft()
+                  }
+               >
+                  <span tw='truncate'>Weaver</span>
                </Button>
                <RevealUI
                   tw='my-0.5 self-center hover:brightness-125'
