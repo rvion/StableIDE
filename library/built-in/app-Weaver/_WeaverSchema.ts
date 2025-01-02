@@ -1,40 +1,11 @@
-// import { DanbooruTagCategory } from '../../../src/widgets/prompter/nodes/booru/BooruLoader'
-import type { FieldTypes } from '../../../src/csuite/model/$FieldTypes'
-import type { BaseSchema } from '../../../src/csuite/model/BaseSchema'
+import type { StackData } from './_prefabs/prefab_Stack'
 
-import { ui_cnet, type UI_cnet } from '../_controlNet/prefab_cnet'
-import { type $extra1, extra1 } from '../_extra/extra1'
-import { type $extra2, extra2 } from '../_extra/extra2'
-import { ui_IPAdapterV2, type UI_IPAdapterV2 } from '../_ipAdapter/prefab_ipAdapter_baseV2'
-import { ui_IPAdapterFaceIDV2, type UI_IPAdapterFaceIDV2 } from '../_ipAdapter/prefab_ipAdapter_faceV2'
-import { ui_latent_v3, type UI_LatentV3 } from '../_prefabs/prefab_latent_v3'
-import { ui_sampler_advanced, type UI_Sampler_Advanced } from '../_prefabs/prefab_sampler_advanced'
-import { ui_customSave, type UI_customSave } from '../_prefabs/saveSmall'
-import { sampleNegative, samplePrompts } from '../samplePrompts'
-import { type $prefabModelSD15andSDXL, prefabModelSD15andSDXL } from '../SD15/_model_SD15_SDXL'
-import { type $PromptList, promptList } from './_prefabs/prefab_PromptList'
-
-export type StackType = 'conditioning' | 'latent'
-
-export type StackData = X.XGroup<{
-   name: X.XString
-   data: X.XOptional<
-      X.XChoices<{
-         conditioning: $PromptList
-         latent: UI_LatentV3
-      }>
-   >
-}>
+import { ui_latent_v3 } from '../_prefabs/prefab_latent_v3'
+import { promptList } from './_prefabs/prompting/WeaverPrompting'
 
 export type $CushyWeaverUI = X.XGroup<{
-   // stack: AllStackTypes
-
    stack: X.XList<StackData>
-   // stack: X.XList<BaseSchema<FieldTypes, SchemaAndAliases<_>>>,
-   // conditioning: $PromptList
-   // negative: $PromptList
    // model: $prefabModelSD15andSDXL
-   // latent: UI_LatentV3
    // sampler: UI_Sampler_Advanced
    // customSave: UI_customSave
    // controlnets: UI_cnet
@@ -44,25 +15,19 @@ export type $CushyWeaverUI = X.XGroup<{
    // extra2: $extra2
 }>
 
-// type K = $CushySDXLUI['$Field']
-
 export function _cushyWeaverSchema(b: X.Builder): $CushyWeaverUI {
-   // console.log(`[🤠] tags`, tags)
-   // console.log(`[🤠] artists`, artists)
    return b.fields({
       stack: b
          .fields({
             name: b.string(),
             data: b
                .choice({
-                  conditioning: promptList(b),
+                  prompting: promptList(b),
                   latent: ui_latent_v3(),
                })
                .optional(),
          })
          .list(),
-      // conditioning: promptList(b, { default: samplePrompts.tree }),
-      // negative: promptList(b, { default: 'bad quality, blurry, low resolution, pixelated, noisy' }),
 
       // controlnets: ui_cnet(),
       // model: prefabModelSD15andSDXL({

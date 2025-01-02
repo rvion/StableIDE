@@ -51,7 +51,7 @@ export const BlenderListUI = observer(function BlenderListUI_<T extends Field_li
                         <Frame //
                            tw={[
                               //
-                              'select-none overflow-clip',
+                              'select-none overflow-clip !border-none',
                               '!box-content',
                            ]}
                            triggerOnPress={{
