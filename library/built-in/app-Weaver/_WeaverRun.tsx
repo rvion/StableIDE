@@ -28,6 +28,7 @@ export async function _cushyWeaverRun(
    ui: FIELD['$Value'],
    ctx: DraftExecutionContext,
 ): Promise<void> {
+   return
    const graph = sdk.nodes
    // #region  MODEL, clip skip, vae, etc.
    const { ckpt, vae, clip: clip_ } = evalModelSD15andSDXL(ui.model)

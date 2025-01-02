@@ -1,4 +1,7 @@
 // import { DanbooruTagCategory } from '../../../src/widgets/prompter/nodes/booru/BooruLoader'
+import type { FieldTypes } from '../../../src/csuite/model/$FieldTypes'
+import type { BaseSchema } from '../../../src/csuite/model/BaseSchema'
+
 import { ui_cnet, type UI_cnet } from '../_controlNet/prefab_cnet'
 import { type $extra1, extra1 } from '../_extra/extra1'
 import { type $extra2, extra2 } from '../_extra/extra2'
@@ -11,12 +14,28 @@ import { sampleNegative, samplePrompts } from '../samplePrompts'
 import { type $prefabModelSD15andSDXL, prefabModelSD15andSDXL } from '../SD15/_model_SD15_SDXL'
 import { type $PromptList, promptList } from './_prefabs/prefab_PromptList'
 
+export type StackType = 'conditioning' | 'latent'
+
+export type StackData = X.XGroup<{
+   name: X.XString
+   data: X.XOptional<
+      X.XChoices<{
+         conditioning: $PromptList
+         latent: UI_LatentV3
+      }>
+   >
+}>
+
 export type $CushyWeaverUI = X.XGroup<{
-   conditioning: $PromptList
+   // stack: AllStackTypes
+
+   stack: X.XList<StackData>
+   // stack: X.XList<BaseSchema<FieldTypes, SchemaAndAliases<_>>>,
+   // conditioning: $PromptList
    // negative: $PromptList
-   model: $prefabModelSD15andSDXL
-   latent: UI_LatentV3
-   sampler: UI_Sampler_Advanced
+   // model: $prefabModelSD15andSDXL
+   // latent: UI_LatentV3
+   // sampler: UI_Sampler_Advanced
    // customSave: UI_customSave
    // controlnets: UI_cnet
    // ipAdapter: X.XOptional<UI_IPAdapterV2>
@@ -31,26 +50,37 @@ export function _cushyWeaverSchema(b: X.Builder): $CushyWeaverUI {
    // console.log(`[🤠] tags`, tags)
    // console.log(`[🤠] artists`, artists)
    return b.fields({
-      conditioning: promptList(b, { default: samplePrompts.tree }),
+      stack: b
+         .fields({
+            name: b.string(),
+            data: b
+               .choice({
+                  conditioning: promptList(b),
+                  latent: ui_latent_v3(),
+               })
+               .optional(),
+         })
+         .list(),
+      // conditioning: promptList(b, { default: samplePrompts.tree }),
       // negative: promptList(b, { default: 'bad quality, blurry, low resolution, pixelated, noisy' }),
 
       // controlnets: ui_cnet(),
-      model: prefabModelSD15andSDXL({
-         // @ts-ignore
-         // ckpt_name: 'albedobaseXL_v21.safetensors',
-      }).addRequirements({
-         // just for Lorn
-         type: 'modelInCivitai',
-         civitaiModelId: '889818',
-         // civitaiModelId: 'https://civitai.com/api/download/models/889818',
-         // civitaiURL: 'https://civitai.com/models/795765/illustrious-xl',
-         base: 'SDXL',
-         optional: true,
-      }),
-      latent: ui_latent_v3({
-         size: { default: { modelType: 'SDXL 1024' } },
-      }),
-      sampler: ui_sampler_advanced(),
+      // model: prefabModelSD15andSDXL({
+      //    // @ts-ignore
+      //    // ckpt_name: 'albedobaseXL_v21.safetensors',
+      // }).addRequirements({
+      //    // just for Lorn
+      //    type: 'modelInCivitai',
+      //    civitaiModelId: '889818',
+      //    // civitaiModelId: 'https://civitai.com/api/download/models/889818',
+      //    // civitaiURL: 'https://civitai.com/models/795765/illustrious-xl',
+      //    base: 'SDXL',
+      //    optional: true,
+      // }),
+      // latent: ui_latent_v3({
+      //    size: { default: { modelType: 'SDXL 1024' } },
+      // }),
+      // sampler: ui_sampler_advanced(),
       // customSave: ui_customSave(),
       // ipAdapter: ui_IPAdapterV2().optional(),
       // faceID: ui_IPAdapterFaceIDV2().optional(),
