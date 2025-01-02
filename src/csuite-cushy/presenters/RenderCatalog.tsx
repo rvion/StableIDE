@@ -1,3 +1,6 @@
+import type { FieldTypes } from '../../csuite/model/$FieldTypes'
+import type { Field } from '../../csuite/model/Field'
+
 import { observer } from 'mobx-react-lite'
 
 import { Button } from '../../csuite/button/Button'
@@ -19,6 +22,7 @@ import { WidgetString_summary } from '../../csuite/fields/string/WidgetString_su
 import { WidgetString_TextareaInput } from '../../csuite/fields/string/WidgetString_TextareaInput'
 import { Frame, type FrameProps } from '../../csuite/frame/Frame'
 import { IkonOf } from '../../csuite/icons/iconHelpers'
+import { InputNumberUI } from '../../csuite/input-number/InputNumberUI'
 import { MessageErrorUI } from '../../csuite/messages/MessageErrorUI'
 import { MessageInfoUI } from '../../csuite/messages/MessageInfoUI'
 import { MessageWarningUI } from '../../csuite/messages/MessageWarningUI'
@@ -40,6 +44,28 @@ import { ShellInlineUI } from '../shells/ShellInline'
 import { ShellMobileUI } from '../shells/ShellMobile'
 import { ShellNoop } from '../shells/ShellNoop'
 import { ShellSimpleUI } from '../shells/ShellSimple'
+
+type Prop<T> = keyof T
+
+const test = observer(
+   ({
+      field,
+      config,
+   }: {
+      field: Field
+      config?: { [K in keyof (typeof field)['$Config']]: (typeof field)['$Config'][K] }
+   }): JSX.Element => {
+      const conf = (field['$Config'] = { ...field['$Config'], ...config })
+
+      switch (field.type) {
+         case 'bool':
+            return <UY.boolean.default toggleGroup='' {...conf} />
+         default:
+            return <>{field.type}</>
+      }
+      return <>{field.type}</>
+   },
+)
 
 export type WidgetsCatalog = typeof widgetsCatalog /* {
    Misc: {
@@ -163,6 +189,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
          )
       }),
    },
+
    Misc: {
       Frame: Frame,
       Button: Button,
@@ -211,6 +238,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       Default: WidgetGroup_BlockUI,
       inline: WidgetGroup_InlineUI,
    },
+   Prop: test,
 }
 
 // make globally available

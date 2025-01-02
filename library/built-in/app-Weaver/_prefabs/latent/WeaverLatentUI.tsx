@@ -36,6 +36,7 @@ export const StackLatentUI = observer(function WeaverLatentUI_(p: {
                   )
                })}
             </UY.Layout.Row>
+            {/* <UY.Prop obj={field.bField} property={'fields'} /> */}
             {field.bField.matchExhaustive({
                emptyLatent: (value) => {
                   return (
