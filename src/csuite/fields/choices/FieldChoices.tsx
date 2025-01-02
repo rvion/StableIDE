@@ -219,6 +219,17 @@ export class Field_choices<T extends SchemaDict = SchemaDict> extends Field<Fiel
       }
    }
 
+   matchExhaustive<RESULT>(cases: {
+      [K in keyof T]: CovariantFn<[field: T[K]['$Field']], RESULT>
+   }): RESULT {
+      for (const branch of this.activeBranchesList) {
+         if (branch && branch.mountKey in cases) {
+            return cases[branch.mountKey]!(branch)
+         }
+      }
+      throw new Error('Wow')
+   }
+
    matchAll<RESULT>(cases: {
       [K in keyof T]?: CovariantFn<[field: T[K]['$Field']], RESULT>
    }): RESULT[] {
