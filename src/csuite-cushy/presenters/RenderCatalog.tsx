@@ -1,3 +1,5 @@
+import { observer } from 'mobx-react-lite'
+
 import { Button } from '../../csuite/button/Button'
 import { InputBoolCheckboxUI } from '../../csuite/checkbox/InputBoolCheckboxUI'
 import { InputBoolUI } from '../../csuite/checkbox/InputBoolUI'
@@ -15,7 +17,7 @@ import { WidgetString_MarkdownUI } from '../../csuite/fields/string/WidgetString
 import { WidgetString_SmallInput } from '../../csuite/fields/string/WidgetString_SmallInput'
 import { WidgetString_summary } from '../../csuite/fields/string/WidgetString_summary'
 import { WidgetString_TextareaInput } from '../../csuite/fields/string/WidgetString_TextareaInput'
-import { Frame } from '../../csuite/frame/Frame'
+import { Frame, type FrameProps } from '../../csuite/frame/Frame'
 import { IkonOf } from '../../csuite/icons/iconHelpers'
 import { MessageErrorUI } from '../../csuite/messages/MessageErrorUI'
 import { MessageInfoUI } from '../../csuite/messages/MessageInfoUI'
@@ -134,6 +136,33 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       List1: ShellCushyList1UI,
    },
    // #region Utils
+   Layout: {
+      Col: observer(function ColumnUI_(p: FrameProps) {
+         const theme = cushy.preferences.theme.value
+
+         return (
+            <Frame
+               col
+               border={p.align ? true : {}}
+               roundness={p.align ? theme.global.roundness : undefined}
+               dropShadow={p.align ? theme.global.shadow : undefined}
+               {...p}
+            />
+         )
+      }),
+      Row: observer(function ColumnUI_(p: FrameProps) {
+         const theme = cushy.preferences.theme.value
+         return (
+            <Frame
+               row
+               border={p.align ? true : {}}
+               roundness={p.align ? theme.global.roundness : undefined}
+               dropShadow={p.align ? theme.global.shadow : undefined}
+               {...p}
+            />
+         )
+      }),
+   },
    Misc: {
       Frame: Frame,
       Button: Button,
