@@ -53,7 +53,7 @@ export const SelectValueOverflowUI = observer(function SelectValueOverflowUI(p: 
       <Frame
          base={0}
          tw='box minw-inside h-inside absolute right-0 top-0 w-fit whitespace-nowrap px-1 text-center  shadow-md'
-         tooltip={`${p.valuesCount} valeurs`}
+         description={`${p.valuesCount} valeurs`}
          style={{
             marginTop: 'calc((var(--input-height) - var(--inside-height)) / 2 - 1px)',
             marginRight: '2px',

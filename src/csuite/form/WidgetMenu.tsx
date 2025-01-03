@@ -23,7 +23,7 @@ export const WidgetMenuUI = observer(function WidgetMenu(p: WidgetMenuProps) {
          content={() => <menu.UI />}
       >
          <Button //
-            tooltip='Open field menu'
+            description='Open field menu'
             tabIndex={-1}
             borderless
             subtle

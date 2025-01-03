@@ -51,7 +51,7 @@ export const RunOrAutorunUI = observer(function RunOrAutorunUI_(p: { className?:
          <Button
             // tw='h-input'
             look='success'
-            tooltip='Run the current draft. (create a step)'
+            description='Run the current draft. (create a step)'
             // size='xs'
             expand
             className='self-start'
@@ -66,7 +66,7 @@ export const RunOrAutorunUI = observer(function RunOrAutorunUI_(p: { className?:
          </Button>
          <Button // TODO(bird_d): Need a button that can be tied to an command, and will pull the relevant info from it. Like a label for the- label, and a description for the tooltip.
             icon='mdiAnimationPlay'
-            tooltip='Auto-start (restart when idle if change happened)'
+            description='Auto-start (restart when idle if change happened)'
             look='success'
             // size='xs'
             // tw='h-input'

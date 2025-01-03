@@ -35,7 +35,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                <Button
                   //
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
-                  tooltip='SD1.5'
+                  description='SD1.5'
                   // base={{ hue: 0, chromaBlend: 2, contrast: 0.2 }}
                   style={{ width: tempSize, height: tempSize }}
                   onClick={() => cushy.layout.open('PanelAppLibrary', {})}
@@ -46,7 +46,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                <Button
                   //
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
-                  tooltip='SD1.5'
+                  description='SD1.5'
                   base={{ hue: 0, chromaBlend: 2, contrast: 0.2 }}
                   style={{ width: tempSize, height: tempSize }}
                   onClick={() =>
@@ -57,7 +57,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                </Button>
                <Button
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
-                  tooltip='SDXL'
+                  description='SDXL'
                   base={{ hue: 90, chromaBlend: 2, contrast: 0.2 }}
                   style={{ width: tempSize, height: tempSize }}
                   onClick={() =>
@@ -73,7 +73,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                     /> */}
                <Button
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
-                  tooltip='NoobAI'
+                  description='NoobAI'
                   base={{ hue: 90, chromaBlend: 2, contrast: 0.2 }}
                   style={{
                      width: tempSize,
@@ -93,7 +93,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                </Button>
                <Button
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
-                  tooltip='SD3'
+                  description='SD3'
                   base={{ hue: 180, chromaBlend: 2, contrast: 0.2 }}
                   style={{ width: tempSize, height: tempSize }}
                   onClick={() =>
@@ -104,7 +104,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                </Button>
                <Button
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center truncate'
-                  tooltip='Cascade'
+                  description='Cascade'
                   base={{ hue: 210, chromaBlend: 2, contrast: 0.2 }}
                   style={{ width: tempSize, height: tempSize }}
                   onClick={() => cushy.db.cushy_app.get('library/built-in/Cascade/cushyCascade.ts:0')?.openLastOrCreateDraft()} // prettier-ignore
@@ -113,7 +113,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                </Button>
                <Button
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
-                  tooltip='FLUX'
+                  description='FLUX'
                   base={{ hue: 270, chromaBlend: 2, contrast: 0.2 }}
                   style={{ width: tempSize, height: tempSize }}
                   onClick={() =>
@@ -123,7 +123,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                   <span tw='truncate'>FLUX</span>
                </Button>
                <Button
-                  tooltip='Slay the Spire Card Generator'
+                  description='Slay the Spire Card Generator'
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
                   base={{ hue: 270, chromaBlend: 2, contrast: 0.2 }}
                   style={{ width: tempSize, height: tempSize }}
@@ -137,7 +137,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                </Button>
                <Button
                   tw='my-0.5 flex flex-shrink-0 items-center justify-center self-center'
-                  tooltip='Weaver'
+                  description='Weaver'
                   base={{ hue: 90, chromaBlend: 2, contrast: 0.2 }}
                   style={{
                      width: tempSize,
@@ -180,7 +180,7 @@ export const FavBarUI = observer(function FavBarUI_(p: { direction?: 'row' | 'co
                      {cushy.favoriteApps.map((app) => (
                         <Frame
                            border={20}
-                           tooltip={app.name}
+                           description={app.name}
                            roundness={cushy.preferences.theme.value.global.roundness}
                            key={app.id}
                            style={{ width: tempSize, height: tempSize }}

@@ -13,7 +13,7 @@ export const OutputImagePreviewUI = observer(function OutputImagePreviewUI_(p: {
    output: MediaImageL
 }) {
    return (
-      <Frame tooltip={`Image Output`} tw='h-full w-full'>
+      <Frame description={`Image Output`} tw='h-full w-full'>
          <ImageUIDumb //
             img={p.output}
          />

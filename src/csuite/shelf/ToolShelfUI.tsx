@@ -162,7 +162,7 @@ export const ToolShelfButtonUI = observer(function ToolShelfButtonUI_(
          iconSize={!expand ? '100%' : p.iconSize}
          onValueChange={p.onValueChange}
          text={expand ? p.text : undefined}
-         tooltip={p.tooltip}
+         description={p.tooltip}
          tooltipPlacement={p.tooltipPlacement}
       />
    )

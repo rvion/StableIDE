@@ -23,7 +23,7 @@ export const PanelAssetsShelfUI = observer(function PanelAssetsShelfUI_(p: { st:
                   tw='line-clamp-1 flex w-full select-none truncate whitespace-nowrap p-1'
                   icon='mdiFileDocument'
                   line
-                  tooltip={`Filepath\n${activeLora}`}
+                  description={`Filepath\n${activeLora}`}
                   roundness={theme.global.roundness}
                >
                   {activeLora}

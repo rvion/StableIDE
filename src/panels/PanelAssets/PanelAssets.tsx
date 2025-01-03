@@ -107,7 +107,7 @@ const AssetPageLora = observer(function AssetPageLora_(p: { st: PanelAssetsState
                <Frame //
                   key={index}
                   tw='flex h-40 w-32 select-none flex-col overflow-clip !border-none'
-                  tooltip={`${name}\nReplace with description of Lora.`}
+                  description={`${name}\nReplace with description of Lora.`}
                   active
                   border={false}
                   base={selected ? { contrast: 0.1, chroma: 0.11 } : { contrast: 0 }}

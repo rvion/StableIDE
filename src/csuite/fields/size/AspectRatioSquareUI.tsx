@@ -29,7 +29,7 @@ export const AspectRatioSquareUI = observer(function AspectRatioSquareUI_(p: { s
             // `aspect-square w-[100%]`,
          ]}
          onClick={() => uist.flip()}
-         tooltip='Flip aspect ratio'
+         description='Flip aspect ratio'
          style={{
             //
             width: ratioDisplaySize,

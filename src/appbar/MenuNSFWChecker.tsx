@@ -8,7 +8,7 @@ export const MenuNSFWCheckerUI = observer(function MenuNSFWCheckerUI_(p: {}) {
    const pj = cushy.project
    return (
       <Button //
-         tooltip={pj.filterNSFW ? 'NSFW Filter Enabled' : 'NSFW Filter Disabled'}
+         description={pj.filterNSFW ? 'NSFW Filter Enabled' : 'NSFW Filter Disabled'}
          borderless
          subtle
          square

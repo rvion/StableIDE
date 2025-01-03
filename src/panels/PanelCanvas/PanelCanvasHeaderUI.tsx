@@ -35,7 +35,7 @@ export const PanelCanvasHeaderUI = observer(function PanelCanvasHeaderUI_(p: {})
                   value={canvas.usePenPressure}
                   onValueChange={() => (canvas.usePenPressure = !canvas.usePenPressure)}
                   icon={canvas.usePenPressure ? 'mdiPencil' : 'mdiPencilOff'}
-                  tooltip='(Not implemented) Whether or not pressure affects the radius size of a brush stroke'
+                  description='(Not implemented) Whether or not pressure affects the radius size of a brush stroke'
                />
             </div>
             <div // TODO(bird_d): Should be a joined container thing
@@ -44,7 +44,7 @@ export const PanelCanvasHeaderUI = observer(function PanelCanvasHeaderUI_(p: {})
                <Button //
                   square
                   icon='mdiUndo'
-                  tooltip='Undo'
+                  description='Undo'
                   disabled={!canvas.canUndo}
                   onClick={() => canvas.undo()}
                />
@@ -52,7 +52,7 @@ export const PanelCanvasHeaderUI = observer(function PanelCanvasHeaderUI_(p: {})
                   square
                   disabled={!canvas.canRedo}
                   icon='mdiRedo'
-                  tooltip='Redo (Not implemented)'
+                  description='Redo (Not implemented)'
                   onClick={() => canvas.redo()}
                />
             </div>
@@ -75,7 +75,7 @@ export const PanelCanvasHeaderUI = observer(function PanelCanvasHeaderUI_(p: {})
                onValueChange={(v) => {
                   canvas.snapToGrid = !canvas.snapToGrid
                }}
-               tooltip='Enable Snapping'
+               description='Enable Snapping'
             />
          </div>
          <div tw='flex items-end justify-end'>
@@ -84,7 +84,7 @@ export const PanelCanvasHeaderUI = observer(function PanelCanvasHeaderUI_(p: {})
                value={canvas.enableOverlay}
                onValueChange={(_) => (canvas.enableOverlay = !canvas.enableOverlay)}
                icon={canvas.enableOverlay ? 'mdiDrawing' : 'mdiDrawingBox'}
-               tooltip={'(Not Implemented) Show Canvas Overlays'}
+               description={'(Not Implemented) Show Canvas Overlays'}
             />
             <Dropdown
                title=''

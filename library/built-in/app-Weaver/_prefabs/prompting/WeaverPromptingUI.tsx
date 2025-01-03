@@ -86,14 +86,14 @@ export const StackPromptingUI = observer(function StackPromptingUI_(p: {
                                  toggleGroup='prompt'
                                  value={item.fields.enabled.value}
                                  onValueChange={(v) => (item.fields.enabled.value = v)}
-                                 tooltip={'Whether or not the prompt effects the generation'}
+                                 description={'Whether or not the prompt effects the generation'}
                               />
                            ) : (
                               <UY.Misc.Frame
                                  icon='mdiAlert'
                                  size='input'
                                  square
-                                 tooltip='This will have no effect because prompt is empty'
+                                 description='This will have no effect because prompt is empty'
                               />
                            )}
                         </div>
@@ -130,7 +130,7 @@ export const StackPromptingUI = observer(function StackPromptingUI_(p: {
                         widgetLabel='Prompt Enabled'
                         text='Prompt Enabled'
                         // Tooltip needs to be gathered from the field
-                        tooltip='Whether or not the prompt effects the generation'
+                        description='Whether or not the prompt effects the generation'
                         // display='button'
                         expand
                      />

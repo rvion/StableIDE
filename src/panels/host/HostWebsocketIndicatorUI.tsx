@@ -45,7 +45,7 @@ export const ConnectionInfoUI = observer(function ConnectionInfoUI_(p: { host: H
          }}
       >
          <Button //
-            tooltip='Host information'
+            description='Host information'
             borderless
             square
             look={connected ? 'success' : 'error'}

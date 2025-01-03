@@ -13,7 +13,7 @@ export const PublishAppBtnUI = observer(function PublishAppBtnUI_({
    loading,
    icon,
    square,
-   tooltip,
+   description: tooltip,
    onClick,
 
    // rest
@@ -28,7 +28,7 @@ export const PublishAppBtnUI = observer(function PublishAppBtnUI_({
          loading={loading ?? app.isPublishing}
          icon={icon ?? 'mdiPublish'}
          square={square ?? true}
-         tooltip={tooltip ?? 'Publish app to the Cushy App Store'}
+         description={tooltip ?? 'Publish app to the Cushy App Store'}
          onClick={async (ev) => {
             // ensure is connected
             if (!cushy.auth.isConnected) {

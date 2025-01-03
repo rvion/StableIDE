@@ -35,7 +35,7 @@ export const AspectLockButtonUI = observer(function AspectLockButtonUI_(p: { siz
                    }}
                /> */}
          <Button
-            tooltip='Lock aspect ratio'
+            description='Lock aspect ratio'
             square
             size='input'
             base={{ contrast: uist.isAspectRatioLocked ? 0.2 : 0.0 }}

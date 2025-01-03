@@ -34,7 +34,8 @@ export type FrameProps = {
 
    container?: boolean | string | React.HTMLAttributes<HTMLDivElement>
 
-   tooltip?: string
+   description?: string
+   tooltip?: React.ReactNode
    tooltipPlacement?: RevealPlacement
 
    /** should be moved to Box props soon */
@@ -110,7 +111,7 @@ export const Frame = observer(
 
             hovered: hovered__,                                 // state
             onMouseDown, onMouseEnter, onClick, triggerOnPress, // interactions
-            tooltip, tooltipPlacement,
+            description: tooltip, tooltipPlacement,
 
             noColorStuff: noColorStuff__,
             // remaining properties

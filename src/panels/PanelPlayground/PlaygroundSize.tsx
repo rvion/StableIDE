@@ -11,7 +11,7 @@ export const PlaygroundSizeUI = observer(function PlaygroundSizeUI_(p: {}) {
          <Frame border base={{ hueShift: 10, contrast: 0.1, chroma: 0.05 }}>
             <h3>Manual (lg)</h3>
             {sizeManual.map((size) => (
-               <Frame tooltip={size} tw='my-1' line /* V1 */>
+               <Frame description={size} tw='my-1' line /* V1 */>
                   <Frame tw='w-12'>{size}</Frame>
                   <Button size={size}>button</Button>
                   <Frame size={size} children={'text in a frame'} />

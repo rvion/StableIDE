@@ -143,7 +143,9 @@ export const PanelIconUI = observer(function PanelIconUI_(p: NO_PROPS) {
                      <Button //
                         borderless
                         subtle
-                        tooltip={iconName + (aliases != null ? ` (aliases: ${JSON.stringify(aliases)})` : '')}
+                        description={
+                           iconName + (aliases != null ? ` (aliases: ${JSON.stringify(aliases)})` : '')
+                        }
                         base={{ hueShift: matchPrimaryName ? undefined : -100 }}
                         style={style}
                         icon={iconName}

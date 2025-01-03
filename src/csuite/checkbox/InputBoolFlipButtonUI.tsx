@@ -13,7 +13,7 @@ export const InputBoolFlipButtonUI = observer(function InputBoolFlipButtonUI_(p:
          style={p.style}
          className={p.className}
          disabled={p.disabled}
-         tooltip={p.tooltip}
+         description={p.description}
          tooltipPlacement={p.tooltipPlacement}
          hover
          triggerOnPress={{ startingState: isActive, toggleGroup: p.toggleGroup }}

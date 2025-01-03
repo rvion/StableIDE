@@ -70,14 +70,14 @@ export const UCMenuLayerEntryUI = observer(function UCMenuLayerEntryUI_(p: UCMen
 
             {/* <SpacerUI /> */}
             <Button
-               tooltip='Delete'
+               description='Delete'
                onClick={() => p.layer.disableSelfWithinParent()}
                icon={'mdiDeleteOutline'}
                borderless
                subtle
             />
             <Button
-               tooltip='visibility'
+               description='visibility'
                onClick={() => p.layer.Visible.toggle()}
                icon={isVisible ? 'mdiEyeOutline' : 'mdiEyeClosed'}
                borderless

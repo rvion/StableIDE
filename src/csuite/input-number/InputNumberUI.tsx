@@ -265,7 +265,7 @@ export const InputNumberUI = observer(function InputNumberUI_(p: InputNumberProp
          className={p.className}
          // unsure about the amount of code we had to use for that prop
          dropShadow={dropShadow ? dropShadow : undefined}
-         tooltip={p.tooltip}
+         description={p.tooltip}
          roundness={p.roundness ?? theme.global.roundness}
          disabled={p.disabled}
          tw={[

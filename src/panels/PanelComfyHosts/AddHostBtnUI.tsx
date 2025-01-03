@@ -8,7 +8,7 @@ import { asAbsolutePath } from '../../utils/fs/pathUtils'
 export const AddHostBtnUI = observer(function AddHostBtnUI_(p: {}) {
    return (
       <Button
-         tooltip='Add a new Host'
+         description='Add a new Host'
          icon='mdiPlus'
          look='primary'
          onClick={() => {

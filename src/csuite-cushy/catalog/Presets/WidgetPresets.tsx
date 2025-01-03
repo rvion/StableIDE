@@ -32,7 +32,7 @@ export const WidgetPresetsUI = observer(function WidgetPresets({
             button ?? (
                <UI.Button
                   /* borderless */
-                  tooltip={title}
+                  description={title}
                   tooltipPlacement='top'
                   subtle
                   borderless

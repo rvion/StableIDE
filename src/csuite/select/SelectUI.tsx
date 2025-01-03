@@ -82,7 +82,7 @@ export const SelectUI = observer(function SelectUI_<T>(p: SelectProps<T>) {
             dropShadow={cushy.preferences.theme.value.global.shadow}
             expand // </RevealUI>={p.expand ?? true}
             tabIndex={0}
-            tooltip={p.tooltip}
+            description={p.tooltip}
             {...p.frameProps}
             // line
             // hover

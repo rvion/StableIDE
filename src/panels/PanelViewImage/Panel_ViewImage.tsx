@@ -117,7 +117,7 @@ export const ImageActionBarUI = observer(function ImageActionBar(p: { img?: Mayb
             <Button // rating button
                square
                icon={isStarred ? 'mdiStarMinus' : 'mdiStar'}
-               tooltip={isStarred ? 'Un-Favorite' : 'Favorite'}
+               description={isStarred ? 'Un-Favorite' : 'Favorite'}
                // active={isStarred}
                borderless
                subtle
@@ -163,7 +163,7 @@ export const ImageActionBarUI = observer(function ImageActionBar(p: { img?: Mayb
             )}
             <Button // Delete button
                look='warning'
-               tooltip='Delete Image'
+               description='Delete Image'
                icon='mdiDeleteForever'
                iconSize='1.2rem'
                onClick={() => {

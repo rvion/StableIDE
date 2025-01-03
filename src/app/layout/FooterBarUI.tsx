@@ -17,7 +17,7 @@ export const FooterBarUI = observer(function FooterBarUI_(p: FrameProps) {
       >
          <ToggleButtonUI
             tw='mr-2'
-            tooltip='Show Command Visualizer'
+            description='Show Command Visualizer'
             onValueChange={(next) => (cushy.showCommandHistory = next)}
             value={cushy.showCommandHistory}
             icon='mdiKeyboard'

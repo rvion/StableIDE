@@ -54,7 +54,7 @@ function getOutput(step: Maybe<StepL>, output: StepOutput): JSX.Element | undefi
 
    exhaust(output)
    console.log(`[🔴]`,output)
-   return <Frame square icon='mdiAlert' iconSize='80%' tooltip={`❌ unhandled message of type ${(output as any).constructor.name}`}  />
+   return <Frame square icon='mdiAlert' iconSize='80%' description={`❌ unhandled message of type ${(output as any).constructor.name}`}  />
    }
 
 export const OutputPreview_ContentUI = observer(function OutputPreview_ContentUI_(p: {
@@ -73,7 +73,7 @@ export const OutputPreview_ContentUI = observer(function OutputPreview_ContentUI
             // border={}
             roundness={theme.global.roundness}
             dropShadow={theme.global.shadow}
-            tooltip='Step was null'
+            description='Step was null'
             icon={'mdiAlert'}
             iconSize='80%'
          />

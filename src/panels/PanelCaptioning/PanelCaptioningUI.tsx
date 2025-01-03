@@ -50,7 +50,7 @@ export const PanelCaptioningUI = observer(function PanelCaptioningUI_(p: {}) {
             <BasicShelfUI anchor='right'>
                <Frame line tw='flex flex-row'>
                   <Button
-                     tooltip={doc.folderPath ?? 'no folder selected'}
+                     description={doc.folderPath ?? 'no folder selected'}
                      expand
                      icon={'mdiFolderOpen'}
                      onClick={async () => {
@@ -87,7 +87,7 @@ export const PanelCaptioningUI = observer(function PanelCaptioningUI_(p: {}) {
                                     borderless
                                     base={{ contrast: isSelected ? 0.1 : 0 }}
                                     onClick={() => (doc.activeImageIndex = ix)}
-                                    tooltip={fileName}
+                                    description={fileName}
                                  >
                                     <CachedResizedImage size={24} src={`${doc.folderPath}/${fileName}`} />
                                     <span tw='truncate text-center'>
@@ -116,7 +116,7 @@ export const PanelCaptioningUI = observer(function PanelCaptioningUI_(p: {}) {
                                        borderless
                                        base={{ contrast: isSelected ? 0.1 : 0 }}
                                        onClick={() => (doc.activeCaptionIndex = ix)}
-                                       tooltip={caption}
+                                       description={caption}
                                        setValue={(val) => {
                                           doc.captions[doc.activeCaptionIndex] = val
                                           doc.updateCaptions()
@@ -129,7 +129,7 @@ export const PanelCaptioningUI = observer(function PanelCaptioningUI_(p: {}) {
                                     >
                                        <span tw='flex-grow truncate text-start'>{caption}</span>
                                        <Button
-                                          tooltip='Remove caption'
+                                          description='Remove caption'
                                           size='sm'
                                           square
                                           subtle

@@ -47,7 +47,7 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
                   square
                   subtle
                   icon='mdiContentPaste'
-                  tooltip='Paste image data from the clipboard'
+                  description='Paste image data from the clipboard'
                   onClick={() => {
                      // XXX: This is slow, should probably be done through electron's api, but works for now. Could also be made re-usable? getImageFromClipboard()?
                      navigator.clipboard
@@ -99,7 +99,7 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
                <SpacerUI />
                <Button //
                   disabled={field.value == cushy.defaultImage}
-                  tooltip='reset'
+                  description='reset'
                   square
                   subtle
                   icon={'mdiRestore'}

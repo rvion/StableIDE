@@ -190,7 +190,7 @@ export const LoraBoxUI = observer(function LoraBoxUI_(p: {
                />
                <Button
                   //
-                  tooltip='Open associated URL in external browser'
+                  description='Open associated URL in external browser'
                   icon='mdiOpenInNew'
                   onClick={() => openExternal(associatedUrl)}
                />

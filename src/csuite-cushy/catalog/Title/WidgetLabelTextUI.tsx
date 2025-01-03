@@ -20,7 +20,7 @@ export const DefaultWidgetTitleUI = observer(function DefaultWidgetTitle(p: Widg
       // Using Frame for the tooltips
       <Frame
          // TODO(bird_d/interface/option): Add option to toggle label text tooltips, until a more robust method that determines if the text is truncated comes along
-         tooltip={labelText.toString()}
+         description={labelText.toString()}
          // (bird_d): I'm hoping this makes things more efficient since it was just a div before?
          noColorStuff
          tw={[
