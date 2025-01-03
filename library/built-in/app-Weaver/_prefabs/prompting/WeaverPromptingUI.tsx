@@ -62,12 +62,6 @@ export const StackPromptingUI = observer(function StackPromptingUI_(p: {
                               ev.preventDefault()
                            }}
                         />
-                        <UY.Prop
-                           field={item.fields.enabled}
-                           config={{
-                              border: { contrast: 50 },
-                           }}
-                        />
                         <span
                            tw={[
                               'line-clamp-1 w-full flex-grow px-1',
