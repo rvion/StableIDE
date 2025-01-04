@@ -33,6 +33,7 @@ export const SelectUI = observer(function SelectUI_<T>(p: SelectProps<T>) {
                'ANCHOR-REVEAL',
                p.hasErrors && 'rsx-field-error',
             ]}
+            tooltip={p.tooltip}
          >
             <AnchorContentComp select={select} />
          </Frame>

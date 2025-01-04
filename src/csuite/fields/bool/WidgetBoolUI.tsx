@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite'
 
 import { InputBoolUI } from '../../checkbox/InputBoolUI'
 import { SpacerUI } from '../../components/SpacerUI'
+import { WidgetTooltipUI } from '../number/WidgetNumberUI'
 
 export const WidgetBoolUI = observer(function WidgetBoolUI_(p: { field: Field_bool }) {
    const field = p.field
@@ -30,6 +31,7 @@ export const WidgetBoolUI = observer(function WidgetBoolUI_(p: { field: Field_bo
                p.field.touch()
             }}
             toggleGroup={'field-bool'}
+            tooltip={<WidgetTooltipUI field={field} />}
          />
 
          <SpacerUI />

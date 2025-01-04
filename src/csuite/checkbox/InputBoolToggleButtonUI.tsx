@@ -49,7 +49,8 @@ export const ToggleButtonUI = observer(function ToggleButtonUI_(
          tabIndex={0}
          className={p.className}
          triggerOnPress={{ startingState: isActive, toggleGroup: p.toggleGroup }}
-         description={p.description}
+         // TODO(bird_d/tooltips) didn't work
+         // tooltip={p.tooltip}
          tooltipPlacement={p.tooltipPlacement}
          // look={isActive ? 'primary' : undefined} // 🔴🦀 temp solution to visually broken active options
          base={isActive ? activeColor : {}} // 🔴🦀 temp solution to visually broken active options

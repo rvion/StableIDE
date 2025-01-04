@@ -31,6 +31,7 @@ export const InputBoolCheckboxUI = observer(function InputBoolCheckboxUI_(p: Boo
             ev.stopPropagation()
             p.onValueChange(!isActive)
          }}
+         tooltip={p.tooltip}
          {...rest}
          role='checkbox'
          aria-checked={isActive}
