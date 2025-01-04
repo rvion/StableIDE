@@ -37,7 +37,7 @@ export function ui_highresfix(): UI_HighResFix {
          upscaleMethod: form
             .selectOneString(['regular', 'Neural 1.5', 'Neural XL'], {
                appearance: 'tab',
-               tooltip: 'regular upscale add more noise, depend your objective. for a second pass to refine stuff, I think adding noise is better', // prettier-ignore
+               description: 'regular upscale add more noise, depend your objective. for a second pass to refine stuff, I think adding noise is better', // prettier-ignore
             })
             .addRequirements([
                { type: 'customNodesByURI', uri: 'https://github.com/Ttl/ComfyUi_NNLatentUpscale' },
@@ -121,7 +121,7 @@ type Resolutions =
    | '1536x640'
 
 export const ui_resolutionPicker = (form: X.Builder): X.XSelectOne_<Resolutions> =>
-   form.selectOneString(resolutions, { label: 'Resolution', tooltip: 'Width x Height' })
+   form.selectOneString(resolutions, { label: 'Resolution', description: 'Width x Height' })
 
 /** allow to easilly pick a shape */
 export const ui_shapePickerBasic = (form: X.Builder): X.XSelectOne_<'round' | 'square'> => {

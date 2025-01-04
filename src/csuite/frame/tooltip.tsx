@@ -5,7 +5,7 @@ import { makeAutoObservable, observable } from 'mobx'
 export type TooltipInst = {
    depth: number
    ref: Element
-   text: string
+   text: string | React.ReactNode
    placement: RevealPlacement
 }
 

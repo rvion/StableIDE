@@ -29,7 +29,7 @@ export function ui_model_kohyaDeepShrink(form: X.Builder): UI_model_kohyaDeepShr
                   max: 9,
                   softMax: 4,
                   step: 0.25,
-                  tooltip: 'only applies to shrink on base model. hires will use hires scale factor.',
+                  description: 'only applies to shrink on base model. hires will use hires scale factor.',
                }),
                block_number: form.int({ default: 3, max: 32, min: 1 }),
                startPercent: form.float({ default: 0, min: 0, max: 1, step: 0.05 }),
@@ -52,7 +52,7 @@ export function ui_model_kohyaDeepShrink(form: X.Builder): UI_model_kohyaDeepShr
       },
       {
          startCollapsed: true,
-         tooltip:
+         description:
             'Shrinks and patches the model. Can be used to generate resolutions higher than the model training and helps with hires fix.',
          toSummary: ({ value: ui }): string => {
             return `${ui.include.base ? '🟢Base (' + ui.advancedSettings.downscaleFactor + ')' : ''}${ui.include.hiRes ? '🟢HiRes ' : ''} end:${ui.advancedSettings.endPercent}`

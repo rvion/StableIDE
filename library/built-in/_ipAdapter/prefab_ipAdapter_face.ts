@@ -87,7 +87,7 @@ export function ui_IPAdapterFaceID(): UI_IPAdapterFaceID {
                .group({
                   startCollapsed: true,
                   label: 'Reinforce With Additional IPAdapter',
-                  tooltip:
+                  description:
                      'Enabling will apply an additional IPAdapter. This usually makes faces more accurate, but pulls along more features from the face image.',
                   items: {
                      help: b.markdown({

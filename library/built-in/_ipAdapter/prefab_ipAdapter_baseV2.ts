@@ -25,7 +25,7 @@ export const ui_ipadapter_advancedSettings = (
          adapterAttentionMask: form
             .image({
                label: 'Attention Mask',
-               tooltip: 'This defines the region of the generated image the IPAdapter will apply to',
+               description: 'This defines the region of the generated image the IPAdapter will apply to',
             })
             .optional(),
          weight_type: form.enum['IPAdapter_plus.IPAdapterAdvanced.weight_type']({ default: weight_type }),
@@ -67,7 +67,7 @@ export function ui_IPAdapterImageInput(form: X.Builder): UI_IPAdapterImageInput 
                   .image({
                      label: 'Image Attention Mask',
                      startCollapsed: true,
-                     tooltip:
+                     description:
                         'This defines the region of the image the clip vision will attempt to interpret into an embedding',
                   })
                   .optional(),

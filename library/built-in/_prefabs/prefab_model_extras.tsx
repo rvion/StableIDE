@@ -50,7 +50,7 @@ export const schemaModelExtras = (
             KohyaDeepShrink: ui_model_kohyaDeepShrink(b),
             civitai_ckpt_air: b
                .string({
-                  tooltip: 'Civitai checkpoint Air, as found on the civitai Website. It should look like this: 43331@176425', // prettier-ignore
+                  description: 'Civitai checkpoint Air, as found on the civitai Website. It should look like this: 43331@176425', // prettier-ignore
                   label: 'Civitai Ref',
                   placeHolder: 'e.g. 43331@176425',
                })

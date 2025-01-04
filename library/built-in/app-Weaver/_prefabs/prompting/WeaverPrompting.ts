@@ -50,7 +50,7 @@ export function weaverPrompt(b: X.Builder, options?: { default?: string }): $Wea
          positive: b.bool({
             default: true,
             hidden: true,
-            tooltip: 'When true, the prompt will apply positively',
+            description: 'When true, the prompt will apply positively',
          }),
          prompt: b.prompt({
             icon: 'mdiPlusBoxOutline',

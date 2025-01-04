@@ -114,8 +114,8 @@ export interface FieldConfig_CommonProperties<out T extends FieldTypes> {
    /** The layout direction, H for 'horizontal' or V for 'vertical' */
    layout?: 'H' | 'V'
 
-   /** if provided, will dispaly a tooltip when hovering over the label */
-   tooltip?: string
+   /** Description of what the field is or does. (An ending period will be added automatically) */
+   description?: string
 
    /**
     * Will be injected around the widget;

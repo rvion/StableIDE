@@ -105,7 +105,8 @@ export function ui_refiners(): UI_Refiners {
                      },
                      {
                         startCollapsed: true,
-                        tooltip: 'Enabling defines the bounding boxes more clearly rather than a square box',
+                        description:
+                           'Enabling defines the bounding boxes more clearly rather than a square box',
                         toSummary: ({ value: ui }): string => `model:${ui.model_name}`,
                      },
                   )

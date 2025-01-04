@@ -21,7 +21,7 @@ export function ui_3dDisplacement(): UI_3dDisplacement {
          label: '3D Displacement',
          items: {
             normal: form.selectOneString(['MiDaS', 'BAE', 'None'], {
-               tooltip: 'no Normal map may be better, bad model yields bumpy stuff',
+               description: 'no Normal map may be better, bad model yields bumpy stuff',
                default: 'None',
             }),
             depth: form.choice(

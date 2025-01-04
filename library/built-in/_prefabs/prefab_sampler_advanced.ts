@@ -91,6 +91,7 @@ export function ui_sampler_advanced(p?: {
          guidanceType: form.choice(
             {
                CFG: form.float({
+                  description: 'WHAT THE FUCK',
                   step: 1,
                   label: 'CFG',
                   min: 0,

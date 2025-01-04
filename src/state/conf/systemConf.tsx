@@ -24,7 +24,8 @@ export const systemConf = cushyFactory.document(
             externalEditor: ui.string({
                //
                label: 'External Editor',
-               tooltip: 'The name of your preffered text editor to use when opening text files externally',
+               description:
+                  'The name of your preffered text editor to use when opening text files externally',
                default: 'code',
             }),
             tags: ui.fields({

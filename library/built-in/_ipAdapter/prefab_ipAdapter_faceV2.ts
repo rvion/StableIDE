@@ -76,7 +76,7 @@ export function ui_IPAdapterFaceIDV2(): UI_IPAdapterFaceIDV2 {
                            adapterAttentionMask: form
                               .image({
                                  label: 'Attention Mask',
-                                 tooltip:
+                                 description:
                                     'This defines the region of the generated image the IPAdapter will apply to',
                               })
                               .optional(),

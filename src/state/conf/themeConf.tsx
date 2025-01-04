@@ -54,7 +54,7 @@ export const themeConf: ThemeConf['$Field'] = cushyFactory.document(
             ),
             // 1. colors
             base: ui.colorV2({
-               tooltip: 'main color of the CushyStudio UI',
+               description: 'main color of the CushyStudio UI',
                default: '#F4F5FB',
                // presets: [
                //     { label: 'Dark', icon: 'mdiLightSwitch', apply: (w) => (w.value = '#1E212B') },
@@ -64,7 +64,7 @@ export const themeConf: ThemeConf['$Field'] = cushyFactory.document(
             }),
             appbar: ui
                .colorV2({
-                  tooltip: 'color or the app shell (appbar, footer, tabset separator, etc.)',
+                  description: 'color or the app shell (appbar, footer, tabset separator, etc.)',
                   default: '#313338',
                })
                .optional(false),

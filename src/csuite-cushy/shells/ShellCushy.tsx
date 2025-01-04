@@ -81,7 +81,7 @@ export const ShellCushyLeftUI = observer(function ShellCushyLeft(p: CompiledRend
          HEADER={
             <>
                {/* prettier-ignore */}
-               <WidgetLabelContainerUI tooltip={field.config.tooltip} justify>
+               <WidgetLabelContainerUI tooltip={field.config.description} justify>
                         {utils.renderFCOrNode(p.Indent,      { depth: field.depth })}
                         {utils.renderFCOrNode(p.DragKnob,    { field })}
                         {utils.renderFCOrNode(p.Caret,       { field, placeholder: true })}
@@ -108,7 +108,7 @@ export const ShellCushyList1UI = observer(function ShellCushyList1(p: CompiledRe
          HEADER={
             <>
                {/* prettier-ignore */}
-               <WidgetLabelContainerUI tooltip={field.config.tooltip} justify>
+               <WidgetLabelContainerUI tooltip={field.config.description} justify>
                         {utils.renderFCOrNode(p.Indent,      { depth: field.depth })}
                         {utils.renderFCOrNode(p.DragKnob,    { field })}
                         {utils.renderFCOrNode(p.Caret,       { field, placeholder: true })}
@@ -135,7 +135,7 @@ export const ShellCushyRightUI = observer(function ShellCushyRight(p: CompiledRe
          HEADER={
             <>
                <WidgetLabelContainerUI //
-                  tooltip={field.config.tooltip}
+                  tooltip={field.config.description}
                   justify
                >
                   {utils.renderFCOrNode(p.Indent /*    */, { depth: field.depth })}
@@ -167,7 +167,7 @@ export const ShellCushyFluidUI = observer(function ShellCushyFluid(p: CompiledRe
          HEADER={
             <>
                <WidgetLabelContainerUI //
-                  tooltip={field.config.tooltip}
+                  tooltip={field.config.description}
                   justify={false}
                >
                   {utils.renderFCOrNode(p.Indent, /*    */ { depth: field.depth })}

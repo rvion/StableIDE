@@ -1,6 +1,8 @@
+import type { Field } from '../../model/Field'
 import type { Field_number } from './FieldNumber'
 
 import { observer } from 'mobx-react-lite'
+import { type ReactNode } from 'react'
 
 import { InputNumberUI } from '../../input-number/InputNumberUI'
 
@@ -24,6 +26,21 @@ export const WidgetNumberUI = observer(function WidgetNumberUI_(p: { field: Fiel
          text={field.config.text}
          onValueChange={(next) => void (field.value = next)}
          forceSnap={field.config.forceSnap}
+         tooltip={<WidgetTooltipUI field={field} />}
       />
+   )
+})
+
+export const WidgetTooltipUI = observer(function WidgetTooltipUI_({ field }: { field: Field }) {
+   return (
+      <div tw='py-1 px-2'>
+         <div tw='flex flex-col'>
+            <span>{field.labelText}</span>
+            {field.config.description ? <span>{field.config.description}</span> : <></>}
+            {cushy.preferences.interface.DeveloperOptions.ShowDeveloperTooltips.value && (
+               <span tw='opacity-75'>{field.path}</span>
+            )}
+         </div>
+      </div>
    )
 })

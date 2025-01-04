@@ -21,7 +21,7 @@ app({
                system: b.string({
                   textarea: true,
                   default: defaultSystemPrompt,
-                  tooltip:
+                  description:
                      'Try experimenting with the system prompt. You may get better results from different models depending on how specific the instructions are.',
                }),
             },

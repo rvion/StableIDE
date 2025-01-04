@@ -20,6 +20,7 @@ import { FramePhoneUI } from '../../csuite/wrappers/FramePhoneUI'
 import { InstallRequirementsBtnUI } from '../../manager/REQUIREMENTS/InstallRequirementsBtnUI'
 import { usePanel } from '../../router/usePanel'
 import { useImageSlotDrop } from '../../widgets/galleries/dnd'
+import { POPUP } from '../../widgets/misc/SimplePopUp'
 import { draftContext } from '../../widgets/misc/useDraft'
 import { AppCompilationErrorUI } from './AppCompilationErrorUI'
 import { DraftHeaderUI } from './DraftHeaderUI'
@@ -37,82 +38,6 @@ export const PanelDraftUI = observer(function PanelDraftUI_(p: PanelDraftProps) 
    // 1. get draft
    const draft = typeof p.draftID === 'string' ? cushy.db.draft.get(p.draftID) : p.draftID
    return <DraftUI draft={draft} />
-})
-
-const POPUP = observer(function POPUP___(p: { title?: string; children?: React.ReactNode }) {
-   const divRef = useRef<HTMLDivElement | null>(null)
-
-   // Really simple and just keep it on screen for now. Should
-   const fixPlacement = (): void => {
-      if (divRef.current) {
-         const rect = divRef.current.getBoundingClientRect()
-         const viewportWidth = window.innerWidth
-         const viewportHeight = window.innerHeight
-
-         let top = rect.top
-         let left = rect.left
-
-         if (rect.bottom > viewportHeight) {
-            top = viewportHeight - rect.height
-         }
-         if (rect.top < 0) {
-            top = 0
-         }
-
-         if (rect.right > viewportWidth) {
-            left = viewportWidth - rect.width
-         }
-         if (rect.left < 0) {
-            left = 0
-         }
-
-         setInitialPosition({ x: left, y: top })
-      }
-   }
-
-   useLayoutEffect(() => {
-      fixPlacement()
-      window.document.addEventListener('resize', fixPlacement)
-      return (): void => window.document.removeEventListener('resize', fixPlacement)
-   }, [])
-
-   const [initialPosition, setInitialPosition] = useState<{ x: number; y: number } | null>(null)
-
-   if (!initialPosition) {
-      setInitialPosition({ x: cushy.region.mouseX, y: cushy.region.mouseY })
-   }
-
-   if (!initialPosition) {
-      return <div> POSITION FAILED SOMEHOW</div>
-   }
-
-   const theme = cushy.preferences.theme.value
-
-   return (
-      <Frame
-         ref={divRef}
-         base={theme.global.contrast}
-         border={{ contrast: 0.1 }}
-         roundness={theme.global.roundness}
-         tw='absolute select-none'
-         style={{
-            //
-            top: initialPosition.y,
-            left: initialPosition.x,
-         }}
-         col
-      >
-         {p.title && (
-            <>
-               <Frame tw='!bg-transparent px-2' text={{ contrast: 0.5 }} line size={'input'} expand>
-                  {p.title}
-               </Frame>
-               <MenuDivider />
-            </>
-         )}
-         {p.children}
-      </Frame>
-   )
 })
 
 export const DraftUI = observer(function Panel_Draft_(p: { draft: Maybe<DraftL> }) {

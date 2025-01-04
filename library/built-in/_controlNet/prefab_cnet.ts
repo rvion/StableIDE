@@ -52,7 +52,7 @@ export function ui_cnet(): UI_cnet {
    const form: X.Builder = getCurrentForm()
 
    const applyDuringUpscale2 = form.bool({
-      tooltip: 'Use the controlnet conditioning for the upscale pass if enabled',
+      description: 'Use the controlnet conditioning for the upscale pass if enabled',
       label2: 'Apply during upscale',
       label: false,
       default: false,
@@ -64,7 +64,7 @@ export function ui_cnet(): UI_cnet {
             label: 'ControlNets',
             icon: 'mdiCompass',
             // box: { base: { hue: 90, chroma: 0.1 } },
-            tooltip: `Instructional resources:\nhttps://github.com/lllyasviel/ControlNet\nhttps://stable-diffusion-art.com/controlnet/`,
+            description: `Instructional resources:\nhttps://github.com/lllyasviel/ControlNet\nhttps://stable-diffusion-art.com/controlnet/`,
             element: () =>
                form.group({
                   label: 'Controlnet Image',
@@ -77,7 +77,7 @@ export function ui_cnet(): UI_cnet {
                               nodeName: 'Advanced-ControlNet.ACN_AdvancedControlNetApply',
                            },
                         ])
-                        .withConfig({ tooltip: 'Applies controlnet only to the masked area.' }),
+                        .withConfig({ description: 'Applies controlnet only to the masked area.' }),
                      resize: form.bool({ default: true }),
                      applyDuringUpscale: applyDuringUpscale,
                      cnets: form.choices(

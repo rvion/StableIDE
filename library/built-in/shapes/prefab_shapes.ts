@@ -63,7 +63,7 @@ export function ui_LatentShapeGenerator(
 
          color1: ui.stringColor({ default: '#FFFFFF' }),
          color2: ui.stringColor({ default: '#000000' }),
-         colorVariationFactor: ui.float({ min: 0, max: 1, default: 0.5, tooltip: 'A higher color variation factor value will result in more color variation, while a lower color variation factor value will result in less color variation. If factor is 0, there will be no color variation at all.' }), // prettier-ignore
+         colorVariationFactor: ui.float({ min: 0, max: 1, default: 0.5, description: 'A higher color variation factor value will result in more color variation, while a lower color variation factor value will result in less color variation. If factor is 0, there will be no color variation at all.' }), // prettier-ignore
       },
       {
          collapsed: false,
