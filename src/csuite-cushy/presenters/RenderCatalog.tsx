@@ -172,6 +172,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
                border={p.align ? true : {}}
                roundness={p.align ? theme.global.roundness : undefined}
                dropShadow={p.align ? theme.global.shadow : undefined}
+               expand={p.expand ?? true}
                {...p}
             />
          )
@@ -184,6 +185,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
                border={p.align ? true : {}}
                roundness={p.align ? theme.global.roundness : undefined}
                dropShadow={p.align ? theme.global.shadow : undefined}
+               expand={p.expand ?? true}
                {...p}
             />
          )
