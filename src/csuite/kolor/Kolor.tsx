@@ -134,14 +134,14 @@ export class Kolor implements Tint {
          // console.log(`[🤠] dir`, dir_)
          const x1 = this.color
             .clone()
-            // .set({ 'oklch.l': (v: any) => (v += cr) })
-            .set({ 'hct.t': (v: any) => (v += cr * 100) })
+            .set({ 'oklch.l': (v: any) => (v += cr) })
+            // .set({ 'hct.t': (v: any) => (v += cr * 100) })
             .toGamut('srgb')
 
          const x2 = this.color
             .clone()
-            // .set({ 'oklch.l': (v: any) => (v -= cr) })
-            .set({ 'hct.t': (v: any) => (v -= cr * 100) })
+            .set({ 'oklch.l': (v: any) => (v -= cr) })
+            // .set({ 'hct.t': (v: any) => (v -= cr * 100) })
             .toGamut('srgb')
 
          const apcaWx1 = Math.abs(this.color.contrastAPCA(x1))
@@ -152,7 +152,8 @@ export class Kolor implements Tint {
 
       const clamped = new Color('oklch', [lightness, chroma, hue]).toGamut('srgb')
       // console.log(`[🤠] `, xxxx.oklch[0]!, xxxx.oklch[1]!, or0(xxxx.oklch[2]!))
-      const next = new Kolor(clamped.oklch[0]!, clamped.oklch[1]!, or0(clamped.oklch[2]!))
+      const oklchCl = clamped.oklch
+      const next = new Kolor(oklchCl[0]!, oklchCl[1]!, or0(oklchCl[2]!))
 
       if (!next.isInRBGGamut) console.error(`[🔴] ${usage} out of gamut: ${next.toOKLCH()} - ${next.webLink}`)
       return next
