@@ -160,12 +160,8 @@ export class Field_group<X extends Field_group_types<SchemaDict> = Field_group_t
    }
 
    // #region UI
-   DefaultHeaderUI = WidgetGroup_LineUI
-
-   get DefaultBodyUI(): CovariantFC<{ field: Field_group<any> }> | undefined {
-      if (Object.keys(this.fields).length === 0) return
-      return WidgetGroup_BlockUI
-   }
+   DefaultHeaderUI: -1 = -1
+   DefaultBodyUI: -1 = -1
 
    get summary(): string {
       // 👇🤔 Maybe we don't want to invoke the summary unless the field is valid
@@ -175,11 +171,6 @@ export class Field_group<X extends Field_group_types<SchemaDict> = Field_group_t
       } catch (e) {
          return `❌ ${this.path}.toString() crashed ❌`
       }
-   }
-
-   get justifyLabel(): boolean {
-      if (this.numFields > 1) return false
-      return true
    }
 
    // #region PROBLEMS

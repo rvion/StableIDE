@@ -315,8 +315,8 @@ export class Field_string extends Field<Field_string_types> {
    }
 
    // #region UI
-   DefaultBodyUI: undefined = undefined
-   DefaultHeaderUI = WidgetStringUI
+   DefaultBodyUI: -1 = -1
+   DefaultHeaderUI: -1 = -1
 
    get isCollapsible(): boolean {
       if (this.config.textarea) return true

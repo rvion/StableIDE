@@ -225,20 +225,8 @@ export class Field_selectOne<
    }
 
    // 📌 UI ---------------------------------------------------------------------|
-   DefaultHeaderUI = WidgetSelectOneUI
-   DefaultBodyUI: undefined = undefined
-   DefaultCellUI = WidgetSelectOne_CellUI
-
-   // @deprecated
-   renderAsCell(this: Field_selectOne<VALUE, KEY>, p?: { reveal?: boolean }): JSX.Element {
-      return (
-         <this.DefaultCellUI //
-            field={this}
-            opts={p}
-            {...p}
-         />
-      )
-   }
+   DefaultHeaderUI: -1 = -1
+   DefaultBodyUI: -1 = -1
 
    // #region PROBLEMS
 

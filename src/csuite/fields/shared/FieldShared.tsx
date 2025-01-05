@@ -63,8 +63,8 @@ export class Field_shared<F extends Field = Field> extends Field<Field_shared_ty
    }
 
    // #region UI
-   readonly DefaultHeaderUI: undefined = undefined
-   readonly DefaultBodyUI: undefined = undefined
+   DefaultHeaderUI: -1 = -1
+   DefaultBodyUI: -1 = -1
 
    protected setOwnSerial(_next: Field_shared_serial): void {}
 

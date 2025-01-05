@@ -634,11 +634,11 @@ export abstract class Field<out K extends FieldTypes = FieldTypes>
 
    /** default header UI */
    // abstract readonly DefaultHeaderUI: CovariantFC<{ field: K['$Field']; readonly?: boolean }> | undefined
-   abstract readonly DefaultHeaderUI: CovariantFC<{ field: UNSAFE_AnyField; readonly?: boolean }> | undefined
+   // 🔴 abstract readonly DefaultHeaderUI: -1 // CovariantFC<{ field: UNSAFE_AnyField; readonly?: boolean }> | undefined
 
    /** default body UI */
    // abstract readonly DefaultBodyUI: CovariantFC<{ field: K['$Field'] }> | undefined
-   abstract readonly DefaultBodyUI: CovariantFC<{ field: UNSAFE_AnyField }> | undefined
+   // 🔴 abstract readonly DefaultBodyUI: -1 // CovariantFC<{ field: UNSAFE_AnyField }> | undefined
 
    // #region UI HELPERS
    /** @deprecated with the new UI system */
@@ -650,12 +650,6 @@ export abstract class Field<out K extends FieldTypes = FieldTypes>
       return 1
    }
 
-   /** @deprecated ? with the new UI system */
-   get justifyLabel(): boolean {
-      if (this.config.justifyLabel != null) return this.config.justifyLabel
-      if (this.DefaultBodyUI) return false // 🔴 <-- probably a mistake here
-      return true
-   }
 
    get depth(): number {
       if (this.parent == null) return 0

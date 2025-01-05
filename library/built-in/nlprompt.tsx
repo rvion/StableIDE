@@ -17,22 +17,21 @@ app({
             .llmModel()
             .list()
             .withConfig({
-               uiui: (ui) =>
-                  ui.set({
-                     Body: () => (
-                        <div>
-                           {ui.field.defaultBody()}
-                           <LegacyFieldUI label='OpenRouter API KEY'>
-                              <InputStringUI
-                                 icon='mdiKey'
-                                 type='password'
-                                 getValue={() => cushy.configFile.value.OPENROUTER_API_KEY ?? ''}
-                                 setValue={(next) => cushy.configFile.update({ OPENROUTER_API_KEY: next })}
-                              />
-                           </LegacyFieldUI>
-                        </div>
-                     ),
-                  }),
+               uiui: {
+                  Body: ({ field }) => (
+                     <div>
+                        <UY.list.DefaultBody field={field} />
+                        <LegacyFieldUI label='OpenRouter API KEY'>
+                           <InputStringUI
+                              icon='mdiKey'
+                              type='password'
+                              getValue={() => cushy.configFile.value.OPENROUTER_API_KEY ?? ''}
+                              setValue={(next) => cushy.configFile.update({ OPENROUTER_API_KEY: next })}
+                           />
+                        </LegacyFieldUI>
+                     </div>
+                  ),
+               },
             }),
          customSystemMessage: b.group({
             startCollapsed: true,

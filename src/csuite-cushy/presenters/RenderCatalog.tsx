@@ -9,8 +9,13 @@ import { WidgetGroup_LineUI } from '../../csuite/fields/group/WidgetGroup_Header
 import { WidgetGroup_InlineUI } from '../../csuite/fields/group/WidgetGroup_InlineUI'
 import { WidgetGroup_TabUI } from '../../csuite/fields/group/WidgetGroup_TabUI'
 import { BlenderListUI } from '../../csuite/fields/list/BlenderListUI'
+import { WidgetList_BodyUI } from '../../csuite/fields/list/WidgetList_BodyUI'
+import { WidgetList_LineUI } from '../../csuite/fields/list/WidgetList_LineUI'
 import { WidgetNumberSimpleUI } from '../../csuite/fields/number/WidgetNumberSimpleUI'
 import { WidgetNumberUI } from '../../csuite/fields/number/WidgetNumberUI'
+import { WidgetSelectOneUI } from '../../csuite/fields/selectOne/WidgetSelectOneUI'
+import { WigetSize_BlockUI } from '../../csuite/fields/size/WigetSize_BlockUI'
+import { WigetSize_LineUI } from '../../csuite/fields/size/WigetSize_LineUI'
 import { WidgetString_MarkdownUI } from '../../csuite/fields/string/WidgetString_Markdown'
 import { WidgetString_SmallInput } from '../../csuite/fields/string/WidgetString_SmallInput'
 import { WidgetString_summary } from '../../csuite/fields/string/WidgetString_summary'
@@ -152,7 +157,11 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       indentWithLiness: WidgetIndentNoLinesUI,
       indentNoLiness: WidgetIndentUI,
    },
-   // #region fields
+   // #region fields ------------
+   size: {
+      line: WigetSize_LineUI,
+      block: WigetSize_BlockUI,
+   },
    number: {
       def: WidgetNumberUI,
       /** inline WidgetNumber */
@@ -163,9 +172,12 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       default: InputBoolUI,
    },
    choices: {
-      TabbedInline: WidgetChoices_HeaderTabBarUI,
+      TabBar: WidgetChoices_HeaderTabBarUI,
       Buttons: WidgetChoices_HeaderButtonsUI,
       SelectHeaderUI: WidgetChoices_HeaderSelectUI,
+   },
+   selectOne: {
+      Select: WidgetSelectOneUI,
    },
    string: {
       input: WidgetString_SmallInput,
@@ -175,6 +187,8 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
    },
    list: {
       BlenderLike: BlenderListUI,
+      DefaultHeader: WidgetList_LineUI,
+      DefaultBody: WidgetList_BodyUI,
    },
    group: {
       Tabbed: WidgetGroup_TabUI,

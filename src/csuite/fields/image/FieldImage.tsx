@@ -74,10 +74,7 @@ export class Field_image extends Field<Field_image_types> {
       serial?: Field_image_serial,
    ) {
       super(repo, root, parent, schema, initialMountKey, serial)
-      this.init(serial, {
-         DefaultHeaderUI: false,
-         DefaultBodyUI: false,
-      })
+      this.init(serial)
    }
 
    // #region serial
@@ -98,8 +95,8 @@ export class Field_image extends Field<Field_image_types> {
    }
 
    // #region UI
-   DefaultHeaderUI: undefined = undefined
-   DefaultBodyUI = WidgetSelectImageUI
+   DefaultHeaderUI: -1 = -1
+   DefaultBodyUI: -1 = -1
 
    // #region UI/helpers
    get animateResize(): boolean {

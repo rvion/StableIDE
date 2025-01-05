@@ -39,7 +39,6 @@ import type { FC, ReactNode } from 'react'
  */
 
 export interface DisplaySlots<out FIELD extends Field = Field> {
-   rule?: DisplaySlotExt<FIELD>
    layout?: CovariantFn1<FIELD, QuickFormContent[]>
 
    // 0.

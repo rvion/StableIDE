@@ -69,8 +69,8 @@ export class Field_size extends Field<Field_size_types> {
    static codegenValueType(config: Field_size_config): string {
       return 'CushySize'
    }
-   DefaultHeaderUI = WigetSize_LineUI
-   DefaultBodyUI = WigetSize_BlockUI
+   DefaultHeaderUI: -1 = -1
+   DefaultBodyUI: -1 = -1
 
    get isOwnSet(): boolean {
       const ser = this.serial

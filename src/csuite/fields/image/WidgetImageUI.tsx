@@ -23,7 +23,7 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
    const [dropStyle, dropRef] = useImageDrop(cushy, (imageL) => {
       field.value = imageL
    })
-   const image = field.value
+   const image = field.value_unchecked
    // ⏸️ const suggestionsRaw = p.field.config.assetSuggested
    // ⏸️ const suggestions: RelativePath[] =
    // ⏸️     suggestionsRaw == null ? [] : Array.isArray(suggestionsRaw) ? suggestionsRaw : [suggestionsRaw]
