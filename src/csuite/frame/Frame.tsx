@@ -209,7 +209,7 @@ export const Frame = observer(
                   // Add borders/"dividers" where needed (Right/Bottom of every child except last)
                   p.col
                      ? 'flex-col [&>*:not(:last-child)]:!border-b'
-                     : 'h-input flex-row [&>*:not(:last-child)]:!border-r',
+                     : 'flex-row [&>*:not(:last-child)]:!border-r',
                   // '[&>*:not(:last-child)]:!mr-[1px]',
                ],
                // Fixes scrolling when used as a container
