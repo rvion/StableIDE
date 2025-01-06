@@ -1,7 +1,9 @@
+import type { MediaImageL } from '../../../../../src/models/MediaImage'
 import type { $WeaverLatent } from './prefab_weaver_latent'
 
 import { observer } from 'mobx-react-lite'
 
+import { useDropZone, useImageDrop } from '../../../../../src/widgets/galleries/dnd'
 import { StackCardUI, type StackData } from '../prefab_Stack'
 
 export const StackLatentUI = observer(function WeaverLatentUI_(p: {
@@ -70,18 +72,40 @@ export const StackLatentUI = observer(function WeaverLatentUI_(p: {
                </UY.Layout.Col>
             </div>
             <UY.Misc.ResizableFrame startSize={512}>
-               {field.Mode.value.empty && <_EmptyUI field={field} />}
-               {field.Mode.value.image && <_EmptyUI field={field} />}
-               {field.Mode.value.random && <_EmptyUI field={field} />}
+               <_EmptyUI field={field} />
             </UY.Misc.ResizableFrame>
          </div>
       </StackCardUI>
    )
 })
 const _EmptyUI = observer(function _EmptyUI_(p: { field: $WeaverLatent['$Field'] }) {
-   const theme = cushy.preferences.theme.value
+   // const theme = cushy.preferences.theme.value
    const f = p.field.value
    const imageL = p.field.Image.value
+
+   const [isOver, dropRef] = UY.DropZone({
+      accept: ['Image', '__NATIVE_FILE__'],
+      config: { shallow: true },
+      onDrop: (match) => {
+         match({
+            Image: (data: MediaImageL) => {
+               console.log('WE DROPPING BOYS', data)
+               f.image = data
+            },
+            __NATIVE_FILE__: (data) => {
+               console.log('WE DROPPING FILES THO?', data)
+            },
+         })
+      },
+      onHover: (item, monitor) => {
+         console.log('WTFFFFFF')
+         cushy.dndHandler.setContent({
+            icon: 'mdiImage',
+            label: 'YYOOO',
+            suffixIcon: 'mdiMenuOpen',
+         })
+      },
+   })
 
    const horizontal = imageL.width > imageL.height
    const correctX = horizontal ? f.scale.x : f.scale.x * (imageL.width / imageL.height)
@@ -92,7 +116,8 @@ const _EmptyUI = observer(function _EmptyUI_(p: { field: $WeaverLatent['$Field']
    // multiply by aspect ratio
    return (
       <div //Contain the Overlay so it doesn't seep in to resizable frame's footer
-         tw='relative flex h-full w-full overflow-hidden'
+         ref={dropRef}
+         tw={['relative flex h-full w-full overflow-hidden', isOver && 'opacity-75']}
       >
          {f.mode.image && (
             <div tw='flex h-full w-full items-center justify-center'>

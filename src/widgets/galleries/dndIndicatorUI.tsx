@@ -60,14 +60,6 @@ export class CushyDnDHandler {
          this.clear()
          return
       }
-
-      this.setup()
-   }
-
-   setup = (): void => {
-      console.log('[FD] SETUP!!!!!')
-      //   window.document.addEventListener('mousemove', this.onMouseMove, false)
-      window.document.addEventListener('drag', this.onMouseMove, true)
    }
 
    onDragEnd = (e: MouseEvent): void => {
@@ -79,8 +71,6 @@ export class CushyDnDHandler {
       this._icon = undefined
       this._label = undefined
       this._content = undefined
-      //   window.document.removeEventListener('mousemove', this.onMouseMove, false)
-      window.document.removeEventListener('drag', this.onMouseMove, true)
    }
 
    setContent({
@@ -132,16 +122,6 @@ export class CushyDnDHandler {
    get content(): Maybe<() => JSX.Element> {
       return this._content ?? this._startContent.content
    }
-
-   onMouseMove = (e: MouseEvent): void => {
-      console.log('[FD] MOVING!!')
-      this.updatePosition(e.clientX, e.clientY)
-   }
-
-   updatePosition(x: number, y: number): void {
-      this.x = x
-      this.y = y
-   }
 }
 
 export const DnDDragIndicatorUI = observer(function DnDDragIndicateUI_() {
@@ -157,8 +137,8 @@ export const DnDDragIndicatorUI = observer(function DnDDragIndicateUI_() {
             dndHandler.visible ? 'block' : 'hidden',
          ]}
          style={{
-            top: dndHandler.y,
-            left: dndHandler.x,
+            top: cushy.region.mouseY,
+            left: cushy.region.mouseX,
          }}
       >
          <Frame

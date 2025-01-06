@@ -8,10 +8,11 @@ import { ToastContainer } from 'react-toastify'
 
 import { CushyUI } from '../../app/layout/AppUI'
 // import { withMobxSpy } from '../../csuite/utils/withSpy'
-import { TargetBox } from '../../importers/TargetBox'
+// import { TargetBox } from '../../importers/TargetBox'
 import { STATE } from '../../state/state'
 import { asAbsolutePath } from '../../utils/fs/pathUtils'
-import { useGlobalDropHook } from './useGlobalDropHook'
+
+// import { useGlobalDropHook } from './useGlobalDropHook'
 
 const path = asAbsolutePath(process.cwd())
 
@@ -22,9 +23,9 @@ export const MainUI = observer(function MainUI_() {
    return (
       <>
          <ToastContainer />
-         <TargetBox>
-            <CushyUI />
-         </TargetBox>
+         {/* <TargetBox> */}
+         <CushyUI />
+         {/* </TargetBox> */}
       </>
    )
 })

@@ -27,6 +27,7 @@ import { MessageErrorUI } from '../../csuite/messages/MessageErrorUI'
 import { MessageInfoUI } from '../../csuite/messages/MessageInfoUI'
 import { MessageWarningUI } from '../../csuite/messages/MessageWarningUI'
 import { ResizableFrame } from '../../csuite/resizableFrame/resizableFrameUI'
+import { useDropZone } from '../../widgets/galleries/dnd'
 import { WidgetCardUI } from '../catalog/Decorations/WidgetCardUI'
 import { WidgetPadUI } from '../catalog/Decorations/WidgetPadUI'
 import { QuickForm } from '../catalog/group/QuickForm'
@@ -241,6 +242,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       inline: WidgetGroup_InlineUI,
    },
    Prop: test,
+   DropZone: useDropZone,
 }
 
 // make globally available
