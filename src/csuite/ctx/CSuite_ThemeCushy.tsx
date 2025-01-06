@@ -103,7 +103,7 @@ export class CSuite_ThemeCushy implements CSuiteConfig {
    }
 
    get labelText(): Tint | undefined {
-      const raw = this.st.preferences.theme.value.global.textLabel.base
+      const raw = this.st.preferences.theme.value.global.labelText.base
       if (raw == null) return undefined
       return run_tint(raw)
    }

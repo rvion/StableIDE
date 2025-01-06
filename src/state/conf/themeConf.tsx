@@ -13,7 +13,6 @@ export type ThemeConf = X.XGroup<{
    labelLayout: X.XSelectOne_<FormGlobalLayoutMode>
    base: X.XColor
    appbar: X.XOptional<X.XColor>
-   /** @deprecated Legacy option, will probably be removed? */
    fieldGroups: X.XGroup<{
       border: X.XOptional<X.XNumber>
       contrast: X.XOptional<X.XNumber>
@@ -22,13 +21,11 @@ export type ThemeConf = X.XGroup<{
       border: X.XOptional<X.XNumber>
       contrast: X.XOptional<X.XNumber>
       shadow: X.XOptional<$schemaSimpleDropShadow>
-      text: UI_Theme_Text
-      // TODO(bird_d/theme/text): Not plugged in yet
-      textLabel: UI_Theme_Text
       roundness: X.XNumber
       active: UI_Tint
+      text: UI_Theme_Text
+      labelText: UI_Theme_Text
    }>
-
    groups: X.XGroup<{
       border: X.XOptional<X.XNumber>
       contrast: X.XOptional<X.XNumber>
@@ -48,7 +45,9 @@ export const themeConf: ThemeConf['$Field'] = cushyFactory.document(
                   { id: 'mobile', /*      */ icon: 'mdiCellphone' /*            */, label: '' },
                ],
                {
-                  header: (p) => <WidgetSelectOne_TabUI field={p.field} tw='!gap-0 ![flex-wrap:nowrap]' />,
+                  ui: {
+                     Header: (p) => <WidgetSelectOne_TabUI field={p.field} tw='!gap-0 ![flex-wrap:nowrap]' />,
+                  },
                   default: 'fixed-left',
                },
             ),

@@ -16,7 +16,7 @@ export type FieldConfig<X, T extends FieldTypes> = X & FieldConfig_CommonPropert
 
 export interface FieldConfig_CommonProperties<out T extends FieldTypes> {
    // TODO: rename to `ui`
-   uiui?: RENDERER.UIConf<T['$Field']>
+   ui?: RENDERER.UIConf<T['$Field']>
    /**
     * @since 2024-05-20
     * @stability beta

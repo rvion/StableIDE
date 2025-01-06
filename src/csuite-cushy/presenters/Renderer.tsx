@@ -1,19 +1,17 @@
+import type { Field } from '../../csuite/model/Field'
 import type { DisplaySlots } from './RenderSlots'
-import type { CompiledRenderProps, DisplaySlotExt } from './RenderTypes'
+import type { CompiledRenderProps, FieldUIConf } from './RenderTypes'
 import type { ReactNode } from 'react'
 
 import { createElement } from 'react'
 
-import { Field } from '../../csuite/model/Field'
-import { FieldSelector } from '../../csuite/selector/selector'
 import { extractComponentName } from '../../csuite/utils/extractComponentName'
-import { getUIDForMemoryStructure } from '../../csuite/utils/getUIDForMemoryStructure'
 import { mergeDefined } from '../../csuite/utils/mergeDefined'
 import { _isFC, renderFCOrNode, renderFCOrNodeWithWrapper } from '../../csuite/utils/renderFCOrNode'
 import { QuickForm } from '../catalog/group/QuickForm'
-import { widgetsCatalog } from './RenderCatalog'
-import { renderPresets } from './RenderPresets'
+import { defaultRulesV2 } from './RenderDefaults'
 import { RenderUI } from './RenderUI'
+import { RenderXXX, type RuleEntry } from './RenderXXX'
 
 // 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇
 // Those types are made folling a language design principle:
@@ -28,21 +26,56 @@ import { RenderUI } from './RenderUI'
  * retrieve * Shell + Slots for each field,
  * and convenient method to call the Wrapper bound to field and slots
  */
-export class Presenter {
+export class Presenter<DOC extends Field = Field> {
+   static count = 0
    /** list of all the ruleOrConf, indexed by field, added during this presenter lifecycle  */
-   rules: {
-      addedBy: Field | null
-      selector: FieldSelector
-      uiconf: DisplaySlotExt<Field>
-   }[] = []
+   // rules: RuleEntry[] = []
 
-   constructor(rootField: Field) {
-      this.rules.push({
-         addedBy: null,
-         selector: FieldSelector.from(''),
-         uiconf: defaultRenderRules,
-      })
+   constructor(
+      //
+      public rootField: Field,
+   ) {
+      Presenter.count++
+      // const proc = new RenderXXX(this, rootField)
+      // defaultRenderRules({ set:  })
+      // this.rules.push({
+      //    addedBy: null,
+      //    selector: true,
+      //    uiconf: defaultRenderRules,
+      //    priority: RENDER_PRIORITY_DEFAULT_RULES,
+      // })
    }
+
+   fieldRenderers: WeakMap<Field, RenderXXX<any>> = new WeakMap()
+   getFieldRenderer<FIELD extends Field>(field: FIELD): RenderXXX<FIELD> {
+      let proc = this.fieldRenderers.get(field)
+      if (proc == null) {
+         proc = new RenderXXX(this, field)
+         this.fieldRenderers.set(field, proc)
+      }
+      return proc
+   }
+
+   /** all fields in document */
+   get allFields(): Field[] {
+      const fields: Field[] = []
+      this.rootField.traverseAllDepthFirst((field) => {
+         fields.push(field)
+      })
+      return fields
+   }
+
+   get allFieldRenderers(): RenderXXX<Field>[] {
+      return this.allFields.map((field) => this.getFieldRenderer(field))
+   }
+
+   get allRules(): RuleEntry[] {
+      return this.allFieldRenderers
+         .flatMap((proc) => proc.final.rulesForSubtree)
+         .concat(defaultRulesV2)
+         .sort((a, b) => a.priority - b.priority)
+   }
+
    /**
     * MAIN METHOD TO RENDER A FIELD
     * this method is both for humans (calling render on field root)
@@ -51,119 +84,47 @@ export class Presenter {
    render<FIELD extends Field>(
       //
       field: FIELD,
-      finalRuleOrConf: DisplaySlots<FIELD>,
-      // extraRules_: PresenterRule<FIELD> | PresenterRule<FIELD>[],
+      rule: FieldUIConf<FIELD> | undefined,
+      extraSlots: DisplaySlots<FIELD>,
    ): ReactNode {
-      // ⏸️ console.log(`[💄] rendering ${field.path}`)
-      // slots accumulator
-      let slots: DisplaySlots<FIELD> = {} //
+      console.log(`[🦊] rendering ${field.path}`, this.allRules.length)
+      const debug =
+         true || //
+         field.path === '$' ||
+         field.path === `$.ipAdapter.child` // '$.latent.b' // '$.positive'
 
-      // 🔴 SUPER SLOW
-      this.rules = this.rules.filter((rule) => rule.addedBy !== field)
+      const rules: RuleEntry[] = [
+         ...this.allRules,
+         { addedBy: null, selector: true, uiconf: extraSlots, priority: 1000 },
+      ]
+      let slots: DisplaySlots<FIELD> = {}
+      // // eval rule from config
+      // if (field.config.uiui != null) xxx.evalRule(field.config.uiui, RENDER_PRIORITY_UIUI)
+      for (const rule of rules) {
+         // only attempt to apply rules defined by parents
+         if (rule.addedBy !== null && !field.path.startsWith(rule.addedBy.path)) continue
 
-      // console.log(`[🤠] ${field.pathExt}`)
-      // const shouldLog = field.pathExt === '📄[group]-latent->[link]-b->[choices]-emptyLatent->[group]-batchSize->[shared]'
-
-      const self = this
-
-      /**
-       * a field can add rules for  any of it's children, not only itself.
-       * that where the magic happen; since fields know the extra type of their children,
-       * any field can quickly add a bunch of rule for all of it's descendants.
-       */
-      function /* A */ addForField(x: DisplaySlotExt<FIELD>): void
-      function /* B */ addForField(selector: string, x: DisplaySlotExt<Field>): void
-      function /* C */ addForField(selector: FieldSelector, x: DisplaySlotExt<Field>): void
-      function /* D */ addForField<Sub extends Field>(field: Maybe<Sub>, x: DisplaySlotExt<Sub>): void
-      function addForField<SUB extends Field>(
-         x: unknown,
-         y?: unknown,
-         // sub: Maybe<SUB>,
-         // ruleOrConf: RuleOrConf<SUB>,
-      ): void {
-         // #region A
-         if (y === undefined) {
-            evalRuleOrConf(x as DisplaySlotExt<FIELD>)
-            return
-         }
-
-         // #region B
-         if (typeof x === 'string') {
-            const selectorStr = x as string
-            const selector = FieldSelector.from(selectorStr)
-            const ruleOrConf = y as DisplaySlotExt<Field>
-            self.rules.push({ selector, addedBy: field, uiconf: ruleOrConf })
-            return
-         }
-
-         // #region  C
-         if (x instanceof FieldSelector) {
-            const ruleOrConf = y as DisplaySlotExt<Field>
-            self.rules.push({ selector: x, addedBy: field, uiconf: ruleOrConf })
-            return
-         }
-
-         // #region D
-         if (x instanceof Field) {
-            const ruleOrConf = y as DisplaySlotExt<SUB>
-            if (x === field) {
-               evalRuleOrConf(ruleOrConf as DisplaySlotExt<FIELD>)
-               return
-            }
-            const sub = x as SUB
-            self.rules.push({
-               selector: FieldSelector.from(sub.path),
-               addedBy: field,
-               uiconf: ruleOrConf,
-            })
-         }
-      }
-
-      /**
-       * render SHOULD ONLY (!!) eval rules for current (FIELD)
-       * enforce at type-level here                  VVVVV */
-      const evalRuleOrConf = (ruleOrConf: DisplaySlotExt<FIELD>): void => {
-         if (typeof ruleOrConf === 'function') {
-            const _slots = ruleOrConf({
-               field,
-               set: addForField,
-               presets: renderPresets,
-            }) as Maybe<DisplaySlots<FIELD>> // 🔴🔴🔴
-            if (_slots) slots = mergeDefined(slots, _slots)
-         } else {
-            const { rule, ...slotsOverride } = ruleOrConf
-            slots = mergeDefined(slots, slotsOverride)
-            if (rule != null) {
-               evalRuleOrConf(rule)
-            }
-         }
-      }
-      // #region EVALUATING/MERGING ALL RULES
-
-      // eval rule from config
-      if (field.config.uiui != null) {
-         evalRuleOrConf(field.config.uiui)
-      }
-
-      const debug = null // '$.latent.b' // '$.positive'
-      for (const rule of this.rules) {
          // starts from this, and ensures the result contains the field.
          // we probably want contains in many place.
-         //                 VVVVVVVVVVVVVV
-         const isMatching = field.matches(rule.selector)
-         if (field.path === debug)
+         //                                                         VVVVVVVVVVVVVV
+         const isMatching = isBool(rule.selector) ? rule.selector : field.matches(rule.selector)
+         if (debug)
             console.log(
-               `[🤠] ${field.pathExt}`,
+               `[🦊] ${field.pathExt}`,
                isMatching ? '🟢' : '🔴',
-               rule.selector.selector,
+               isBool(rule.selector) ? rule.selector : rule.selector.selector,
                typeof rule.uiconf !== 'function' ? this.explainSlots(rule.uiconf) : '<function...>',
             )
-         if (isMatching) evalRuleOrConf(rule.uiconf as DisplaySlotExt<FIELD>)
+         if (isMatching) {
+            const newSlots =
+               typeof rule.uiconf === 'function' //
+                  ? (rule.uiconf({ field }) as DisplaySlots<FIELD>)
+                  : (rule.uiconf as DisplaySlots<FIELD>)
+            if (newSlots != null && Object.keys(newSlots).length > 0) {
+               slots = mergeDefined(slots, newSlots)
+            }
+         }
       }
-
-      evalRuleOrConf(finalRuleOrConf)
-
-      // #region MAKING SENSE OF THE COMPILED SLOTS OBJECT
 
       // override `Body` if `chidlren` is specified
       const layout = slots.layout
@@ -171,35 +132,39 @@ export class Presenter {
          slots.Body = createElement(QuickForm, { field, items: layout(field) })
       }
 
-      // bad logic
-      const Shell = slots.ShellName
-         ? UY.Shell[slots.ShellName]
-         : slots.Shell //
-           ? slots.Shell
-           : UY.Shell.Default
+      console.log(`[🔴🦊SHELL]`, slots.Shell)
+      const Shell =
+         typeof slots.Shell === 'string' //
+            ? UY.Shell[slots.Shell]
+            : (slots.Shell ?? UY.Shell.Default)
 
       // console.log(`[🤠] slots.ShellName`, slots.ShellName, field.path, Shell === catalog.Shell.Inline)
       if (!Shell) throw new Error('Shell is not defined')
 
       // COMPILED
-      const finalProps: CompiledRenderProps<FIELD> = { field, UI: UY, presenter: this, ...slots }
+      const finalProps: CompiledRenderProps<FIELD> = {
+         field,
+         UI: UY,
+         presenter: this,
+         ...slots,
+      }
 
-      if (field.path === debug) this.debugFinalProps(finalProps)
+      if (debug) this.debugFinalProps(finalProps)
       // if (field.path === '$.latent.b.image.resize') this.debugFinalProps(finalProps)
       // console.log(`[🤠] Shell for ${field.path} is `, Shell)
+      console.log(`[🦊] slots for`, field.path, slots)
       return renderFCOrNode(Shell, finalProps)
    }
 
    debugFinalProps(finalProps: CompiledRenderProps<any>): void {
       console.log(`[🤠] `, finalProps.field.path, this.explainSlots(finalProps))
    }
+
    private explainSlots(slots: DisplaySlots<any>): Record<string, any> {
       return Object.fromEntries(
          Object.entries(slots).map(([k, v]) => [
             k,
-            _isFC(v) && 'type' in v //
-               ? (extractComponentName(v.type) ?? v)
-               : v,
+            _isFC(v) && 'type' in v ? (extractComponentName(v.type) ?? v) : v,
          ]),
       )
    }
@@ -207,7 +172,6 @@ export class Presenter {
    utils = {
       renderFCOrNode: renderFCOrNode,
       renderFCOrNodeWithWrapper: renderFCOrNodeWithWrapper,
-      // _isFC: _isFC,
    }
 }
 
@@ -215,4 +179,8 @@ export class Presenter {
 // Renderer is injected, to help with using csuite in other codebases.
 window.RENDERER = {
    Render: RenderUI,
+}
+
+function isBool(x: unknown): x is boolean {
+   return typeof x === 'boolean'
 }

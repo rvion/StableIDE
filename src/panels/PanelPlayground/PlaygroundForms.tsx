@@ -13,12 +13,18 @@ export const PlaygroundForms = observer(function PlaygroundImportFromComfy_(p: {
          .fields({
             a: b.percent({ suffix: '% of banana' }),
             b: b.string({}).useMixin((self) => ({
-               UIWithFancyBorder: (): JSX.Element => <Frame border={30} tw='p-2' children={self.header()} />,
+               UIWithFancyBorder: (): JSX.Element => (
+                  <Frame //
+                     border={30}
+                     tw='p-2'
+                     children={self.UI({ Shell: UY.Shell.HeaderOnly })}
+                  />
+               ),
                UIWithSuperFancyBorder: (): JSX.Element => (
-                  <Frame border={30} tw='p-8' children={self.header()} />
+                  <Frame border={30} tw='p-8' children={<self.UI Shell={UY.Shell.HeaderOnly} />} />
                ),
                UIWithSuperFancyBorder2: (p: { size: 'big' | 'small' }): JSX.Element => (
-                  <Frame border={30} tw='p-8' children={self.header()} />
+                  <Frame border={30} tw='p-8' children={<self.UI Shell={UY.Shell.HeaderOnly} />} />
                ),
             })),
             d: b.fields({
@@ -44,7 +50,7 @@ export const PlaygroundForms = observer(function PlaygroundImportFromComfy_(p: {
                               </div>
                            </Frame>
                            <Frame base={{ hueShift: 200 }}>
-                              {b.type}({b.id})<div>{a.header()}</div>
+                              {b.type}({b.id})<div>{a.UI({ Shell: 'HeaderOnly' })}</div>
                               <div>{b.UIWithFancyBorder()}</div>
                            </Frame>
                         </Frame>

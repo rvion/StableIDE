@@ -136,6 +136,10 @@ export function ui_IPAdapterV2(): UI_IPAdapterV2 {
             help: form.markdown({ startCollapsed: true, markdown: ipAdapterDoc }),
          },
          {
+            ui: (ui) => {
+               console.log(`[🔴🔴🔴🔴] `)
+               ui.set({ Shell: <>🟢</> })
+            },
             icon: 'mdiAnvil',
             label: 'IPAdapter',
             box: { base: { hue: 70, chroma: 0.1 } },

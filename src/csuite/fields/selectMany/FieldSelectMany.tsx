@@ -178,8 +178,8 @@ export class Field_selectMany<
    }
 
    // #region UI
-   DefaultHeaderUI = WidgetSelectManyUI
-   DefaultBodyUI: undefined = undefined
+   DefaultHeaderUI: -1 = -1
+   DefaultBodyUI: -1 = -1
    // DefaultBodyUI = WidgetSelectMany_ListUI
 
    get isCollapsedByDefault(): boolean {

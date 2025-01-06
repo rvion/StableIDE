@@ -1,4 +1,5 @@
 import type { CompiledRenderProps } from '../presenters/RenderTypes'
+import type React from 'react'
 import type { ReactNode } from 'react'
 
 import { observer } from 'mobx-react-lite'
@@ -15,7 +16,7 @@ const CushyShellUI = observer(function CushySHell(
    p: CompiledRenderProps & {
       // card?: boolean
       border?: boolean
-      HEADER: ReactNode
+      HEADER: React.JSX.Element
    },
 ) {
    const field = p.field
@@ -109,14 +110,14 @@ export const ShellCushyList1UI = observer(function ShellCushyList1(p: CompiledRe
             <>
                {/* prettier-ignore */}
                <WidgetLabelContainerUI tooltip={field.config.tooltip} justify>
-                        {utils.renderFCOrNode(p.Indent,      { depth: field.depth })}
-                        {utils.renderFCOrNode(p.DragKnob,    { field })}
-                        {utils.renderFCOrNode(p.Caret,       { field, placeholder: true })}
-                        {utils.renderFCOrNode(p.Icon,        { field, className: 'mr-1' })}
-                        {utils.renderFCOrNode(p.Toogle, { field: originalField })}
-                        {utils.renderFCOrNode(p.Title,       { field })}
-                        {utils.renderFCOrNode(p.DebugID,     { field })}
-                    </WidgetLabelContainerUI>
+                  {utils.renderFCOrNode(p.Indent,      { depth: field.depth })}
+                  {utils.renderFCOrNode(p.DragKnob,    { field })}
+                  {utils.renderFCOrNode(p.Caret,       { field, placeholder: true })}
+                  {utils.renderFCOrNode(p.Icon,        { field, className: 'mr-1' })}
+                  {utils.renderFCOrNode(p.Toogle, { field: originalField })}
+                  {utils.renderFCOrNode(p.Title,       { field })}
+                  {utils.renderFCOrNode(p.DebugID,     { field })}
+               </WidgetLabelContainerUI>
                {utils.renderFCOrNode(p.Presets, { field })}
             </>
          }

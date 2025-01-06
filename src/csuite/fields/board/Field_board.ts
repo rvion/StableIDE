@@ -117,12 +117,9 @@ export interface RV1<
 //🟢>     extends MakeItWork<BoardDataSchema<SCHEMA>> {}
 //🟢>
 
-export interface Field_board<SCHEMA extends BaseSchema> //
+export interface Field_board<SCHEMA extends BaseSchema>
    extends MAGICFIELDS<BoardDataSchema<SCHEMA>['$Reflect']> {}
-
-export class Field_board<SCHEMA extends BaseSchema> //
-   extends Field_group<BoardDataSchema<SCHEMA>['$Reflect']>
-{
+export class Field_board<SCHEMA extends BaseSchema> extends Field_group<BoardDataSchema<SCHEMA>['$Reflect']> {
    $Config!: FieldConfig<{/* ... place whatever here */}, RV1<BoardDataSchema<SCHEMA>['$Reflect'], Field_board<SCHEMA>>> // prettier-ignore
    $Field!: Field_board<SCHEMA>
    // $Reflect: RV1<SCHEMA, NEWCLASS>
@@ -149,9 +146,6 @@ export class Field_board<SCHEMA extends BaseSchema> //
 
    // somehow this is enough to make the ui work for now
    DefaultHeaderUI: any = WidgetListExt_LineUI
-   get DefaultBodyUI(): any {
-      return WidgetListExtUI__Regional
-   }
 
    // #region Composite Shema
    static getSchema<SCHEMA extends BaseSchema>(
@@ -161,5 +155,6 @@ export class Field_board<SCHEMA extends BaseSchema> //
    ): SimpleSchema<Field_board<SCHEMA>> {
       return boardDataSchema(b, opts) //
          .useBuilder((...args: FieldCtorProps) => new Field_board<SCHEMA>(opts, ...args))
+         .withConfig({ ui: { Body: WidgetListExtUI__Regional } })
    }
 }

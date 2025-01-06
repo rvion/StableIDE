@@ -1,11 +1,11 @@
-import type { DisplaySlotFn } from '../../../src/csuite-cushy/presenters/RenderTypes'
+import type { RenderRule } from '../../../src/csuite-cushy/presenters/RenderTypes'
 import type { Field_list } from '../../../src/csuite/fields/list/FieldList'
 import type { IconName } from '../../../src/csuite/icons/icons'
 import type { $CushySDXLUI } from './_cushySDXLSchema'
 
 import { observer } from 'mobx-react-lite'
 
-export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>> {
+export function _cushySDXLLayout(): Maybe<RenderRule<$CushySDXLUI['$Field']>> {
    return (ui) => {
       const xxx = ui.field.Latent.bField
       // ui.apply({
@@ -118,7 +118,7 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                            {activePrompt ? (
                               <>
                                  <UY.string.input field={activePrompt.fields.name} />
-                                 <UY.boolean.default
+                                 <UY.inputs.InputBoolUI
                                     toggleGroup='y802w34ty80we4th80er0erh8008'
                                     value={activePrompt.fields.enabled.value}
                                     onValueChange={(v) => (activePrompt.fields.enabled.value = v)}
@@ -148,8 +148,8 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
       ui.set(ui.field.Negative.Prompts, { collapsible: false, Head: false, Header: false })
 
       ui.set('', (ui2) => {
-         if (ui2.field.parent?.parent === ui.field.Positive.Prompts) ui2.set({ Head: false })
-         if (ui2.field.parent?.parent === ui.field.Negative.Prompts) ui2.set({ Head: false })
+         if (ui2.field.parent?.parent === ui.field.Positive.Prompts) return { Head: false }
+         if (ui2.field.parent?.parent === ui.field.Negative.Prompts) return { Head: false }
          // No longer needed as not using optional, opting for the enabled field. It didn't even work anyways.
          // if (ui2.field.parent === ui.field.Positive.Prompts) ui2.set({ Shell: ShellOptionalEnabledUI })
       })
@@ -168,16 +168,16 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
             ui2.field.type !== 'shared' &&
             ui2.field.type !== 'optional'
          ) {
-            ui2.set({ Shell: UY.Shell.Right })
+            return { Shell: UY.Shell.Right }
          }
 
-         if (ui2.field.path.startsWith(model.path + '.')) ui2.set({ Shell: UY.Shell.Right })
+         if (ui2.field.path.startsWith(model.path + '.')) return { Shell: UY.Shell.Right }
 
          let should = ui2.field.path.startsWith(ui.field.Sampler.path + '.')
          should = ui2.field.depth >= 2
          if (should) {
-            if (ui2.field.isOfType('group', 'list', 'choices')) ui2.set({ Title: UY.Title.h4 })
-            if (!ui2.field.isOfType('optional', 'link', 'list', 'shared')) ui2.set({ Shell: UY.Shell.Right })
+            if (ui2.field.isOfType('group', 'list', 'choices')) return { Title: UY.Title.h4 }
+            if (!ui2.field.isOfType('optional', 'link', 'list', 'shared')) return { Shell: UY.Shell.Right }
          }
       })
    }

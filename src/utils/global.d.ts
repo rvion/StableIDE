@@ -1,7 +1,7 @@
 import 'react'
 
 import type { WidgetsCatalog } from '../csuite-cushy/presenters/RenderCatalog'
-import type { DisplaySlotFn } from '../csuite-cushy/presenters/RenderTypes'
+import type { RenderRule } from '../csuite-cushy/presenters/RenderTypes'
 import type { Field } from '../csuite/model/Field'
 import type { PixiReactElementProps } from '@pixi/react/types/typedefs/PixiReactNode'
 import type { Viewport } from 'pixi-viewport'
@@ -29,7 +29,7 @@ declare global {
     */
    const cushy: import('../state/state').STATE
    const UY: WidgetsCatalog
-   const defaultRenderRules: DisplaySlotFn<Field>
+   const defaultRenderRules: RenderRule<Field>
 }
 
 declare module 'react' {

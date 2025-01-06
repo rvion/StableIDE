@@ -17,7 +17,7 @@ app({
             .llmModel()
             .list()
             .withConfig({
-               uiui: {
+               ui: {
                   Body: ({ field }) => (
                      <div>
                         <UY.list.DefaultBody field={field} />

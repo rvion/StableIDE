@@ -46,7 +46,9 @@ export const PanelPlaygroundUI = observer(function PanelPlaygroundUI_(p: PanelPl
 
    return (
       <UI.Panel tw='gap-1'>
-         <UI.Panel.Header extensibleHeight>{Header_Playground.root.header()}</UI.Panel.Header>
+         <UI.Panel.Header extensibleHeight>
+            <Header_Playground.root.UI Shell={UY.Shell.HeaderOnly} />
+         </UI.Panel.Header>
          <ErrorBoundaryUI /* 👇 playground sub-pages */>
             {mode.electron && <PlaygroundElectronUI />}
             {mode.forms && <PlaygroundForms />}

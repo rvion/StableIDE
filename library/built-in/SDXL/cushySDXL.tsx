@@ -2,9 +2,9 @@ import { _cushySDXLLayout } from './_cushySDXLLayout'
 import { _cushySDXLRun } from './_cushySDXLRun'
 import { type $CushySDXLUI, _cushySDXLSchema } from './_cushySDXLSchema'
 
-export type FIELD = $CushySDXLUI['$Field']
+export type $CushySDXLUIField = $CushySDXLUI['$Field']
 
-app<FIELD>({
+app<$CushySDXLUIField>({
    metadata: {
       name: 'Cushy SDXL',
       illustration: 'library/built-in/_illustrations/mc.jpg',
@@ -21,7 +21,7 @@ const noobAIUrls = {
    noobAI2: 'https://noobai.com',
 }
 
-app<FIELD>({
+app<$CushySDXLUIField>({
    metadata: {
       name: 'NoobAI',
       illustration: 'library/built-in/noobai.webp',

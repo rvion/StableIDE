@@ -5,27 +5,42 @@ import type { Presenter } from './Renderer'
 import type { renderPresets } from './RenderPresets'
 import type { DisplaySlots } from './RenderSlots'
 
+// --------------------------------------------------------------------
 // prettier-ignore
-export type DisplaySlotExt<FIELD extends Field> =
-   | DisplaySlotFn<FIELD>
+export type FieldUIConf<FIELD extends Field> =
+   | RenderRule<FIELD>
    | DisplaySlots<FIELD> // RenderDSL<FIELD['$Child']['$Field']>
 
 // display rule is just a function that returns a display slot, injecting the field
-export type DisplaySlotFn<FIELD extends Field> = CovariantFn1<
-   DisplayRuleCtx<FIELD>,
+export type RenderRule<FIELD extends Field> = CovariantFn1<
+   FieldUIConfCtx<FIELD>,
    DisplaySlots<FIELD> | undefined | void
 >
 
-export type DisplayRuleCtx<FIELD extends Field = Field> = {
+export type FieldUIConfCtx<FIELD extends Field = Field> = {
    field: FIELD
 
-   set(x: DisplaySlotExt<FIELD>): void
-   set<SUB extends Field = Field>(selector: string, x: DisplaySlotExt<SUB>): void
-   set<SUB extends Field = Field>(selector: FieldSelector, x: DisplaySlotExt<SUB>): void
-   set<SUB extends Field>(field: Maybe<SUB>, x: DisplaySlotExt<SUB>): void
+   // see src/csuite-cushy/presenters/RenderXXX.ts for implementation
+   set(x: DisplaySlots<FIELD>, priority?: number): void
+   set<SUB extends Field = Field>(selector: string, x: DisplaySlotsExt<SUB>, priority?: number): void
+   set<SUB extends Field = Field>(selector: FieldSelector, x: DisplaySlotsExt<SUB>, priority?: number): void
+   set<SUB extends Field>(field: Maybe<SUB>, x: DisplaySlotsExt<SUB>, priority?: number): void
 
    presets: typeof renderPresets
 }
+// --------------------------------------------------------------------
+// display rule is just a function that returns a display slot, injecting the field
+// prettier-ignore
+export type DisplaySlotsExt<FIELD extends Field> =
+   | DisplaySlotsFn<FIELD>
+   | DisplaySlots<FIELD>
+
+export type DisplaySlotsFn<FIELD extends Field> = CovariantFn1<
+   { field: FIELD },
+   DisplaySlots<FIELD> | undefined | void
+>
+
+// --------------------------------------------------------------------
 
 /**
  * this is the final type that is given to your most of your widgets (Shell, Body, ...)

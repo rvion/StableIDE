@@ -59,18 +59,20 @@ export function ui_latent_v3(p: { size?: Field_size_config } = {}): UI_LatentV3 
             random: ui_LatentShapeGenerator(batchSize),
          },
          {
-            header: (p) => {
-               const size = p.field.value.emptyLatent?.size || p.field.value.random?.size
-               return (
-                  <div tw='flex gap-1'>
-                     <p.field.DefaultHeaderUI field={p.field} />
-                     {size && (
-                        <>
-                           {size.width} x{size.height}
-                        </>
-                     )}
-                  </div>
-               )
+            ui: {
+               Header: (p) => {
+                  const size = p.field.value.emptyLatent?.size || p.field.value.random?.size
+                  return (
+                     <div tw='flex gap-1'>
+                        <p.field.UI Header={UY.choices.DefaultHeader} />
+                        {size && (
+                           <>
+                              {size.width} x{size.height}
+                           </>
+                        )}
+                     </div>
+                  )
+               },
             },
             icon: 'mdiStarThreePoints',
             appearance: 'tab',

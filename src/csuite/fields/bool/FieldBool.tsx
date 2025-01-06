@@ -3,14 +3,12 @@ import type { FieldConfig } from '../../model/FieldConfig'
 import type { FieldSerial } from '../../model/FieldSerial'
 import type { Repository } from '../../model/Repository'
 import type { Problem_Ext } from '../../model/Validation'
-import type { FC } from 'react'
 
 import { produce } from 'immer'
 import { computed } from 'mobx'
 
 import { Field } from '../../model/Field'
 import { isProbablySerialBool, registerFieldClass } from '../WidgetUI.DI'
-import { WidgetBoolUI } from './WidgetBoolUI'
 
 // #region $Config
 export type Field_bool_config = FieldConfig<
@@ -110,8 +108,8 @@ export class Field_bool extends Field<Field_bool_types> {
    }
 
    // #region Ui
-   readonly DefaultHeaderUI: FC<{ field: Field_bool }> = WidgetBoolUI
-   readonly DefaultBodyUI: undefined = undefined
+   readonly DefaultHeaderUI: -1 = -1 // FC<{ field: Field_bool }> = WidgetBoolUI
+   readonly DefaultBodyUI: -1 = -1 //  undefined = undefined
 
    // #region Serial
    protected setOwnSerial(next: Field_bool_serial): void {

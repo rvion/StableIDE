@@ -1,5 +1,5 @@
 import type { CushySchema } from '../controls/CushySchema'
-import type { DisplaySlotFn } from '../csuite-cushy/presenters/RenderTypes'
+import type { RenderRule } from '../csuite-cushy/presenters/RenderTypes'
 import type { Field } from '../csuite/model/Field'
 import type { SchemaDict } from '../csuite/model/SchemaDict'
 import type { MediaImageL } from '../models/MediaImage'
@@ -54,7 +54,7 @@ export type App<FIELD extends Field> = {
    ui: (form: X.Builder) => CushySchema<FIELD>
 
    /* layout */
-   layout?: Maybe<DisplaySlotFn<NoInfer<FIELD>>>
+   layout?: Maybe<RenderRule<NoInfer<FIELD>>>
 
    /** so you cana have fancy buttons to switch between a few things */
    presets?: Record<string, (doc: NoInfer<FIELD>) => void>

@@ -1,12 +1,9 @@
 import type { Field_list_serial } from '../fields/list/FieldList'
 import type { Field_optional_serial } from '../fields/optional/FieldOptional'
 import type { Field_shared } from '../fields/shared/FieldShared'
-import type { WidgetLabelContainerProps } from '../form/WidgetLabelContainerUI'
 import type { IconName } from '../icons/icons'
 import type { TintExt } from '../kolor/Tint'
 import type { ITreeElement } from '../tree/TreeEntry'
-import type { ProplessFC } from '../types/ReactUtils'
-import type { CovariantFC } from '../variance/CovariantFC'
 import type { FieldTypes } from './$FieldTypes'
 import type { BaseSchema } from './BaseSchema'
 import type { DraftLike } from './Draft'
@@ -23,7 +20,7 @@ import type { Problem, Problem_Ext } from './Validation'
 import type { AnnotationsMap } from 'mobx'
 
 import { produce, setAutoFreeze } from 'immer'
-import { $mobx, extendObservable, isObservable, makeObservable, observable, runInAction } from 'mobx'
+import { $mobx, extendObservable, isObservable, makeObservable, observable } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { createElement, type FC, type ReactNode, useMemo } from 'react'
 
@@ -40,10 +37,6 @@ import {
    isProbablySomeFieldSerial,
 } from '../fields/WidgetUI.DI'
 import { FormAsDropdownConfigUI } from '../form/FormAsDropdownConfigUI'
-import { WidgetHeaderContainerUI } from '../form/WidgetHeaderContainerUI'
-import { WidgetLabelContainerUI } from '../form/WidgetLabelContainerUI'
-import { WidgetLabelIconUI } from '../form/WidgetLabelIconUI'
-import { WidgetToggleUI } from '../form/WidgetToggleUI'
 import { hashJSONObjectToNumber } from '../hashUtils/hash'
 import { type FieldAnomaly } from '../migration/Anomaly'
 import { type AnomalyMixin, AnomalyMixinDescriptors } from '../migration/Anomaly.mixin'
@@ -649,7 +642,6 @@ export abstract class Field<out K extends FieldTypes = FieldTypes>
    get indentChildren(): number {
       return 1
    }
-
 
    get depth(): number {
       if (this.parent == null) return 0
@@ -1319,7 +1311,7 @@ export abstract class Field<out K extends FieldTypes = FieldTypes>
       // top level widget is not collapsible; we may want to revisit this decision
       // if (widget.parent == null) return false
       if (this.config.collapsed != null) return this.config.collapsed //
-      if (!this.DefaultBodyUI) return false // 🔴 <-- probably a mistake here
+      // if (!this.DefaultBodyUI) return false // 🔴 <-- probably a mistake here
       if (this.config.label === false) return false
       return true
    }
@@ -1346,6 +1338,7 @@ export abstract class Field<out K extends FieldTypes = FieldTypes>
    // #region UI.Render
 
    //  => CUSHY
+
    UI(props: RENDERER.FieldRenderArgs<this> = {}): ReactNode {
       // 💬 2024-10-17 ghusse:
       // | Spreading props here instead of passing them as a single object
@@ -1383,39 +1376,6 @@ export abstract class Field<out K extends FieldTypes = FieldTypes>
       width?: string
    }): ReactNode {
       return createElement(FormAsDropdownConfigUI, { form: this, ...p })
-   }
-
-   // #region UI.Components
-   defaultHeader(this: Field): JSX.Element | undefined {
-      if (this.DefaultHeaderUI == null) return
-      return <this.DefaultHeaderUI field={this} />
-   }
-
-   defaultBody(this: Field): JSX.Element | undefined {
-      if (this.DefaultBodyUI == null) return
-      return <this.DefaultBodyUI field={this} />
-   }
-
-   // 🔴 not sure where this 'readonly' goes, it's a render prop, not a config.
-   // do we have have render props? (active? look?) or do we make different custom components? probably both are required?
-   // currently those kind of "render" config are only available at top level via FormUIProps or via calling field.renderWithLabel(...)
-   // but actually header and renderWithLabel have the same nature, so yeah, they should be here too. See commonalities with WidgetWithLabelProps
-   header(this: Field, p?: { readonly?: boolean }): JSX.Element | undefined {
-      const HeaderUI =
-         'header' in this.config //
-            ? useEnsureObserver(this.config.header)
-            : this.DefaultHeaderUI
-      if (HeaderUI == null) return
-      return <HeaderUI key={this.id} field={this} {...p} />
-   }
-
-   body(this: Field): JSX.Element | undefined {
-      const BodyUI =
-         'body' in this.config //
-            ? useEnsureObserver(this.config.body)
-            : this.DefaultBodyUI
-      if (BodyUI == null) return
-      return <BodyUI field={this} />
    }
 
    // #region CHILDREN

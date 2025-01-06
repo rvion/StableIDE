@@ -1,4 +1,4 @@
-import type { DisplayRuleCtx } from '../../csuite-cushy/presenters/RenderTypes'
+import type { FieldUIConfCtx } from '../../csuite-cushy/presenters/RenderTypes'
 import type { NO_PROPS } from '../../csuite/types/NO_PROPS'
 
 import { observer } from 'mobx-react-lite'
@@ -39,11 +39,11 @@ export const PlaygroundRenderUI = observer(function PlaygroundRender(p: NO_PROPS
             // layout={({ fields: f }) => [f.x, f.x, f.x, f.x, '*']}
             rule={(ui) => {
                // ui.for(ui.field.Aaa, { Shell: UY.Shell.Card })
-               ui.set(ui.field.Z, { Header: 'hello guys' })
+               ui.set(ui.field.Z, { Header: <>hello guys</> })
                ui.set(ui.field.Y, { Title: null })
-               ui.set(ui.field.Sub1.Z, { Header: 'hope you guys good' })
-               ui.set(ui.field.Sub1, { layout: (f) => [f.X, f.Y, f.Y, '*'], Header: 'hope you guys good' })
-               ui.set('', (ui: DisplayRuleCtx) => {
+               ui.set(ui.field.Sub1.Z, { Header: <>hope you guys good</> })
+               ui.set(ui.field.Sub1, { layout: (f) => [f.X, f.Y, f.Y, '*'], Header: <>hope you guys good</> })
+               ui.set('', (ui: FieldUIConfCtx) => {
                   if (isFieldGroup(ui.field) && isFieldChoice(ui.field.parent)) return { Head: false }
                })
                ui.set('', ({ field }) => {

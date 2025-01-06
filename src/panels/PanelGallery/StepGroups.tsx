@@ -1,10 +1,10 @@
+import type { MediaImageL } from '../../models/MediaImage'
 import type { CSSProperties } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
 import { Frame } from '../../csuite/frame/Frame'
 import { hashStringToNumber } from '../../csuite/hashUtils/hash'
-import { MediaImageL } from '../../models/MediaImage'
 import { useGalleryConf } from './galleryConf'
 import { GalleryImageCardUI } from './GalleryImageCardUI'
 

@@ -23,7 +23,7 @@ export const WidgetList_BodyUI = observer(function WidgetList_BodyUI_<T extends 
             return (
                <div /* SortableItem */ key={subField.id}>
                   <subField.UI
-                     Title={ix.toString()}
+                     Title={<>{ix.toString()}</>}
                      // slotDragKnob={
                      //     <div tw='flex'>
                      //         <SortableKnob>

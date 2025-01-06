@@ -138,8 +138,8 @@ export class Field_choices<T extends SchemaDict = SchemaDict> extends Field<Fiel
       super(repo, root, parent, schema, initialMountKey, serial)
       this.init(serial, {
          // UI
-         DefaultHeaderUI: false,
-         DefaultBodyUI: false,
+         // DefaultHeaderUI: false,
+         // DefaultBodyUI: false,
          // values
          value_or_fail: false,
          value_or_zero: false,
@@ -148,11 +148,11 @@ export class Field_choices<T extends SchemaDict = SchemaDict> extends Field<Fiel
    }
 
    // #region UI
-   UITab: ProplessFC = () => <WidgetChoices_HeaderButtonsUI field={this} />
-   UISelect: ProplessFC = () => <WidgetChoices_HeaderSelectUI field={this} />
-   UIChildren: ProplessFC = () => <WidgetChoices_BodyUI field={this} justify={false} />
-   DefaultHeaderUI = WidgetChoices_HeaderUI
-   DefaultBodyUI = WidgetChoices_BodyUI
+   // UITab: ProplessFC = () => <WidgetChoices_HeaderButtonsUI field={this} />
+   // UISelect: ProplessFC = () => <WidgetChoices_HeaderSelectUI field={this} />
+   // UIChildren: ProplessFC = () => <WidgetChoices_BodyUI field={this} justify={false} />
+   // DefaultHeaderUI = WidgetChoices_HeaderUI
+   // DefaultBodyUI = WidgetChoices_BodyUI
 
    // #region MISC
    readonly expand: boolean = this.config.expand ?? false

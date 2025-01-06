@@ -176,7 +176,7 @@ export const MenuPieUI = observer(function MenuPieUI_({
                if (isBoundCommand(entry) || isCommand(entry)) {
                   return (
                      <PieMenuItem
-                        tw='min-w-60 select-none pointer-events-none'
+                        tw='pointer-events-none min-w-60 select-none'
                         style={style}
                         key={ix}
                         label={entry.label}

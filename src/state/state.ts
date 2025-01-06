@@ -979,10 +979,6 @@ export class STATE {
 
    csuite: CSuiteConfig = new CSuite_ThemeCushy(this)
 
-   get themeText(): Tint {
-      return run_tint(this.preferences.theme.value.text)
-   }
-
    resolveFromRoot(relativePath: RelativePath): AbsolutePath {
       return asAbsolutePath(join(this.rootPath, relativePath))
    }

@@ -1,9 +1,12 @@
 import { Button } from '../../csuite/button/Button'
 import { InputBoolCheckboxUI } from '../../csuite/checkbox/InputBoolCheckboxUI'
 import { InputBoolUI } from '../../csuite/checkbox/InputBoolUI'
+import { WidgetBoolUI } from '../../csuite/fields/bool/WidgetBoolUI'
+import { WidgetChoices_BodyUI } from '../../csuite/fields/choices/WidgetChoices_BodyUI'
 import { WidgetChoices_HeaderButtonsUI } from '../../csuite/fields/choices/WidgetChoices_HeaderButtonsUI'
 import { WidgetChoices_HeaderSelectUI } from '../../csuite/fields/choices/WidgetChoices_HeaderSelectUI'
 import { WidgetChoices_HeaderTabBarUI } from '../../csuite/fields/choices/WidgetChoices_HeaderTabBarUI'
+import { WidgetChoices_HeaderUI } from '../../csuite/fields/choices/WidgetChoices_HeaderUI'
 import { WidgetGroup_BlockUI } from '../../csuite/fields/group/WidgetGroup_BlockUI'
 import { WidgetGroup_LineUI } from '../../csuite/fields/group/WidgetGroup_Header'
 import { WidgetGroup_InlineUI } from '../../csuite/fields/group/WidgetGroup_InlineUI'
@@ -13,6 +16,7 @@ import { WidgetList_BodyUI } from '../../csuite/fields/list/WidgetList_BodyUI'
 import { WidgetList_LineUI } from '../../csuite/fields/list/WidgetList_LineUI'
 import { WidgetNumberSimpleUI } from '../../csuite/fields/number/WidgetNumberSimpleUI'
 import { WidgetNumberUI } from '../../csuite/fields/number/WidgetNumberUI'
+import { WidgetSelectManyUI } from '../../csuite/fields/selectMany/WidgetSelectManyUI'
 import { WidgetSelectOneUI } from '../../csuite/fields/selectOne/WidgetSelectOneUI'
 import { WigetSize_BlockUI } from '../../csuite/fields/size/WigetSize_BlockUI'
 import { WigetSize_LineUI } from '../../csuite/fields/size/WigetSize_LineUI'
@@ -33,12 +37,14 @@ import { WidgetIndentNoLinesUI } from '../catalog/Indent/IndentNoLine'
 import { WidgetIndentUI } from '../catalog/Indent/WidgetIndentUI'
 import { H1Title, H2Title, H3Title, H4Title } from '../catalog/Title/H123Title'
 import { DefaultWidgetTitleUI } from '../catalog/Title/WidgetLabelTextUI'
+import { ShellBodyOnlyUI } from '../shells/ShellBodyOnlyUI'
 import {
    ShellCushyFluidUI,
    ShellCushyLeftUI,
    ShellCushyList1UI,
    ShellCushyRightUI,
 } from '../shells/ShellCushy'
+import { ShellHeaderOnlyUI } from '../shells/ShellHeaderOnlyUI'
 import { ShellInlineUI } from '../shells/ShellInline'
 import { ShellMobileUI } from '../shells/ShellMobile'
 import { ShellNoop } from '../shells/ShellNoop'
@@ -128,14 +134,19 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
    QuickForm: QuickForm,
    Shell: {
       Default: ShellCushyLeftUI,
-      Simple: ShellSimpleUI,
-      Mobile: ShellMobileUI,
-      Noop: ShellNoop,
+      // most common
       Left: ShellCushyLeftUI,
       Right: ShellCushyRightUI,
       FluidUI: ShellCushyFluidUI,
       Inline: ShellInlineUI,
-      //
+      // minimalist
+      Simple: ShellSimpleUI,
+      HeaderOnly: ShellHeaderOnlyUI,
+      BodyOnly: ShellBodyOnlyUI,
+      // experimental
+      Mobile: ShellMobileUI,
+      Noop: ShellNoop,
+      // custom
       List1: ShellCushyList1UI,
    },
    // #region Utils
@@ -157,7 +168,11 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       indentWithLiness: WidgetIndentNoLinesUI,
       indentNoLiness: WidgetIndentUI,
    },
-   // #region fields ------------
+   // base inputs
+   inputs: {
+      InputBoolUI: InputBoolUI,
+   },
+   // #region fields -----------------------------------------------------------------------------------------------------
    size: {
       line: WigetSize_LineUI,
       block: WigetSize_BlockUI,
@@ -169,15 +184,20 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
       simple: WidgetNumberSimpleUI,
    },
    boolean: {
-      default: InputBoolUI,
+      default: WidgetBoolUI,
    },
    choices: {
+      DefaultHeader: WidgetChoices_HeaderUI,
+      DefaultBody: WidgetChoices_BodyUI,
       TabBar: WidgetChoices_HeaderTabBarUI,
       Buttons: WidgetChoices_HeaderButtonsUI,
       SelectHeaderUI: WidgetChoices_HeaderSelectUI,
    },
    selectOne: {
       Select: WidgetSelectOneUI,
+   },
+   selectMany: {
+      DefaultHeader: WidgetSelectManyUI,
    },
    string: {
       input: WidgetString_SmallInput,

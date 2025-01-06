@@ -34,9 +34,13 @@ const useDoc = (): Field<any> => {
       (b) => {
          const booleanForm = {
             check: b.bool({}),
-            checkLabel: b.bool({
+            checkTextNoLabel: b.bool({
                label: false,
-               text: 'Check Label',
+               text: 'Text',
+            }),
+            checkTextAndLabel: b.bool({
+               label: 'Check',
+               text: 'Text',
             }),
             checkLabelIcon: b.bool({
                label: false,
@@ -128,7 +132,13 @@ const useDoc = (): Field<any> => {
                { label: 'Choices' },
             ),
          }
-
+         return b.group({
+            // startCollapsed: true,
+            items: {
+               aligned: b.group({ border: false, items: booleanForm }),
+               // notAligned: b.group({ border: false, justifyLabel: false, items: booleanForm }),
+            },
+         })
          return b.fields({
             manyOf: b.fields({
                selectMany: b.selectManyStrings([

@@ -10,11 +10,15 @@ app({
          testA: b.fields(
             { a: b.int(), b: b.string(), c: b.string() },
             {
-               header: ({ field }) => (
-                  <div tw='flex'>
-                     👉 {field.fields.a.header()} ({field.fields.b.header()}) ({field.fields.a.header()}) 👈
-                  </div>
-               ),
+               ui: {
+                  Header: ({ field }) => (
+                     <div tw='flex'>
+                        <field.fields.a.UI Shell={UY.Shell.HeaderOnly} />
+                        <field.fields.b.UI Shell={UY.Shell.HeaderOnly} />
+                        <field.fields.a.UI Shell={UY.Shell.HeaderOnly} />
+                     </div>
+                  ),
+               },
             },
          ),
 
@@ -22,25 +26,31 @@ app({
          testB: b.fields(
             { a: b.int(), b: b.string(), c: b.string() },
             {
-               body: null,
-               header: () => <div tw='flex'>nothing to see here</div>,
+               ui: {
+                  Body: null,
+                  Header: () => <div tw='flex'>nothing to see here</div>,
+               },
             },
          ),
 
          c: b.header('Custom boolean header wrapping the default:'),
          testC: b.bool({
-            header: ({ field: widget }) => (
-               <div tw='flex-1 flex whitespace-nowrap'>
-                  <div
-                     tw='px-1 cursor-pointer'
-                     style={{ border: '3px solid red' }}
-                     onClick={() => (widget.value = !widget.value)}
-                  >
-                     click here
+            ui: {
+               Header: ({ field: widget }) => (
+                  <div tw='flex flex-1 whitespace-nowrap'>
+                     <div
+                        tw='cursor-pointer px-1'
+                        style={{ border: '3px solid red' }}
+                        onClick={() => (widget.value = !widget.value)}
+                     >
+                        click here
+                     </div>
+                     <div tw='ml-auto flex flex-nowrap'>
+                        (default UI: 👉 <UY.boolean.default field={widget} /> 👈)
+                     </div>
                   </div>
-                  <div tw='ml-auto flex flex-nowrap'>(default UI: 👉 {widget.defaultHeader()} 👈)</div>
-               </div>
-            ),
+               ),
+            },
          }),
 
          d: b.header('Custom string body:'),

@@ -43,7 +43,7 @@ export const ui_tint = (ui: X.Builder, def?: Tint): UI_Tint => {
                }),
             },
             {
-               uiui: (ui) => {
+               ui: (ui) => {
                   ui.set(ui.field.activeBranchesDict.contrast, ui.presets.noLabel)
                   ui.set(ui.field.activeBranchesDict.lightness, ui.presets.noLabel)
                },
