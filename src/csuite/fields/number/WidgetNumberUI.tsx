@@ -2,7 +2,6 @@ import type { Field } from '../../model/Field'
 import type { Field_number } from './FieldNumber'
 
 import { observer } from 'mobx-react-lite'
-import { type ReactNode } from 'react'
 
 import { InputNumberUI } from '../../input-number/InputNumberUI'
 

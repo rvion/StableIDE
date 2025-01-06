@@ -2,7 +2,6 @@ import type { DisplaySlotFn } from '../../../src/csuite-cushy/presenters/RenderT
 import type { $CushyWeaverUI } from './_WeaverSchema'
 
 import { StackLatentUI } from './_prefabs/latent/WeaverLatentUI'
-import { StackCardUI } from './_prefabs/prefab_Stack'
 import { type $WeaverPromptList } from './_prefabs/prompting/WeaverPrompting'
 import { StackPromptingUI } from './_prefabs/prompting/WeaverPromptingUI'
 
@@ -82,10 +81,6 @@ export function _cushyWeaverLayout(): Maybe<DisplaySlotFn<$CushyWeaverUI['$Field
                               )
                            },
                            latent: (value) => {
-                              const data = d.Stack.items[index]
-                              if (!data) {
-                                 return
-                              }
                               return (
                                  <StackLatentUI
                                     dataField={field}

@@ -1,5 +1,5 @@
 import type { IconName } from '../../../../src/csuite/icons/icons'
-import type { UI_LatentV3 } from '../../_prefabs/prefab_latent_v3'
+import type { $WeaverLatent } from './latent/prefab_weaver_latent'
 import type { $WeaverPromptList } from './prompting/WeaverPrompting'
 
 import { observer } from 'mobx-react-lite'
@@ -11,7 +11,7 @@ export type StackData = X.XGroup<{
    data: X.XOptional<
       X.XChoices<{
          prompting: $WeaverPromptList
-         latent: UI_LatentV3
+         latent: $WeaverLatent
       }>
    >
 }>

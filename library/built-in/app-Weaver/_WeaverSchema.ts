@@ -1,6 +1,6 @@
 import type { StackData } from './_prefabs/prefab_Stack'
 
-import { ui_latent_v3 } from '../_prefabs/prefab_latent_v3'
+import { weaverLatent } from './_prefabs/latent/prefab_weaver_latent'
 import { promptList } from './_prefabs/prompting/WeaverPrompting'
 
 export type $CushyWeaverUI = X.XGroup<{
@@ -23,7 +23,7 @@ export function _cushyWeaverSchema(b: X.Builder): $CushyWeaverUI {
             data: b
                .choice({
                   prompting: promptList(b),
-                  latent: ui_latent_v3(),
+                  latent: weaverLatent(b),
                })
                .optional(),
          })
