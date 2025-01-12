@@ -107,7 +107,7 @@ export const BlenderListUI = observer(function BlenderListUI_<T extends Field_li
                   <Button
                      disabled={selectedChild == null}
                      icon='mdiChevronUp'
-                     description='Move item up'
+                     tooltip='Move item up'
                      onClick={() =>
                         runInAction(() => {
                            if (x.selectedIx > 0) field.moveItem(x.selectedIx, --x.selectedIx)
@@ -117,7 +117,7 @@ export const BlenderListUI = observer(function BlenderListUI_<T extends Field_li
                   <Button
                      disabled={selectedChild == null}
                      icon='mdiChevronDown'
-                     description='Move item down'
+                     tooltip='Move item down'
                      onClick={() =>
                         runInAction(() => {
                            if (x.selectedIx < field.items.length - 1)

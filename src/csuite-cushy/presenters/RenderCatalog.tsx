@@ -28,6 +28,7 @@ import { MessageInfoUI } from '../../csuite/messages/MessageInfoUI'
 import { MessageWarningUI } from '../../csuite/messages/MessageWarningUI'
 import { ResizableFrame } from '../../csuite/resizableFrame/resizableFrameUI'
 import { useDropZone } from '../../widgets/galleries/dndGeneric'
+import { POPUP } from '../../widgets/misc/SimplePopUp'
 import { WidgetCardUI } from '../catalog/Decorations/WidgetCardUI'
 import { WidgetPadUI } from '../catalog/Decorations/WidgetPadUI'
 import { QuickForm } from '../catalog/group/QuickForm'
@@ -194,6 +195,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
    },
 
    Misc: {
+      PopUp: POPUP,
       Frame: Frame,
       Button: Button,
       Checkbox: InputBoolCheckboxUI,

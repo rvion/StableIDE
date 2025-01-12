@@ -3,6 +3,7 @@ import type { $WeaverPromptList } from './WeaverPrompting'
 
 import { observer } from 'mobx-react-lite'
 
+import { POPUP } from '../../../../../src/widgets/misc/SimplePopUp'
 import { StackCardUI, type StackData } from '../prefab_Stack'
 
 export const StackPromptingUI = observer(function StackPromptingUI_(p: {
@@ -15,15 +16,88 @@ export const StackPromptingUI = observer(function StackPromptingUI_(p: {
    const index = p.stackIndex
    const prompts = p.field
    const theme = cushy.preferences.theme.value
+
+   const [isDropZoneHovered, dropRef] = UY.DropZone({
+      config: { shallow: true },
+      Image: {
+         onDrop: (item, monitor) => {
+            const workflow = item.workflow
+            if (!workflow) {
+               return
+            }
+
+            const textArray: { name: string; text: string }[] = []
+            workflow.nodes.forEach((node, index) => {
+               if (node.inputs) {
+                  Array.from(node.$schema.inputs).forEach((item) => {
+                     if (item.typeName == 'STRING') {
+                        textArray.push({
+                           name: item.slotName,
+                           text: node.inputs[item.nameInComfy],
+                        })
+                     }
+                  })
+               }
+            })
+
+            if (textArray.length > 0) {
+               cushy.activityManager.start({
+                  stopOnBackdropClick: true,
+                  UI: (p) => (
+                     <UY.Misc.PopUp title='Add prompt from Image'>
+                        {textArray.map((item) => {
+                           return (
+                              <UY.Misc.Frame
+                                 tw='max-w-[500px] !border-none line-clamp-1 p-1 px-2'
+                                 hover
+                                 onClick={() => {
+                                    const prompt = prompts.fields.prompts.addItem()
+                                    if (!prompt) {
+                                       console.warn('Unable to add prompt')
+                                       return
+                                    }
+                                    prompt.fields.prompt.text = item.text
+
+                                    p.stop()
+                                 }}
+                                 //TODO(bird_d/ui/tooltip): Uncomment when tooltips are fixed
+                                 // tooltip={
+                                 //    <div tw='!w-[500px]'>
+                                 //       <p>{item.name}</p>
+                                 //       ------------------
+                                 //       <p tw='whitespace-break-spaces'>{item.text}</p>
+                                 //    </div>
+                                 // }
+                              >
+                                 {item.text}
+                              </UY.Misc.Frame>
+                           )
+                        })}
+                     </UY.Misc.PopUp>
+                  ),
+               })
+            }
+         },
+         onHover: (item, monitor) => {
+            cushy.dndHandler.setContent({
+               icon: 'mdiImage',
+               label: 'Insert Prompt from image',
+               suffixIcon: 'mdiPencilPlus',
+            })
+         },
+      },
+   })
+
    return (
       <StackCardUI
+         isDnDHovered={isDropZoneHovered}
          key={index}
          field={p.datafield}
          stackField={p.stackField}
          stackIndex={index}
          icon={p.field.icon ?? undefined}
       >
-         <div tw='py-1'>
+         <div ref={dropRef} tw='py-1'>
             <UY.list.BlenderLike<typeof prompts.fields.prompts> //
                activeIndex={prompts.value.activeIndex}
                field={prompts.fields.prompts}

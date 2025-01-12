@@ -1,4 +1,5 @@
 import type { IconName } from '../../../../src/csuite/icons/icons'
+import type { ClassLike } from '../../../../src/csuite/types/ClassLike'
 import type { $WeaverLatent } from './latent/prefab_weaver_latent'
 import type { $WeaverPromptList } from './prompting/WeaverPrompting'
 
@@ -17,6 +18,8 @@ export type StackData = X.XGroup<{
 }>
 
 export const StackCardUI = observer(function StackCardUI_(p: {
+   // For some reason tw returns undefined so use this I guess???
+   isDnDHovered?: boolean
    field: StackData['$Field']
    stackField: X.XList<StackData>['$Field']
    stackIndex: number
@@ -29,10 +32,10 @@ export const StackCardUI = observer(function StackCardUI_(p: {
       <UY.Misc.Frame
          tw='overflow-clip'
          base={{ contrast: 0.1 }}
-         border={theme.groups.border}
+         border={p.isDnDHovered ? { contrast: 0.2 } : theme.groups.border}
          roundness={theme.global.roundness}
       >
-         <UY.Misc.Frame tw='select-none !gap-2 px-2 py-1' line>
+         <UY.Misc.Frame tw='select-none !gap-2 px-1 py-1' line>
             <UY.Misc.Frame row line linegap={false}>
                <UY.boolean.default
                   tw='!border-none !bg-transparent'
