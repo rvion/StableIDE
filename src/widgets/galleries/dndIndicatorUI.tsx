@@ -61,7 +61,6 @@ export class CushyDnDHandler {
       // early abort for perf
       if (this._visible === value) return
 
-      console.warn('[FD] visible: ', value)
       this._visible = value
 
       if (!value) {
