@@ -1,9 +1,7 @@
-import type { MediaImageL } from '../../../../../src/models/MediaImage'
 import type { $WeaverLatent } from './prefab_weaver_latent'
 
 import { observer } from 'mobx-react-lite'
 
-import { useDropZone, useImageDrop } from '../../../../../src/widgets/galleries/dnd'
 import { StackCardUI, type StackData } from '../prefab_Stack'
 
 export const StackLatentUI = observer(function WeaverLatentUI_(p: {
@@ -84,26 +82,18 @@ const _EmptyUI = observer(function _EmptyUI_(p: { field: $WeaverLatent['$Field']
    const imageL = p.field.Image.value
 
    const [isOver, dropRef] = UY.DropZone({
-      accept: ['Image', '__NATIVE_FILE__'],
       config: { shallow: true },
-      onDrop: (match) => {
-         match({
-            Image: (data: MediaImageL) => {
-               console.log('WE DROPPING BOYS', data)
-               f.image = data
-            },
-            __NATIVE_FILE__: (data) => {
-               console.log('WE DROPPING FILES THO?', data)
-            },
-         })
-      },
-      onHover: (item, monitor) => {
-         console.log('WTFFFFFF')
-         cushy.dndHandler.setContent({
-            icon: 'mdiImage',
-            label: 'YYOOO',
-            suffixIcon: 'mdiMenuOpen',
-         })
+      Image: {
+         onDrop: (item, monitor) => {
+            f.image = item
+         },
+         onHover: (item, monitor) => {
+            cushy.dndHandler.setContent({
+               icon: 'mdiImage',
+               label: 'Drop Image',
+               suffixIcon: 'mdiMenuOpen',
+            })
+         },
       },
    })
 

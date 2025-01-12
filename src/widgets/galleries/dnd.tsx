@@ -1,4 +1,3 @@
-import type { IconName } from '../../csuite/icons/icons'
 import type { MediaImageL } from '../../models/MediaImage'
 import type { STATE } from '../../state/state'
 
@@ -7,14 +6,13 @@ import {
    type ConnectDragPreview,
    type ConnectDragSource,
    type ConnectDropTarget,
-   type DropTargetMonitor,
    useDrag,
    useDrop,
 } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { createMediaImage_fromFileObject } from '../../models/createMediaImage_fromWebFile'
-import { type ItemTypes, LegacyItemTypes } from './DnDItemTypes'
+import { LegacyItemTypes } from './DnDItemTypes'
 
 export const useImageDrag = (
    image: MediaImageL,
@@ -189,69 +187,3 @@ export const useImageSlotDrop = (dropAction: (image: MediaImageL) => void): [boo
       },
    }))
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export type NativeFileDropType = { files: (File & { path: AbsolutePath })[] }
-
-type DropItem<T extends ItemTypes> = T extends 'Image'
-   ? MediaImageL
-   : T extends '__NATIVE_FILE__'
-     ? NativeFileDropType
-     : string
-
-type DropCallback<T extends ItemTypes> = (
-   match: (cases: {
-      [K in T]: (data: DropItem<T>) => void
-   }) => void,
-) => void
-
-export const useDropZone = <T extends ItemTypes>({
-   accept,
-   onDrop,
-   onHover,
-   config,
-}: {
-   accept: T[]
-   onDrop: DropCallback<T>
-   onHover?: (item: DropItem<T>, monitor: DropTargetMonitor<DropItem<T>>) => void
-   config?: { shallow?: boolean }
-}): [boolean, ConnectDropTarget] => {
-   return useDrop<DropItem<T>, void, boolean>(() => ({
-      accept,
-      collect(monitor): boolean {
-         if (!monitor.isOver()) {
-            cushy.dndHandler.setContent({})
-         }
-         return monitor.isOver({ shallow: true })
-      },
-      drop(item: DropItem<T>, monitor): void {
-         console.log('MONITOR: ', monitor.getItemType())
-         console.log('item: ', item, monitor)
-         if (monitor.isOver({ shallow: config?.shallow })) {
-            onDrop((cases) => {
-               const itemType = monitor.getItemType()
-               if (!itemType) {
-                  return
-               }
-               const handler = cases[itemType as T]
-               // Pattern matching based on itemType
-               if (handler) {
-                  handler(item) // item is already narrowed here
-               } else {
-                  throw new Error(`Unhandled item type: ${itemType.toString()}`)
-               }
-            })
-         }
-      },
-      hover(item, monitor): void {
-         if (monitor.isOver({ shallow: config && config.shallow })) {
-            if (onHover) {
-               onHover(item, monitor)
-            }
-         }
-      },
-   }))
-}
-
-// export const useDropZoneImage = useDropZone()

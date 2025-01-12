@@ -43,29 +43,39 @@ export const PanelDraftUI = observer(function PanelDraftUI_(p: PanelDraftProps) 
 export const DraftUI = observer(function Panel_Draft_(p: { draft: Maybe<DraftL> }) {
    const draft = p.draft
    const justify = cushy.forms.use(ui_justify)
-   const [isDnDHovered, dropRef] = useImageSlotDrop((img) => {
-      if (draft == null) return
 
-      cushy.activityManager.start({
-         stopOnBackdropClick: true,
-         // backdrop: true,
-         // shell: 'popup-sm',
+   const [isDnDHovered, dropRef] = UY.DropZone({
+      config: { shallow: true },
+      Image: {
+         onDrop: (item, monitor) => {
+            if (draft == null) return
 
-         UI: (p) => (
-            <POPUP title='Insert Image in to Slot'>
-               <DraftImageSlotPickerUI //
-                  image={img}
-                  draft={draft}
-                  stop={p.stop}
-               />
-            </POPUP>
-         ),
-      })
-      // Make pop-up open with a list of Image fields to pick from, the picked field is set to the dropped image
-      // The list of options should display their path from their top-level group to the field
-      // For example, CushySXDL's Latent Image field would be "Latent->Image"
-      return null
+            cushy.activityManager.start({
+               stopOnBackdropClick: true,
+               // backdrop: true,
+               // shell: 'popup-sm',
+
+               UI: (p) => (
+                  <POPUP title='Insert Image in to Slot'>
+                     <DraftImageSlotPickerUI //
+                        image={item}
+                        draft={draft}
+                        stop={p.stop}
+                     />
+                  </POPUP>
+               ),
+            })
+         },
+         onHover: (item, monitor) => {
+            cushy.dndHandler.setContent({
+               icon: 'mdiImage',
+               label: 'Drop Image in to Slot',
+               suffixIcon: 'mdiMenuOpen',
+            })
+         },
+      },
    })
+
    const theme = cushy.preferences.theme.value
 
    // useEffect(() => draft?.AWAKE(), [draft?.id])

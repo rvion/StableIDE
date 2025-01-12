@@ -109,6 +109,10 @@ export class MediaImageL extends BaseInst<TABLES['media_image']> {
       return this.step?.draft
    }
 
+   get workflow(): Maybe<ComfyWorkflowL> {
+      return this.prompt?.graph
+   }
+
    get app(): Maybe<CushyAppL> {
       return this.draft?.app
    }

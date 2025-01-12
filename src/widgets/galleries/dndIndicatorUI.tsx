@@ -14,6 +14,14 @@ export type DnDHandlerContent = {
    content?: () => JSX.Element
 }
 
+export type ExplanationAboutWhatIsBeeingDragged = {
+   suffixIcon?: IconName
+   icon?: IconName
+   label?: string
+   /** Underneath the other parameters, display whatever you need to */
+   content?: () => JSX.Element
+}
+
 export class CushyDnDHandler {
    private _visible: boolean = false
 
@@ -92,18 +100,7 @@ export class CushyDnDHandler {
    }
 
    /** Call this when starting a drag to have the indicator have a fallback when the normal content is cleared */
-   setDragContent({
-      suffixIcon,
-      icon,
-      label,
-      content,
-   }: {
-      suffixIcon?: IconName
-      icon?: IconName
-      label?: string
-      /** Underneath the other parameters, display whatever you need to */
-      content?: () => JSX.Element
-   }): void {
+   setDragContent({ suffixIcon, icon, label, content }: ExplanationAboutWhatIsBeeingDragged): void {
       this._startContent.suffixIcon = suffixIcon
       this._startContent.icon = icon
       this._startContent.label = label

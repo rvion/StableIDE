@@ -6,12 +6,11 @@ import { nanoid } from 'nanoid'
 import { createMediaImage_fromBlobObject } from '../../../models/createMediaImage_fromWebFile'
 import { FPath } from '../../../models/FPath'
 import { PanelGalleryUI } from '../../../panels/PanelGallery/PanelGalleryUI'
-import { useImageDrop } from '../../../widgets/galleries/dnd'
-import { ImageUI, ImageUIDumb } from '../../../widgets/galleries/ImageUI'
+import { ImageUIDumb } from '../../../widgets/galleries/ImageUI'
 import { Button } from '../../button/Button'
 import { SpacerUI } from '../../components/SpacerUI'
 import { Frame } from '../../frame/Frame'
-import { Ikon, IkonOf } from '../../icons/iconHelpers'
+import { Ikon } from '../../icons/iconHelpers'
 import { ResizableFrame } from '../../resizableFrame/resizableFrameUI'
 import { RevealUI } from '../../reveal/RevealUI'
 
@@ -20,8 +19,20 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
    field: Field_image
 }) {
    const field = p.field
-   const [dropStyle, dropRef] = useImageDrop(cushy, (imageL) => {
-      field.value = imageL
+   const [isOver, dropRef] = UY.DropZone({
+      config: { shallow: true },
+      Image: {
+         onDrop: (item, monitor) => {
+            field.value = item
+         },
+         onHover: (item, monitor) => {
+            cushy.dndHandler.setContent({
+               icon: 'mdiImage',
+               label: 'Drop Image',
+               suffixIcon: 'mdiMenuOpen',
+            })
+         },
+      },
    })
 
    const image = field.value
@@ -48,7 +59,7 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
                   square
                   subtle
                   icon='mdiContentPaste'
-                  description='Paste image data from the clipboard'
+                  tooltip='Paste image data from the clipboard'
                   onClick={() => {
                      // XXX: This is slow, should probably be done through electron's api, but works for now. Could also be made re-usable? getImageFromClipboard()?
                      navigator.clipboard
@@ -100,7 +111,7 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
                <SpacerUI />
                <Button //
                   disabled={field.value == cushy.defaultImage}
-                  description='reset'
+                  tooltip='Reset'
                   square
                   subtle
                   icon={'mdiRestore'}
@@ -117,7 +128,9 @@ export const WidgetSelectImageUI = observer(function WidgetSelectImageUI_(p: {
          }
       >
          <div
-            style={dropStyle}
+            style={{
+               opacity: isOver ? '75%' : '100%',
+            }}
             ref={dropRef}
             className='DROP_IMAGE_HANDLER'
             tw='_WidgetSelectImageUI flex h-full w-full flex-1 items-center justify-center'

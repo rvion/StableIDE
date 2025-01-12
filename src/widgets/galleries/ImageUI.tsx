@@ -5,7 +5,8 @@ import { observer } from 'mobx-react-lite'
 
 import { RevealUI } from '../../csuite/reveal/RevealUI'
 import { ImageDropdownMenuUI } from '../../panels/ImageDropdownUI'
-import { useImageDrag, useImageDragNew } from './dnd'
+import { useImageDrag } from './dnd'
+import { useDragItem } from './dndGeneric'
 import { ImageErrorDisplayUI } from './ImageErrorDisplayUI'
 
 export const ImageUI = observer(function ImageUI_({
@@ -86,7 +87,7 @@ export const ImageUIDumb = observer(function ImageUIDumb_({
    className?: string
 }) {
    const image = typeof img === 'string' ? cushy.db.media_image.get(img) : img
-   const [{ opacity }, dragRef, dragPreview] = useImageDragNew(image! /* 🔴 */)
+   // const [{ opacity }, dragRef, dragPreview] = useImageDragNew(image! /* 🔴 */)
 
    if (!image) {
       return (
@@ -103,6 +104,8 @@ export const ImageUIDumb = observer(function ImageUIDumb_({
          />
       )
    }
+
+   const [{ opacity }, dragRef, dragPreview] = useDragItem(image)
 
    return (
       <RevealUI //

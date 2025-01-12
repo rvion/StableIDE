@@ -83,7 +83,7 @@ export class ComfyPromptL extends BaseInst<TABLES['comfy_prompt']> {
       return this.stepRef.item
    }
 
-   // link to grah
+   // link to graph
    graphRef = new LiveRef<this, ComfyWorkflowL>(this, 'graphID', 'comfy_workflow')
 
    get graph(): ComfyWorkflowL {
