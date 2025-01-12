@@ -73,7 +73,7 @@ export const OutputPreview_ContentUI = observer(function OutputPreview_ContentUI
             // border={}
             roundness={theme.global.roundness}
             dropShadow={theme.global.shadow}
-            description='Step was null'
+            tooltip='Step was null'
             icon={'mdiAlert'}
             iconSize='80%'
          />

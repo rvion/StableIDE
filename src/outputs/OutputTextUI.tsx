@@ -39,7 +39,7 @@ export const OutputTextPreviewUI = observer(function OutputTextPreviewUI_(p: {
          </div>
       ) : (
          <Frame //
-            description={'Text Output'}
+            tooltip={'Text Output'}
             square
             icon='mdiText'
             iconSize='80%'

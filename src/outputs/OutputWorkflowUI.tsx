@@ -56,7 +56,7 @@ export const OutputWorkflowPreviewUI = observer(function OutputWorkflowUI_(p: {
             square
             icon='cdiNodes'
             iconSize='80%'
-            description='Workflow'
+            tooltip='Workflow'
          />
       </RevealUI>
    )
