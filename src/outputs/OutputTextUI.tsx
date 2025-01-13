@@ -7,16 +7,20 @@ import { Frame } from '../csuite/frame/Frame'
 import { LegacySurfaceUI } from '../csuite/inputs/LegacySurfaceUI'
 import { MarkdownUI } from '../csuite/markdown/MarkdownUI'
 import { TabUI } from '../csuite/tabs/TabUI'
+import { useDragItem } from '../widgets/galleries/dndGeneric'
 
 export const OutputTextPreviewUI = observer(function OutputTextPreviewUI_(p: {
    //
    step?: Maybe<StepL>
    output: MediaTextL
 }) {
+   const [opacity, dragRef, dragPreview] = useDragItem(p.output.data.content)
+
    const output = p.output
    const message =
       output.data.kind === 'markdown' ? ( //
          <div
+            // ref={dragRef}
             tw={[
                //
                '[font-size:60%] [line-height:100%]',
@@ -28,6 +32,7 @@ export const OutputTextPreviewUI = observer(function OutputTextPreviewUI_(p: {
          </div>
       ) : output.data.kind === 'html' ? (
          <div
+            // ref={dragRef}
             tw={[
                //
                '[font-size:60%] [line-height:100%]',
@@ -39,6 +44,8 @@ export const OutputTextPreviewUI = observer(function OutputTextPreviewUI_(p: {
          </div>
       ) : (
          <Frame //
+            // tw='w-full h-full flex'
+            // ref={dragRef}
             tooltip={'Text Output'}
             square
             icon='mdiText'
@@ -46,7 +53,19 @@ export const OutputTextPreviewUI = observer(function OutputTextPreviewUI_(p: {
          />
       )
 
-   return message
+   return (
+      <>
+         <div tw='absolute opacity-0' ref={dragPreview}>
+            a
+         </div>
+
+         <div // Hack to get around icons blocking dragging for some reason
+            ref={dragRef}
+            tw='absolute h-full w-full opacity-0'
+         />
+         {message}
+      </>
+   )
 })
 
 export const OutputTextUI = observer(function OutputTextUI_(p: { step?: Maybe<StepL>; output: MediaTextL }) {
