@@ -3,17 +3,14 @@ import type { Field_prompt } from './FieldPrompt'
 import type { Prompt_Lora } from './grammar/grammar.practical'
 
 import { EditorState } from '@codemirror/state'
-import { basicSetup, EditorView } from 'codemirror'
+import { EditorView } from 'codemirror'
 import { makeAutoObservable, observable, reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { createRef, useLayoutEffect, useMemo } from 'react'
 
-import { Button } from '../csuite/button/Button'
-import { ToggleButtonUI } from '../csuite/checkbox/InputBoolToggleButtonUI'
-import { MessageInfoUI } from '../csuite/messages/MessageInfoUI'
-import { SelectUI } from '../csuite/select/SelectUI'
-import { toastError } from '../csuite/utils/toasts'
+import { Frame } from '../csuite/frame/Frame'
 import { PromptLang } from './cm-lang/LANG'
+import { basicSetup } from './cm-lang/SETUP'
 import { PromptAST } from './grammar/grammar.practical'
 
 type X = { id: FieldId; label?: string }
@@ -131,7 +128,7 @@ export const PromptEditorUI = observer(function PromptEditorUI_(p: { promptID: F
    }, [cushy.activePrompt])
 
    return (
-      <div tw='flex flex-col gap-1 p-2'>
+      <Frame className='ͼo' base={{ contrast: -0.05 }} tw='flex h-full flex-col gap-1'>
          {/* <MessageInfoUI title='instructions'> select the [from] to change the to widget </MessageInfoUI> */}
          {/* <div className='flex flex-wrap'>
             {cushy.repository.getWidgetsByType<Field_prompt>('prompt').map((widget) => (
@@ -145,7 +142,7 @@ export const PromptEditorUI = observer(function PromptEditorUI_(p: { promptID: F
             ))}
          </div> */}
 
-         <div ref={uist.mountRef}></div>
+         <div tw='h-full' ref={uist.mountRef}></div>
          {/* <Button onClick={() => uist.setInternalText(uist.linkedText + '!')}>add "!"</Button>
          <SelectUI<X>
             value={() => ({ id: p.promptID, label: 'current' })}
@@ -164,6 +161,6 @@ export const PromptEditorUI = observer(function PromptEditorUI_(p: { promptID: F
                return allPrompts.map((i) => ({ id: i.id, label: i.text ?? '' }))
             }}
          /> */}
-      </div>
+      </Frame>
    )
 })
