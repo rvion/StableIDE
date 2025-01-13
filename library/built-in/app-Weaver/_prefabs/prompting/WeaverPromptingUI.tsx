@@ -69,7 +69,10 @@ export const StackPromptingUI = observer(function StackPromptingUI_(p: {
                                  //    </div>
                                  // }
                               >
-                                 {item.text}
+                                 <p tw='flex flex-row gap-1'>
+                                    <p tw='line-clamp-3 w-full'>{item.text}</p>
+                                    <p tw='opacity-50'>{item.name}</p>
+                                 </p>
                               </UY.Misc.Frame>
                            )
                         })}
