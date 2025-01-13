@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite'
 import { Button } from '../../csuite/button/Button'
 import { InputBoolCheckboxUI } from '../../csuite/checkbox/InputBoolCheckboxUI'
 import { InputBoolUI } from '../../csuite/checkbox/InputBoolUI'
+import { MenuDivider } from '../../csuite/dropdown/MenuDivider'
 import { WidgetChoices_HeaderButtonsUI } from '../../csuite/fields/choices/WidgetChoices_HeaderButtonsUI'
 import { WidgetChoices_HeaderSelectUI } from '../../csuite/fields/choices/WidgetChoices_HeaderSelectUI'
 import { WidgetChoices_HeaderTabBarUI } from '../../csuite/fields/choices/WidgetChoices_HeaderTabBarUI'
@@ -143,6 +144,7 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
    Decorations: {
       Card: WidgetCardUI,
       Pad: WidgetPadUI,
+      Divider: MenuDivider,
    },
    IkonOf: IkonOf,
    Message: {
@@ -187,6 +189,19 @@ export const widgetsCatalog /* WidgetsCatalog */ = {
                border={p.align ? true : undefined}
                roundness={p.align ? theme.global.roundness : undefined}
                dropShadow={p.align ? theme.global.shadow : undefined}
+               expand={p.expand ?? true}
+               {...p}
+            />
+         )
+      }),
+      Box: observer(function ColumnUI_(p: FrameProps) {
+         const theme = cushy.preferences.theme.value
+         return (
+            <Frame
+               col
+               border={theme.global.border}
+               roundness={theme.global.roundness}
+               dropShadow={theme.global.shadow}
                expand={p.expand ?? true}
                {...p}
             />
