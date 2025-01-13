@@ -51,7 +51,7 @@ export function extractDnDDragType(item: DraggableItem): DraggableItemName {
    return 'File'
 }
 export function extractDragContentFromItem(item: DraggableItem): ExplanationAboutWhatIsBeeingDragged {
-   if (item instanceof MediaImageL) return { icon: 'mdiImage', label: item.relPath }
+   if (item instanceof MediaImageL) return { icon: 'mdiImage', label: item.relPath.split('/').pop() }
    if (typeof item === 'string') return { icon: 'mdiText', label: item }
    if (item instanceof File) return { icon: 'mdiFile', label: item.name }
    return { icon: 'mdiFile' }
@@ -72,8 +72,8 @@ export function useDragItem<T extends DraggableItem, U extends any>(
             onDrag?.(monitor)
             if (cushy.dndHandler.visible) {
                if (cushy.dndHandler.label === undefined || cushy.dndHandler.icon) {
-                  //   const infos = extractDragContentFromItem(item)
-                  //   cushy.dndHandler.setDragContent(infos)
+                  const infos = extractDragContentFromItem(item)
+                  cushy.dndHandler.setDragContent(infos)
                }
             }
             return { opacity: monitor.isDragging() ? 0.5 : 1 }
