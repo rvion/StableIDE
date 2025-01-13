@@ -65,3 +65,7 @@
     outline: 1px dashed oklch(var(--er));
     /* color: oklch(var(--er)); */
 }
+
+.cm-editor {
+    height: 100%
+}
