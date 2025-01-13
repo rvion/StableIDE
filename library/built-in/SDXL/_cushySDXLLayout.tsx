@@ -63,7 +63,10 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                                  tw='flex items-center'
                                  hover
                                  key={item.id}
-                                 onMouseDown={() => (promptGroup.activeIndex = index)}
+                                 onMouseDown={() => {
+                                    promptGroup.activeIndex = index
+                                    cushy.activePrompt = p.field.items[promptGroup.activeIndex]?.value.prompt
+                                 }}
                               >
                                  <span
                                     tw={[
@@ -92,7 +95,7 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                                        toggleGroup='prompt'
                                        value={item.fields.enabled.value}
                                        onValueChange={(v) => (item.fields.enabled.value = v)}
-                                       description='Whether or not the prompt effects the generation'
+                                       tooltip='Whether or not the prompt effects the generation'
                                     />
                                  </div>
                               </UY.Misc.Frame>
@@ -125,7 +128,7 @@ export function _cushySDXLLayout(): Maybe<DisplaySlotFn<$CushySDXLUI['$Field']>>
                                     widgetLabel='Prompt Enabled'
                                     text='Prompt Enabled'
                                     // Tooltip needs to be gathered from the field
-                                    description='Whether or not the prompt effects the generation'
+                                    tooltip='Whether or not the prompt effects the generation'
                                     // display='button'
                                     expand
                                  />

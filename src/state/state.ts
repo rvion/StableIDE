@@ -26,6 +26,7 @@ import type { MediaImageL } from '../models/MediaImage'
 import type { ProjectL } from '../models/Project'
 import type { StepL } from '../models/Step'
 import type { PreferenceMode } from '../panels/PanelPreferences/PanelPreferences'
+import type { Field_prompt } from '../prompt/FieldPrompt'
 import type { Database } from '../supa/database.types'
 import type { CleanedEnumResult } from '../types/EnumUtils'
 import type { StepOutput } from '../types/StepOutput'
@@ -151,6 +152,8 @@ export class STATE {
    userTags = UserTags.build()
    actionTags: ActionTagMethodList = []
    importer: ComfyImporter
+
+   activePrompt?: Field_prompt = undefined
 
    _updateTime(): void {
       const now = Date.now()

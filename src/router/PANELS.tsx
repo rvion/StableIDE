@@ -26,6 +26,7 @@ import { PanelModels } from '../panels/PanelModels/PanelModels'
 import { PanelStep } from '../panels/PanelOutput/PanelOutput'
 import { PanelPlayground } from '../panels/PanelPlayground/PanelPlayground'
 import { PanelPreferences } from '../panels/PanelPreferences/PanelPreferences'
+import { PanelPrompting } from '../panels/PanelPrompting/PanelPrompting'
 import { PanelSafetyRatings } from '../panels/PanelSafetyRatings/PanelSafetyRatings'
 import { PanelShortcuts } from '../panels/PanelShortcuts/PanelShortcuts'
 import { PanelSteps } from '../panels/PanelSteps/PanelSteps'
@@ -58,6 +59,7 @@ export const panels = {
    LastImage: PanelLastImage,
    LastStep: PanelLastStep,
    Custom: PanelCustom,
+   Prompting: PanelPrompting,
 
    // App
    Welcome: PanelWelcome,
