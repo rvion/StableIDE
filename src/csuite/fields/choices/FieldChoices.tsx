@@ -15,6 +15,7 @@ import type { TabPositionConfig } from './TabPositionConfig'
 import { produce } from 'immer'
 
 import { Field } from '../../model/Field'
+import { capitalize } from '../../utils/capitalize'
 import { makeLabelFromPrimitiveValue } from '../../utils/makeLabelFromFieldName'
 import { isProbablySerialChoices, registerFieldClass } from '../WidgetUI.DI'
 import { WidgetChoices_BodyUI } from './WidgetChoices_BodyUI'
@@ -97,6 +98,12 @@ export type Field_choices_types<T extends SchemaDict = SchemaDict> = {
    $Reflect: Field_choices_types<T>
 }
 
+export type MAGICCHOICES<T extends { [key: string]: { $Field: any } }> = {
+   [K in keyof T as Capitalize<K & string>]?: T[K]['$Field']
+}
+
+export type FieldChoices<T extends SchemaDict> = Field_choices<T> & MAGICCHOICES<T>
+
 // #region STATE
 export class Field_choices<T extends SchemaDict = SchemaDict> extends Field<Field_choices_types<T>> {
    // #region TYPE
@@ -136,6 +143,13 @@ export class Field_choices<T extends SchemaDict = SchemaDict> extends Field<Fiel
       serial?: Field_choices_serial<T>,
    ) {
       super(repo, root, parent, schema, initialMountKey, serial)
+      for (const [fName, fSchema] of this._fieldSchemas) {
+         Object.defineProperty(this, capitalize(fName), {
+            get: () => this.activeBranchesDict[fName],
+            configurable: true,
+         })
+      }
+
       this.init(serial, {
          // UI
          // DefaultHeaderUI: false,
@@ -431,6 +445,16 @@ export class Field_choices<T extends SchemaDict = SchemaDict> extends Field<Fiel
       if (typeof schema === 'function') schema = (schema as any)() // 💊 temporary backward compat
       if (schema == null) throw new Error(`❌ Branch "${branchName}" has no initializer function`)
       return schema
+   }
+
+   /** just here to normalize fieldSchema definitions, since it used to be a lambda */
+   private get _fieldSchemas(): [keyof T & string, BaseSchema<any>][] {
+      const itemsDef = this.config.items
+      const fieldSchemas: SchemaDict =
+         typeof itemsDef === 'function' //
+            ? ((itemsDef as any)() ?? {}) // <-- LEGACY SUPPORT
+            : (itemsDef ?? {})
+      return Object.entries(fieldSchemas) as [keyof T & string, BaseSchema<any>][]
    }
 
    // #region setOwnSerial

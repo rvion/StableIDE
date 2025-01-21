@@ -79,30 +79,6 @@ export interface Field_Group_withMagicFields<T extends Field_group_types<SchemaD
 export type FieldGroup<T extends Field_group_types<SchemaDict>> = //
    Field_group<T> & MAGICFIELDS<T> & { $Field: FieldGroup<T> }
 
-// // prettier-ignore
-// type QuickFormContent<T extends Field> =
-//     /** strings will be rendered as Markdown, with a `_MD` className  */
-//     | string
-
-//     /**
-//      * any lambda CURRENTLY expect to return a component
-//      * (PROBABLY BAD, SHOULD RETURN AN ELEMENT)
-//      */
-//     | ((field: T) => Maybe<FC<NO_PROPS>>)
-
-//     /** Fields will be rendered using the default Component
-//      * for the render context (cell, form, text) */
-//     | Field
-
-//     /** null or undefined will be skipped */
-//     | null | undefined
-
-// type RenderFieldsSubsetProps<T extends SchemaDict> = {
-//     showMore?: (keyof T)[] | false // 🔴 probably migrate to QuickFormContent<this>[] asap too
-//     readonly?: boolean
-//     usage?: 'cell' | 'default' | 'text' | 'header'
-// }
-
 // STATE
 export interface Field_group<X extends Field_group_types<SchemaDict> = Field_group_types<SchemaDict>> {
    $Subfields: X['$Sub']

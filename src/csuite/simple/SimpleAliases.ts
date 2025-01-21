@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 import type { Field_bool } from '../fields/bool/FieldBool'
 import type { Field_button } from '../fields/button/FieldButton'
-import type { Field_choices } from '../fields/choices/FieldChoices'
+import type { Field_choices, FieldChoices } from '../fields/choices/FieldChoices'
 import type { Field_color } from '../fields/color/FieldColor'
 import type { Field_date } from '../fields/date/FieldDate'
 import type { Field_dynamic } from '../fields/dynamic/FieldDynamic'
@@ -37,7 +37,7 @@ declare global {
       type Group<T extends SchemaDict> = Field_group<Field_group_types<T>>
       type List<T extends BaseSchema> = Field_list<T>
       type Link<A extends BaseSchema, B extends BaseSchema> = Field_link<A, B>
-      type Choices<T extends SchemaDict = SchemaDict> = Field_choices<T>
+      type Choices<T extends SchemaDict = SchemaDict> = FieldChoices<T>
       type Optional<T extends BaseSchema> = Field_optional<T>
       //
 
