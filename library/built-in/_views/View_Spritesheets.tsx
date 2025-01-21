@@ -1,8 +1,7 @@
-import type { GroupProps } from '@react-three/fiber'
 import type { Group } from 'three'
 
 import { Html, Image, useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { type ThreeElements, useFrame } from '@react-three/fiber'
 import { observer, useLocalObservable } from 'mobx-react-lite'
 import { useEffect, useMemo, useRef } from 'react'
 
@@ -61,16 +60,16 @@ const SpriteSheetUI = observer(function SpriteSheet(p: { imageID: MediaImageID |
    const totalAnim = Math.floor((v.row * v.col) / v.imagePerAnim)
    return (
       <>
-         <div tw='w-96 right-0 absolute z-20'>{form.UI()}</div>
+         <div tw='absolute right-0 z-20 w-96'>{form.UI()}</div>
          {totalAnim} animations
          <div tw='flex flex-wrap'>
             {new Array(totalAnim).fill(0).map((_, i) => {
                const nth = v.imagePerAnim
-               let startIx = i * v.imagePerAnim + (uist.step % v.imagePerAnim)
-               let nthCol = startIx % v.col
-               let nthRow = Math.floor(startIx / v.col)
-               let startX = nthCol * cellWidth
-               let startY = nthRow * cellHeight
+               const startIx = i * v.imagePerAnim + (uist.step % v.imagePerAnim)
+               const nthCol = startIx % v.col
+               const nthRow = Math.floor(startIx / v.col)
+               const startX = nthCol * cellWidth
+               const startY = nthRow * cellHeight
                return (
                   <div key={i} tw='bd'>
                      ({startX}, {startY}){/* {startIx} */}
@@ -95,7 +94,7 @@ const SpriteSheetUI = observer(function SpriteSheet(p: { imageID: MediaImageID |
 })
 
 // const useGLTFProxy = (url: string) => {}
-const Can3 = observer(function Can3_(props: GroupProps & { _textureURL?: string }) {
+const Can3 = observer(function Can3_(props: ThreeElements['group'] & { _textureURL?: string }) {
    // writeFileSync('src/outputs/3d-scene/can3/test/can3.gltf,')
    const gltf = useGLTF(`/library/built-in/_views/_can3/can3.gltf`)
    const { nodes, materials } = gltf

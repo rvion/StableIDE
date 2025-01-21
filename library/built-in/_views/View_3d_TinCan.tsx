@@ -1,5 +1,5 @@
 import type { AnyFieldSerial } from '../../../src/csuite/model/EntitySerial'
-import type { GroupProps } from '@react-three/fiber'
+import type { ThreeElements } from '@react-three/fiber'
 import type { Group } from 'three'
 
 import { Environment, Html, Image, OrbitControls, Sparkles, Stage, useGLTF } from '@react-three/drei'
@@ -67,7 +67,7 @@ const CanUI = observer(function CanUI_(p: { imageID: MediaImageID | null }) {
 
 const useGLTFProxy = (url: string): void => {}
 
-const Can3 = observer(function Can3_(props: GroupProps & { _textureURL?: string }) {
+const Can3 = observer(function Can3_(props: ThreeElements['group'] & { _textureURL?: string }) {
    // writeFileSync('src/outputs/3d-scene/can3/test/can3.gltf,')
    const gltf = useGLTF(`/library/built-in/_views/_can3/can3.gltf`)
    const { nodes, materials } = gltf
