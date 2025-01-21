@@ -19,7 +19,7 @@ You may probably want to wrap them in `observer` wrapper:
 ```tsx
 import { observer } from "mobx-react-lite";
 
-export const IconUI = observer(function IconUI_(p: { icon: string }): JSX.Element {
+export const IconUI = observer(function IconUI_(p: { icon: string }): React.JSX.Element {
    return (
       <span>
          {p.icon}

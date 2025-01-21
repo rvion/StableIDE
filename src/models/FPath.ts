@@ -19,9 +19,9 @@ export class FPath {
    }
 
    /** complete file diagnostics */
-   UIDiagnostic = (): JSX.Element => createElement(FPathDiagnosticUI, { fpath: this })
+   UIDiagnostic = (): React.JSX.Element => createElement(FPathDiagnosticUI, { fpath: this })
 
-   UIDiagnosticBadge = (): JSX.Element => createElement(FPathDiagnosticBadgeUI, { fpath: this })
+   UIDiagnosticBadge = (): React.JSX.Element => createElement(FPathDiagnosticBadgeUI, { fpath: this })
 
    constructor(public path: string) {
       if (path.startsWith('data:')) {

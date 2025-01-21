@@ -544,7 +544,7 @@ export class CushyLayoutManager {
       // return parent as FL.TabSetNode
    }
 
-   UI: ProplessFC = (): JSX.Element => <LayoutUI layout={this} />
+   UI: ProplessFC = (): React.JSX.Element => <LayoutUI layout={this} />
 
    /** rename tab by ID */
    renameTab(tabID: string, newName: string): void {

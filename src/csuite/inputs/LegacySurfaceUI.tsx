@@ -7,7 +7,7 @@ export const LegacySurfaceUI = (p: {
    header?: ReactNode
    className?: string
    children: ReactNode
-}): JSX.Element => {
+}): React.JSX.Element => {
    const { header, children, ...rest } = p
    return (
       <div

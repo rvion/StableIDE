@@ -2,14 +2,14 @@
 
 import { IconUI } from './IconUI'
 
-export const FolderIcon = (p: { isOpen?: boolean }): JSX.Element =>
+export const FolderIcon = (p: { isOpen?: boolean }): React.JSX.Element =>
    p.isOpen ? ( //
       <IconUI icon='expand_more' color='e8a87c' />
    ) : (
       <IconUI icon='chevron_right' color='e8a87c' />
    )
 
-export const FileIcon = (p: { filename: string }): JSX.Element | null => {
+export const FileIcon = (p: { filename: string }): React.JSX.Element | null => {
    const filename = p.filename
    const extension = filename.slice(filename.lastIndexOf('.') + 1)
    // prettier-ignore

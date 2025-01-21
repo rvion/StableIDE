@@ -27,7 +27,7 @@ export class TreeFile implements ITreeEntry {
    isFolder: boolean = true
 
    /** icon to display in the treeview */
-   get icon(): string | JSX.Element {
+   get icon(): string | React.JSX.Element {
       if (this.path.endsWith('.ts')) return assets.typescript_512_png
       if (this.path.endsWith('.tsx')) return assets.typescript_512_png
       if (this.path.endsWith('.png')) return `file://${cwd()}/${this.path}`

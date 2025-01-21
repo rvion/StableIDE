@@ -11,7 +11,7 @@ const sides: { color: string; text: string; }[] = [
     { text: 'Left', color: 'pink' },
 ];
 // https://codesandbox.io/p/sandbox/drei-rendertexture-0z8i2c?file=%2Fsrc%2FApp.js%3A11%2C22
-export function Cube(): JSX.Element {
+export function Cube(): React.JSX.Element {
    const textRef = useRef<any>()
    return (
       <mesh>

@@ -411,7 +411,7 @@ function renderType(
    }
    const final: string =
       alt1 === 'Element' && typeContext.ext === '.tsx' //
-         ? 'JSX.Element'
+         ? 'React.JSX.Element'
          : alt1
 
    const isWhitelisted = ((): boolean => {

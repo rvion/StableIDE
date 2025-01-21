@@ -24,9 +24,9 @@ export const WidgetCustom_HeaderUI = observer(function WidgetCustom_HeaderUI_<T>
 
 /** Common ui components */
 const _commonUIComponents = {
-   ImageUI: (p: PropsOf<typeof ImageUI>): JSX.Element => <ImageUI {...p} />,
-   JsonViewUI: (p: PropsOf<typeof JsonViewUI>): JSX.Element => <JsonViewUI {...p} />,
-   InputNumberUI: (p: PropsOf<typeof InputNumberUI>): JSX.Element => <InputNumberUI {...p} />,
+   ImageUI: (p: PropsOf<typeof ImageUI>): React.JSX.Element => <ImageUI {...p} />,
+   JsonViewUI: (p: PropsOf<typeof JsonViewUI>): React.JSX.Element => <JsonViewUI {...p} />,
+   InputNumberUI: (p: PropsOf<typeof InputNumberUI>): React.JSX.Element => <InputNumberUI {...p} />,
 }
 
 export type UIKit = typeof _commonUIComponents

@@ -46,7 +46,7 @@ export class MenuInstance implements Activity {
    }
 
    /** calle */
-   UI = (): JSX.Element => createElement(MenuUI, { menu: this })
+   UI = (): React.JSX.Element => createElement(MenuUI, { menu: this })
 
    /** unique volative menu id */
    uid: string = nanoid()

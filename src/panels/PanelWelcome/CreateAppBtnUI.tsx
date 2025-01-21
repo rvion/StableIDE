@@ -158,7 +158,7 @@ app({
 `
 }
 
-const IntroTxt = (): JSX.Element => {
+const IntroTxt = (): React.JSX.Element => {
    return (
       <MessageInfoUI title='Memo'>
          <div>

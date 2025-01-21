@@ -1,0 +1,12 @@
+diff --git a/node_modules/meshline/dist/MeshLineMaterial.d.ts b/node_modules/meshline/dist/MeshLineMaterial.d.ts
+index ff363db..86c7fec 100644
+--- a/node_modules/meshline/dist/MeshLineMaterial.d.ts
++++ b/node_modules/meshline/dist/MeshLineMaterial.d.ts
+@@ -36,7 +36,6 @@ export declare class MeshLineMaterial extends THREE.ShaderMaterial implements Me
+     useDash: number;
+     useGradient: number;
+     visibility: number;
+-    alphaTest: number;
+     repeat: THREE.Vector2;
+     constructor(parameters: MeshLineMaterialParameters);
+     copy(source: MeshLineMaterial): this;

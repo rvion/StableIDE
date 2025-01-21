@@ -98,7 +98,7 @@ app({
          // ----------------------------
 
          const storedPrompts = store.get()
-         const simplifiedDescription = x.Text.replaceAll(/[0-9\[\]\#]/g, '')
+         const simplifiedDescription = x.Text.replaceAll(/[0-9[\]#]/g, '')
          const llmRequest = [
             `I need to illustrate my ${kind} skills`,
             `The name of the skill is ${x.Name}. and does read like that: "{${simplifiedDescription}}".`,

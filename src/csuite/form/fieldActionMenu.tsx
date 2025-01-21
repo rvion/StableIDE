@@ -44,7 +44,7 @@ export const fieldActionMenu: MenuTemplate<FieldActionMenuProps> = defineMenuTem
             submit: (): void => {
                console.log(`[🤠] values`)
             },
-            UI: (w): JSX.Element => <CreatePresetUI field={field} />,
+            UI: (w): React.JSX.Element => <CreatePresetUI field={field} />,
          }),
       )
       out.push(

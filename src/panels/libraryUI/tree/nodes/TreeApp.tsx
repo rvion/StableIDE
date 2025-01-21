@@ -56,7 +56,7 @@ export class TreeApp implements ITreeEntry {
       return [...subFolders, ...subFiles]
    }
 
-   extra = (): JSX.Element | null => (
+   extra = (): React.JSX.Element | null => (
       <>
          {this.app?.isLoadedInMemory ? (
             <span className='material-symbols-outlined text-green-500'>memory</span>

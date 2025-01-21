@@ -16,7 +16,7 @@ export const ScribbleCanvas = (p: {
    onChange: (base64: string) => void
    style?: CSSProperties
    className?: string
-}): JSX.Element => {
+}): React.JSX.Element => {
    const canvasRef = useRef<HTMLCanvasElement | null>(null)
    const [drawing, setDrawing] = useState(false)
    const [canvasWidth, setCanvasWidth] = useState(512)

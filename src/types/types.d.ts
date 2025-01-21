@@ -36,5 +36,5 @@ declare type EmptyObject = Record<string, never>
 
 // because react types are more complex by default
 // let's live in a simplified world
-declare type SimpleFC<P> = (props: P) => JSX.Element
-// declare type ProplessFC = () => JSX.Element | null
+declare type SimpleFC<P> = (props: P) => React.JSX.Element
+// declare type ProplessFC = () => React.JSX.Element | null

@@ -14,10 +14,10 @@ export class TreeAppFolder implements ITreeEntry<VirtualFolder<CushyAppL>> {
    get name(): string {
       return `${basename(this.vf.folderPath)}`
    }
-   get icon(): JSX.Element {
+   get icon(): React.JSX.Element {
       return <Ikon.mdiFolder className='text-yellow-700' />
    }
-   get iconExpanded(): JSX.Element {
+   get iconExpanded(): React.JSX.Element {
       return <Ikon.mdiFolderOpen className='text-yellow-700' />
    }
 

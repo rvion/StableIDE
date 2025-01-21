@@ -73,7 +73,7 @@ const baseslots: DisplaySlots<Field> = {
    /* 🟣 */ DebugID: null, // WidgetDebugIDUI,
 
    // only for the lolz
-   /* 🟥 */ EasterEgg: (): JSX.Element => <>🥚</>,
+   /* 🟥 */ EasterEgg: (): React.JSX.Element => <>🥚</>,
 }
 
 export const defaultRulesV2: RuleEntry[] = []
@@ -104,7 +104,7 @@ setRule(
       console.log(`[🔴🦊] evaluationg for ${field.path}`)
       if (field.depth === 1) {
          if (field.isOfType('group', 'list', 'choices')) {
-            return { Decoration: (p): JSX.Element => <UY.Decorations.Card field={field} {...p} /> }
+            return { Decoration: (p): React.JSX.Element => <UY.Decorations.Card field={field} {...p} /> }
             // slots.Title = catalog.Title.h3
          }
       } else if (field.depth === 2) {
@@ -138,7 +138,7 @@ const defaultPresenterRule = (ui: FieldUIConfCtx): void => {
 
    //    if (field.depth === 1) {
    //       // if (field.isOfType('group', 'list', 'choices')) {
-   //       //    slots.Decoration = (p): JSX.Element => <catalog.Decorations.Card field={field} {...p} />
+   //       //    slots.Decoration = (p): React.JSX.Element => <catalog.Decorations.Card field={field} {...p} />
    //       //    // slots.Title = catalog.Title.h3
    //       // }
    //    } else if (field.depth === 2) {
@@ -151,7 +151,7 @@ const defaultPresenterRule = (ui: FieldUIConfCtx): void => {
          console.log(`[🔴🦊] evaluationg for ${field.path}`)
          if (field.depth === 1) {
             if (field.isOfType('group', 'list', 'choices')) {
-               return { Decoration: (p): JSX.Element => <UY.Decorations.Card field={field} {...p} /> }
+               return { Decoration: (p): React.JSX.Element => <UY.Decorations.Card field={field} {...p} /> }
                // slots.Title = catalog.Title.h3
             }
          } else if (field.depth === 2) {

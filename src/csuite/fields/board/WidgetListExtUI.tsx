@@ -10,7 +10,7 @@ import { WidgetListExt_ValuesUI } from './WidgetListExt_ValuesUI'
 
 // import { WidgetListExt_ValuesUI } from './WidgetListExt_ValuesUI'
 
-export function WidgetListExtUI__Regional(p: { field: Field_board<any> }): JSX.Element {
+export function WidgetListExtUI__Regional(p: { field: Field_board<any> }): React.JSX.Element {
    return (
       <WidgetListExtUI //
          field={p.field}
@@ -19,7 +19,7 @@ export function WidgetListExtUI__Regional(p: { field: Field_board<any> }): JSX.E
    )
 }
 
-export function WidgetListExtUI__Timeline(p: { field: Field_board<any> }): JSX.Element {
+export function WidgetListExtUI__Timeline(p: { field: Field_board<any> }): React.JSX.Element {
    return (
       <WidgetListExtUI //
          field={p.field}

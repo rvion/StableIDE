@@ -1,1 +1,1 @@
-export type ProplessFC = () => JSX.Element
+export type ProplessFC = () => React.JSX.Element

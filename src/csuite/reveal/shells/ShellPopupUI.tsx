@@ -7,10 +7,10 @@ import { type ModalShellSize, ModalShellUI } from '../../modal/ModalShell'
 import { exhaust } from '../../utils/exhaust'
 import { mergeStylesTsEfficientInNew } from '../../utils/mergeStylesTsEfficient'
 
-export const ShellPopupXSUI = (p: RevealShellProps): JSX.Element => <ShellPopupUI size='xs' {...p} />
-export const ShellPopupSMUI = (p: RevealShellProps): JSX.Element => <ShellPopupUI size='sm' {...p} />
-export const ShellPopupLGUI = (p: RevealShellProps): JSX.Element => <ShellPopupUI size='lg' {...p} />
-export const ShellPopupXLUI = (p: RevealShellProps): JSX.Element => <ShellPopupUI size='xl' {...p} />
+export const ShellPopupXSUI = (p: RevealShellProps): React.JSX.Element => <ShellPopupUI size='xs' {...p} />
+export const ShellPopupSMUI = (p: RevealShellProps): React.JSX.Element => <ShellPopupUI size='sm' {...p} />
+export const ShellPopupLGUI = (p: RevealShellProps): React.JSX.Element => <ShellPopupUI size='lg' {...p} />
+export const ShellPopupXLUI = (p: RevealShellProps): React.JSX.Element => <ShellPopupUI size='xl' {...p} />
 
 export const ShellPopupUI = observer(function ShellPopupUI_(p: RevealShellProps & { size?: ModalShellSize }) {
    const reveal = p.reveal

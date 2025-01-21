@@ -16,7 +16,7 @@ export const QuickHostActionsUI = observer(function QuickHostActionsUI_(p: {
          <RevealUI
             content={() => (
                <div tw='max-h-96 overflow-auto'>
-                  {((): JSX.Element => {
+                  {((): React.JSX.Element => {
                      if (host.manager.pluginList == null) return <div tw='loading loading-spinner'></div>
                      return (
                         <div tw='flex flex-col'>

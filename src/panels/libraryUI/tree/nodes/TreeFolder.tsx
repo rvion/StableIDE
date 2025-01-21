@@ -63,10 +63,10 @@ export class TreeFolder implements ITreeEntry<RelativePath> {
          ]
       return []
    }
-   get icon(): JSX.Element {
+   get icon(): React.JSX.Element {
       return <Ikon.mdiFolder tw='text-yellow-700' />
    }
-   get iconExpanded(): JSX.Element {
+   get iconExpanded(): React.JSX.Element {
       return <Ikon.mdiFolderOpen tw='text-yellow-700' />
    }
 

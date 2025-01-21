@@ -29,7 +29,7 @@ export class BoundCommand<Ctx = any> {
       return this.command.icon
    }
 
-   NavBarBtnUI = (p: { label?: string }): JSX.Element => {
+   NavBarBtnUI = (p: { label?: string }): React.JSX.Element => {
       return <div onClick={() => this.execute()}>{p.label ?? this.label}</div>
    }
 

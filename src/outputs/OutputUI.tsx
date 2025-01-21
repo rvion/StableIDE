@@ -40,7 +40,7 @@ export const OutputPreviewUI = observer(function StepOutputUI_(p: {
 })
 
 // prettier-ignore
-function getOutput(step: Maybe<StepL>, output: StepOutput): JSX.Element | undefined {
+function getOutput(step: Maybe<StepL>, output: StepOutput): React.JSX.Element | undefined {
    if (output instanceof MediaTextL)            return <OutputTextPreviewUI         step={step} output={output} />
    if (output instanceof MediaImageL)           return <OutputImagePreviewUI        step={step} output={output} />
    if (output instanceof MediaVideoL)           return <OutputVideoPreviewUI        step={step} output={output} />

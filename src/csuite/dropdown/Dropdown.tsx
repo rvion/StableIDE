@@ -26,7 +26,7 @@ export type DropdownProps = {
  * see modules like `src/appbar/MenuDebugUI.tsx`
  */
 export const Dropdown = observerWC(
-   function Dropdown_(p: DropdownProps): JSX.Element {
+   function Dropdown_(p: DropdownProps): React.JSX.Element {
       return (
          <RevealUI
             tw={[p.className]}

@@ -25,7 +25,7 @@ type SelectOptionPresentation = {
    // optional presentation
    disabled?: boolean
    label?: string
-   labelNode?: JSX.Element
+   labelNode?: React.JSX.Element
    icon?: IconName
    hue?: number
 }

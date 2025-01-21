@@ -11,7 +11,7 @@ export type DnDHandlerContent = {
    suffixIcon?: IconName
    icon?: IconName
    label?: string
-   content?: () => JSX.Element
+   content?: () => React.JSX.Element
 }
 
 export class CushyDnDHandler {
@@ -21,7 +21,7 @@ export class CushyDnDHandler {
    private _suffixIcon?: IconName = undefined
    private _icon?: IconName = undefined
    private _label?: string = undefined
-   private _content?: () => JSX.Element
+   private _content?: () => React.JSX.Element
 
    /** Fallback content, set via setStartContent */
    private _startContent: DnDHandlerContent = {
@@ -93,7 +93,7 @@ export class CushyDnDHandler {
       icon?: IconName
       label?: string
       /** Underneath the other parameters, display whatever you need to */
-      content?: () => JSX.Element
+      content?: () => React.JSX.Element
    }): void {
       this._suffixIcon = suffixIcon
       this._icon = icon
@@ -112,7 +112,7 @@ export class CushyDnDHandler {
       icon?: IconName
       label?: string
       /** Underneath the other parameters, display whatever you need to */
-      content?: () => JSX.Element
+      content?: () => React.JSX.Element
    }): void {
       this._startContent.suffixIcon = suffixIcon
       this._startContent.icon = icon
@@ -129,7 +129,7 @@ export class CushyDnDHandler {
    get label(): Maybe<string> {
       return this._label ?? this._startContent.label
    }
-   get content(): Maybe<() => JSX.Element> {
+   get content(): Maybe<() => React.JSX.Element> {
       return this._content ?? this._startContent.content
    }
 

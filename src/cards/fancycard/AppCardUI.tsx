@@ -16,7 +16,7 @@ export const AppCardUI = observer(function FancyCardUI_(p: {
    const file = app.file
    // const importedFrom
    // prettier-ignore
-   const color = ((): JSX.Element | undefined => {
+   const color = ((): React.JSX.Element | undefined => {
         const tw='px-1 py-0.5 overflow-hidden text-ellipsis block whitespace-nowrap self-stretch'
         const maxWidth = cushy.library.imageSize
         if (file.absPath.endsWith('.ts'))   return <Frame base={{hueShift:  60, chroma: .1 }} tw={[tw]} style={{maxWidth}}>Cushy App</Frame>

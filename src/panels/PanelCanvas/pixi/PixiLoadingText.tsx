@@ -1,1 +1,1 @@
-export const PixiLoadingText = (): JSX.Element => <pixiText text={'Loading...'} />
+export const PixiLoadingText = (): React.JSX.Element => <pixiText text={'Loading...'} />

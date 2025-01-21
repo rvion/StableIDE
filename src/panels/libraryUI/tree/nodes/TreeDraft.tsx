@@ -34,7 +34,7 @@ export class TreeDraft implements ITreeEntry {
       this.draft.delete({})
       return true
    }
-   extra = (): JSX.Element => <DraftFavoriteBtnUI draft={this.draft} />
+   extra = (): React.JSX.Element => <DraftFavoriteBtnUI draft={this.draft} />
    actions: TreeEntryAction[] = [
       {
          name: 'add Draft',

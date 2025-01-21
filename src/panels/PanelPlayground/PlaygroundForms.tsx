@@ -13,17 +13,17 @@ export const PlaygroundForms = observer(function PlaygroundImportFromComfy_(p: {
          .fields({
             a: b.percent({ suffix: '% of banana' }),
             b: b.string({}).useMixin((self) => ({
-               UIWithFancyBorder: (): JSX.Element => (
+               UIWithFancyBorder: (): React.JSX.Element => (
                   <Frame //
                      border={30}
                      tw='p-2'
                      children={self.UI({ Shell: UY.Shell.HeaderOnly })}
                   />
                ),
-               UIWithSuperFancyBorder: (): JSX.Element => (
+               UIWithSuperFancyBorder: (): React.JSX.Element => (
                   <Frame border={30} tw='p-8' children={<self.UI Shell={UY.Shell.HeaderOnly} />} />
                ),
-               UIWithSuperFancyBorder2: (p: { size: 'big' | 'small' }): JSX.Element => (
+               UIWithSuperFancyBorder2: (p: { size: 'big' | 'small' }): React.JSX.Element => (
                   <Frame border={30} tw='p-8' children={<self.UI Shell={UY.Shell.HeaderOnly} />} />
                ),
             })),
@@ -34,7 +34,7 @@ export const PlaygroundForms = observer(function PlaygroundImportFromComfy_(p: {
          })
          .useMixin((self) => {
             return {
-               v1: (): JSX.Element => {
+               v1: (): React.JSX.Element => {
                   const { a, b } = field.fields
                   return (
                      <ErrorBoundaryUI>

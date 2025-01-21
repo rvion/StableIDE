@@ -67,7 +67,7 @@ export const Output3dSceneUI2 = observer(function Output3dSceneUI2_(p: {
 })
 
 export const RenderSceneUI = observer(function RenderSceneUI_(p: {
-   render: (params: Record<string, any>) => JSX.Element
+   render: (params: Record<string, any>) => React.JSX.Element
 }) {
    return 1
 })

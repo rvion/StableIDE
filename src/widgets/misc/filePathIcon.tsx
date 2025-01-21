@@ -1,4 +1,4 @@
-export const getIconForFilePath = (filePath: string): JSX.Element => {
+export const getIconForFilePath = (filePath: string): React.JSX.Element => {
    if (filePath.endsWith('.ts')) return <span className='material-symbols-outlined text-blue-600'>code</span>
    if (filePath.endsWith('.png')) return <span className='material-symbols-outlined text-red-700'>image</span>
    if (filePath.endsWith('.json'))

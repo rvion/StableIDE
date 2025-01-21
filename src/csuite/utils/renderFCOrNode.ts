@@ -5,7 +5,7 @@ import { createElement, type ReactNode } from 'react'
 
 export type FCOrJSXOrNamed<P extends object, Named extends string> =
    | CovariantFC<P>
-   | React.JSX.Element
+   | React.React.JSX.Element
    | Named
 
 export type FCOrNode<P extends object /* Named extends string = never */> = CovariantFC<P> | ReactNode

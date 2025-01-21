@@ -14,7 +14,7 @@ export const TypescriptHighlightedCodeUI = (p: {
    className?: string
    code: string
    wrap?: boolean
-}): JSX.Element => {
+}): React.JSX.Element => {
    const ref = useRef(null)
    useLayoutEffect(() => {
       const e = ref.current
@@ -43,7 +43,7 @@ export const TypescriptHighlightedCodeUI = (p: {
    )
 }
 
-export const JSONHighlightedCodeUI = (p: { code: string }): JSX.Element => {
+export const JSONHighlightedCodeUI = (p: { code: string }): React.JSX.Element => {
    // const ref = useRef(null)
    // useLayoutEffect(() => {
    //     const e = ref.current

@@ -8,7 +8,7 @@ import { simpleFactory } from '../../SimpleFactory'
 import { RevealUI } from '../RevealUI'
 
 export const RevealTestUI = observer(function RevealTestUI_(p: {}) {
-   const anchor = (where: string, props?: FrameProps): JSX.Element => (
+   const anchor = (where: string, props?: FrameProps): React.JSX.Element => (
       <Button expand {...props}>
          {where}
       </Button>
@@ -24,7 +24,7 @@ export const RevealTestUI = observer(function RevealTestUI_(p: {}) {
    )
 
    const Content2 = observer(
-      (p: { content: () => string }): JSX.Element => (
+      (p: { content: () => string }): React.JSX.Element => (
          <pre //
             style={{
                width: `${conf.value.width}px`,
@@ -36,7 +36,7 @@ export const RevealTestUI = observer(function RevealTestUI_(p: {}) {
          </pre>
       ),
    )
-   const Content = (p: RevealContentProps): JSX.Element => (
+   const Content = (p: RevealContentProps): React.JSX.Element => (
       <Content2 content={() => /* JSON.stringify(p.reveal.pos, null, 3) */ '🟢'} />
    )
 

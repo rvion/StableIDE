@@ -38,4 +38,4 @@ I want a typescript script that add  every single missing type annotations in my
 - it must properly handle the async lambda with defaults
 - if the annotations that should be added include Anonymouse class (e.g. like in const S1: SimpleSchema<(Anonymous class)> ) we should just skip with an Error message, like for any
 - there is way too many things are typed as any for the script, but are properly typed in my vscode; do I need to include more of my tsconfig ?
-- must generate fully qualified types if those are aready available using their fully qualified name (e.g. JSX.Element)
+- must generate fully qualified types if those are aready available using their fully qualified name (e.g. React.JSX.Element)

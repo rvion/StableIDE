@@ -11,7 +11,7 @@ import { TreeDraftFolder } from './TreeDraftFolders'
 
 export class TreeFavoriteApps implements ITreeEntry {
    isFolder: boolean = true
-   icon: JSX.Element = (<span className='material-symbols-outlined _text-yellow-500'>star</span>)
+   icon: React.JSX.Element = (<span className='material-symbols-outlined _text-yellow-500'>star</span>)
    name: string = 'Favorite Apps'
    constructor(p: {}) {}
    onPrimaryAction(n: TreeNode): void {
@@ -26,7 +26,7 @@ export class TreeFavoriteApps implements ITreeEntry {
 
 export class TreeFavoriteDrafts implements ITreeEntry {
    isFolder: boolean = true
-   icon: JSX.Element = (<span className='material-symbols-outlined _text-blue-500'>star</span>)
+   icon: React.JSX.Element = (<span className='material-symbols-outlined _text-blue-500'>star</span>)
    name: string = 'Favorite Drafts'
    constructor(p: {}) {}
    onPrimaryAction(n: TreeNode): void {
@@ -41,7 +41,7 @@ export class TreeFavoriteDrafts implements ITreeEntry {
 
 export class TreeAllDrafts implements ITreeEntry {
    isFolder: boolean = true
-   icon: JSX.Element = (<span className='material-symbols-outlined _text-blue-500'>palette</span>)
+   icon: React.JSX.Element = (<span className='material-symbols-outlined _text-blue-500'>palette</span>)
    name: string = 'All Drafts'
    constructor(p: {}) {}
    onPrimaryAction(n: TreeNode): void {
@@ -74,7 +74,7 @@ export class TreeAllDrafts implements ITreeEntry {
 
 export class TreeAllApps implements ITreeEntry {
    isFolder: boolean = true
-   icon: JSX.Element = (<span className='material-symbols-outlined _text-yellow-500'>palette</span>)
+   icon: React.JSX.Element = (<span className='material-symbols-outlined _text-yellow-500'>palette</span>)
    name: string = 'All Apps'
    constructor(p: {}) {}
    onPrimaryAction(n: TreeNode): void {

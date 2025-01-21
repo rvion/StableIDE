@@ -5,7 +5,7 @@ export const renderStatus = (
    status: PluginInstallStatus,
    optional: boolean,
    tailwind?: string | undefined,
-): JSX.Element => {
+): React.JSX.Element => {
    const tw = tailwind ?? ''
    if (status === 'installed') return <span tw={[tw, 'text-green-500']}>Installed</span>
    if (status === 'not-installed') {

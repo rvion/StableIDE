@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 
-export const IconUI = observer(function IconUI_(p: { icon: string; color?: string }): JSX.Element {
+export const IconUI = observer(function IconUI_(p: { icon: string; color?: string }): React.JSX.Element {
    return (
       <span
          className='material-symbols-outlined'

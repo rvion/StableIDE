@@ -7,7 +7,7 @@ export const Image = (p: {
    src?: Maybe<string>
    alt?: string
    className?: string
-}): JSX.Element => {
+}): React.JSX.Element => {
    return (
       <img
          //

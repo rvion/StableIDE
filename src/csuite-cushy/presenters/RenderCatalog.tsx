@@ -86,7 +86,7 @@ export type WidgetsCatalog = typeof widgetsCatalog /* {
    }
 
    // quick form system
-   QuickForm: (p: QuickFormProps) => JSX.Element
+   QuickForm: (p: QuickFormProps) => React.JSX.Element
 
    // fields
    number: {

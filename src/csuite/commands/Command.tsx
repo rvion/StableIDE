@@ -66,7 +66,7 @@ export class Command<Ctx = any> {
       return res
    }
 
-   NavBarBtnUI = (p: { label?: string }): JSX.Element => {
+   NavBarBtnUI = (p: { label?: string }): React.JSX.Element => {
       return (
          <Button border={false} onClick={() => this.execute()}>
             {p.label ?? this.label}

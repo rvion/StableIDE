@@ -4,6 +4,6 @@ export type CSCriticalError = { title: string; help: string }
 // export type MsgGroup = {
 //     groupType: string
 //     messages: MessageFromExtensionToWebview[]
-//     uis: JSX.Element[]
+//     uis: React.JSX.Element[]
 //     wrap: boolean
 // }

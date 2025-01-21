@@ -12,7 +12,7 @@ const gridConfig = {
    followCamera: false,
    infiniteGrid: true,
 }
-export function Ground3D(): JSX.Element {
+export function Ground3D(): React.JSX.Element {
    return (
       <Grid //
          position={[0, -0.01, 0]}

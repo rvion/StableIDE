@@ -40,7 +40,7 @@ export const PanelPreferencesUI = observer(function Panel_Preferences_(p: PanelP
    )
 
    const modeField = panelState.fields.preferenceMode
-   const page: JSX.Element = ((): JSX.Element => {
+   const page: React.JSX.Element = ((): React.JSX.Element => {
       switch (modeField.value) {
          case 'hosts': {
             return <PanelComfyHostsUI />

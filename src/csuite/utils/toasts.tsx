@@ -22,7 +22,7 @@ export const toastError = (msg: string): Trigger => {
 export const toastImage = (imageSrc: string | Buffer, message: string): void => {
    const src = typeof imageSrc === 'string' ? imageSrc : imageSrc.toString('base64')
    console.log(src)
-   const CustomToast = (): JSX.Element => (
+   const CustomToast = (): React.JSX.Element => (
       <div tw='flex aspect-square flex-col'>
          <img
             tw='rounded bg-black object-contain'

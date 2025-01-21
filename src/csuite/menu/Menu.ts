@@ -50,17 +50,17 @@ export class Menu {
       // /menuManager.registerMenuTemplate(this)
    }
 
-   UI = (): JSX.Element => {
+   UI = (): React.JSX.Element => {
       const menuInst = useMemo(() => new MenuInstance(this, undefined, null), [])
       return createElement(MenuRootUI, { menu: menuInst })
    }
 
-   DropDownUI = (): JSX.Element => {
+   DropDownUI = (): React.JSX.Element => {
       const menuInst = useMemo(() => new MenuInstance(this, undefined, null), [])
       return createElement(MenuRootUI, { menu: menuInst })
    }
 
-   MenuBarUI = (p: { autoFocus?: boolean }): JSX.Element => {
+   MenuBarUI = (p: { autoFocus?: boolean }): React.JSX.Element => {
       const menuInst = useMemo(() => new MenuInstance(this, undefined, null), [])
       return createElement(MenuBarUI, { menu: menuInst, autoFocus: p.autoFocus })
    }

@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 
 import { Button } from '../../button/Button'
 
-// const ListDragHandleUI = forwardRef<HTMLDivElement, { ix: number; field: Field }>((p, ref) => {
+// const ListDragHandleUI = ((p: { ix: number; field: Field, ref?: ObservableRef<HTMLDivElement>}, ref) => {
 //    return (
 //       //TODO (bird_d): FIX UI - Needs to be Button when ref is implemented.
 //       <div ref={ref} onClick={(ev) => p.field.toggleCollapsed()}>

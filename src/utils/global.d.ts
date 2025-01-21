@@ -8,12 +8,7 @@ import type { Viewport } from 'pixi-viewport'
 
 type ClassLike = import('../csuite/types/ClassLike').ClassLike
 
-declare global {
-   const app: import('../cards/App').GlobalFunctionToDefineAnApp
-   const view: import('../cards/App').GlobalFunctionToDefineAView
-   const getCurrentForm: import('../cards/App').GlobalGetCurrentForm
-   const getCurrentRun: import('../cards/App').GlobalGetCurrentRun
-
+declare module 'react' {
    namespace JSX {
       interface IntrinsicAttributes {
          tw?: string | ClassLike[]
@@ -22,6 +17,14 @@ declare global {
          viewport: PixiReactElementProps<typeof Viewport>
       }
    }
+}
+
+declare global {
+   const app: import('../cards/App').GlobalFunctionToDefineAnApp
+   const view: import('../cards/App').GlobalFunctionToDefineAView
+   const getCurrentForm: import('../cards/App').GlobalGetCurrentForm
+   const getCurrentRun: import('../cards/App').GlobalGetCurrentRun
+
    /*
     defined on window, using observable cache + getter, to allow hot-reload
         | Object.defineProperty(window, 'CushyObservableCache' { value: observable({ st: this }) })

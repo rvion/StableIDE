@@ -11,11 +11,11 @@ import { panelContext } from './usePanel'
 
 // 💬 2024-10-18 rvion:
 // | flexlayout-react do not support memo, so we can't wrap in observer
-export const TabsetPlaceholderUI = (): JSX.Element => {
+export const TabsetPlaceholderUI = (): React.JSX.Element => {
    return <TabsetPlaceholderHackUI />
 }
 
-const TabsetPlaceholderHackUI = observer((): JSX.Element => {
+const TabsetPlaceholderHackUI = observer((): React.JSX.Element => {
    const panelName = 'Welcome'
    const panelURI = '~TabsetPlaceholderUI~'
    const panelState = useMemoAction(() => {

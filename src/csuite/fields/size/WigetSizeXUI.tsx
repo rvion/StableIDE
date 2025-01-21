@@ -7,7 +7,7 @@ import { ToggleButtonUI } from '../../checkbox/InputBoolToggleButtonUI'
 import { InputBoolUI } from '../../checkbox/InputBoolUI'
 import { Frame } from '../../frame/Frame'
 
-const modelBtn = (uist: Field_size, model: ModelType): JSX.Element => (
+const modelBtn = (uist: Field_size, model: ModelType): React.JSX.Element => (
    <ToggleButtonUI //
       toggleGroup='size'
       tw='w-input'
@@ -23,7 +23,7 @@ const modelBtn = (uist: Field_size, model: ModelType): JSX.Element => (
 
 export const WigetSizeXUI = observer(function WigetSizeXUI_(p: { size: Field_size }) {
    const uist: Field_size = p.size
-   const resoBtn = (ar: AspectRatio): JSX.Element => (
+   const resoBtn = (ar: AspectRatio): React.JSX.Element => (
       <InputBoolUI //
          toggleGroup='size'
          display='button'
