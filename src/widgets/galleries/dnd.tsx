@@ -1,7 +1,7 @@
 import type { MediaImageL } from '../../models/MediaImage'
 import type { STATE } from '../../state/state'
 
-import { type CSSProperties } from 'react'
+import { type CSSProperties, useCallback } from 'react'
 import {
    type ConnectDragPreview,
    type ConnectDragSource,
@@ -40,6 +40,21 @@ export const useImageDrag = (
 
 type Drop1 = { image: MediaImageL }
 type Drop2 = { files: (File & { path: AbsolutePath })[] }
+
+/**
+ * from https://github.com/react-dnd/react-dnd/issues/3655#issuecomment-2578808024
+ * Returns a callback ref that calls `drag(element)` when the DOM node is attached.
+ */
+export function useDragDropRefForReact19(
+   drag: (el: HTMLDivElement) => void,
+): (element: HTMLDivElement | null) => void {
+   return useCallback(
+      (element: HTMLDivElement | null) => {
+         if (element) drag(element)
+      },
+      [drag],
+   )
+}
 
 export const useImageDrop = (
    st: STATE,
