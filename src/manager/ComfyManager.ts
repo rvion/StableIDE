@@ -158,7 +158,10 @@ export class ComfyManager {
    }
 
    isPluginInstalled = (title: KnownComfyPluginTitle): boolean => {
-      return this.pluginList?.custom_nodes.some((x) => x.title === title && x.installed === 'True') ?? false
+      if (!this.pluginList || !this.pluginList.custom_nodes) {
+         return false
+      }
+      return this.pluginList.custom_nodes.some((x) => x.title === title && x.installed === 'True') ?? false
    }
 
    getPluginStatus = (title: KnownComfyPluginTitle): PluginInstallStatus => {
