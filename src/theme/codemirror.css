@@ -22,8 +22,25 @@
     background-color: oklch(from var(--KLR) calc(l * var(--DIR)) calc(c) h);
 }
 .ͼo .cm-tooltip-autocomplete > ul > li[aria-selected] {
-    background-color: oklch(var(--p));
+    background-color: oklch(from var(--KLR) calc(l + 0.1 * var(--DIR)) c h);
     color: oklch(var(--pc));
+    border-radius: var(--theme-roundness);
+}
+
+.ͼo .cm-tooltip-autocomplete {
+    z-index: 2000;
+    background-color: oklch(from var(--KLR) calc(l - 0.025 * var(--DIR)) c h);
+    border-radius: var(--theme-roundness);
+    /* padding: 0.25rem; */
+}
+
+.cm-completionListIncompleteBottom {
+    /* background-color: red !important; */
+    padding: 0.1rem !important;
+    border-color: oklch(from var(--KLR) calc(l + 0.3 * var(--DIR)) calc(c) h);
+    border-radius: var(--theme-roundness);
+    border-width: 1px;
+    font-family: monospace;
 }
 
 /* completion stylign */

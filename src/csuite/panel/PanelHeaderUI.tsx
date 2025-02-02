@@ -72,7 +72,7 @@ export const PanelHeaderUI = observer(function PanelHeader({
             base={{ contrast: 0.08 /* hueShift: 100 */ /* chromaBlend: 2 */ }}
             tw={[
                //
-               'sticky top-0 [z-index:999]',
+               'sticky top-0 z-[999]',
                // extensibleHeight ? 'minh-widget shrink-0' : 'h-widget',
                // (bird_d): Clamping instead of height, going to transition to working around h-input instead of forcing it. TODO:(bird_d/ui/theme/padding)
                'line-clamp-1 py-0.5',
