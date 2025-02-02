@@ -25,7 +25,7 @@ export const WidgetLabelContainerUI = observer(function WidgetLabelContainerUI_(
          // tooltipPlacement={p.tooltipPlacement ?? 'topStart'}
          className={p.className}
          // hover={1}
-         expand
+         // expand
          tw={[
             'UI-WidgetLabelContainer', //
             'COLLAPSE-PASSTHROUGH',
